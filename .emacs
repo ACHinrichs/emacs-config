@@ -23,7 +23,14 @@
  ;; If there is more than one, they won't work right.
  )
 
+
+;; Multimode
+(require 'mmm-auto)
+(setq mmm-global-mode 'maybe)
+(mmm-add-mode-ext-class 'html-mode "\\.php\\'" 'html-php)
+
 (setq split-width-threshold 1 )
 (setq-default auto-fill-function 'do-auto-fill)
 (global-auto-revert-mode 1)
 (desktop-save-mode 1)
+
