@@ -34,3 +34,5 @@
 (global-auto-revert-mode 1)
 (desktop-save-mode 1)
 
+(setq c-default-style "linux"
+      c-basic-offset 4)
