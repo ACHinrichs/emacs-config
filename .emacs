@@ -36,3 +36,6 @@
 
 (setq c-default-style "linux"
       c-basic-offset 4)
+
+;; Start server, so that emacsclient can open in emacs
+(server-start)
