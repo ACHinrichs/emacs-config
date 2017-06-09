@@ -20,16 +20,7 @@
 
 
 ;; Unstalls all uninstalled, but selected packages
-(defun install-packages ()
-  "Install all required packages."
-  (interactive)
-  (unless package-archive-contents
-    (package-refresh-contents))
-  (dolist (package package-selected-packages)
-    (unless (package-installed-p package)
-      (package-install package))))
-
-(install-packages)
+(package-install-selected-packages)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
