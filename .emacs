@@ -27,7 +27,7 @@
 
  ;;Set ubuntu font as standard, if somebody other than me uses this, he
  ;;might want comment this one out
- '(default ((t (:family "Ubuntu Mono" :foundry "outline" :slant normal :weight normal :height 102 :width normal)))))
+ '(default ((t (:family "Ubuntu Mono" :foundry "outline" :slant normal :weight normal :height 102 :width normal))))
 
  )
 
