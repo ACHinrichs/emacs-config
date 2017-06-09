@@ -23,12 +23,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+
+
+ ;;Set ubuntu font as standard, if somebody other than me uses this, he
+ ;;might want comment this one out
+ '(default ((t (:family "Ubuntu Mono" :foundry "outline" :slant normal :weight normal :height 102 :width normal)))))
+
  )
 
-
-;;Set ubuntu font as standard, if somebody other than me uses this, he
-;;might want comment this one out
-'(default ((t (:family "Ubuntu Mono" :foundry "outline" :slant normal :weight normal :height 102 :width normal)))))
 
 ;; Multimode
 (require 'mmm-auto)
