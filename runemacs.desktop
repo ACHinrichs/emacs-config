@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Run Emacs Client
+Comment=THE Editor
+Exec=/usr/local/bin/runemacsclient
+Icon=/usr/local/bin/emacs-icon.png
+Terminal=false
+Type=Application
+NoDisplay=false
+Categories=Development;IDE;

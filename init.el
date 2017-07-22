@@ -49,6 +49,10 @@
 (setq c-default-style "linux"
       c-basic-offset 4)
 
+;;Auto complete
+(require 'auto-complete)
+(global-auto-complete-mode t)
+
 ;; Start server, so that emacsclient can open in emacs
 (server-start)
 
