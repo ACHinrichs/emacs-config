@@ -51,3 +51,7 @@
 
 ;; Start server, so that emacsclient can open in emacs
 (server-start)
+
+;; Disable menu and toolbar
+(tool-bar-mode 0)
+(menu-bar-mode 0)
