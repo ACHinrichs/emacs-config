@@ -10,6 +10,13 @@ configuration. The gitignore should exclude everything ›personal‹ from
 commits, but if you want to contribute to this repo, be sure to check
 the files before you `git add .` :grin:.
 
+To use `all-the-icons`, which is used by `NeoTree` please execute
+```
+M-x all-the-icons-install-fonts
+```
+to install the fonts. If you do not do that *before* you start emacs
+with NeoTree, emacs will crash instantly.
+
 For the other usefull things I commited, see the sectios below.
 
 ## runemacsclient

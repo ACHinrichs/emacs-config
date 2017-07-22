@@ -58,4 +58,4 @@
 (require 'all-the-icons)
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
-(neotree)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
