@@ -47,6 +47,12 @@ flycheck_*.el
 # directory configuration
 .dir-locals.el
 
+
+# sessions
+session.*
+
+# other things
+ac-comphist.dat
 ### Linux ###
 
 # temporary files which can be created if a process still has a handle open of a deleted file
