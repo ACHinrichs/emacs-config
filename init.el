@@ -14,7 +14,7 @@
  '(custom-enabled-themes (quote (deeper-blue)))
  '(package-selected-packages
    (quote
-    (ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
+    (all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
@@ -27,13 +27,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-
-
- ;;Set ubuntu font as standard, if somebody other than me uses this, he
- ;;might want comment this one out
- '(default ((t (:family "Ubuntu Mono" :foundry "outline" :slant normal :weight normal :height 102 :width normal))))
-
- )
+ '(default ((t (:family "Ubuntu Mono" :foundry "outline" :slant normal :weight normal :height 102 :width normal)))))
 
 
 ;; Multimode
@@ -59,3 +53,9 @@
 ;; Disable menu and toolbar
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+
+;; Start neotree
+(require 'all-the-icons)
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(neotree)
