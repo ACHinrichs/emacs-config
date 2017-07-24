@@ -59,3 +59,11 @@
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
+;; abbrevs - see https://www.emacswiki.org/emacs/AbbrevMode
+(setq abbrev-file-name             ;; tell emacs where to read abbrev
+      "~/.emacs.d/abbrev_defs")    ;; definitions from...
+(setq save-abbrevs t)              ;; save abbrevs when files are
+;; saved you will be asked before the abbreviations are saved
+;; Turn on abbrev mode
+(setq-default abbrev-mode t)
