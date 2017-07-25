@@ -1,3 +1,6 @@
+;; Set Loadpath
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -68,6 +71,19 @@
 (setq-default abbrev-mode t)
 
 
-;;FlySpell+FlySpell-babel for Spellchecks
+;;FlySpell+FlySpell-babel for Spellchecks using aspell
 (autoload 'flyspell-babel-setup "flyspell-babel")
-(add-hook 'latex-mode-hook 'flyspell-babel-setup)
+(setq-default ispell-program-name "aspell") 
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1))))
+(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode -1))))
+(add-hook 'TeX-mode-hook 'flyspell-babel-setup)
+(add-hook 'TeX-mode-hook 'flyspell-buffer)
+
+
+
+
+;; Enable Linenumbers
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda () (linum-mode 1))))
