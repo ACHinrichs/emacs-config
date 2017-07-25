@@ -38,7 +38,7 @@
 (mmm-add-mode-ext-class 'html-mode "\\.php\\'" 'html-php)
 
 (setq split-width-threshold 1 )
-(setq-default auto-fill-function 'do-auto-fill)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 (global-auto-revert-mode 1)
 (desktop-save-mode 1)
 
@@ -81,9 +81,5 @@
 (add-hook 'TeX-mode-hook 'flyspell-babel-setup)
 (add-hook 'TeX-mode-hook 'flyspell-buffer)
 
-
-
-
 ;; Enable Linenumbers
-(dolist (hook '(text-mode-hook))
-  (add-hook hook (lambda () (linum-mode 1))))
+(add-hook 'find-file-hook (lambda () (linum-mode 1)))
