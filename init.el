@@ -7,13 +7,18 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+;; Import deepest-blue
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/") 
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (deeper-blue)))
+ '(custom-enabled-themes (quote (deepest-blue)))
+ '(custom-safe-themes
+   (quote
+    ("127e9eb02699a58d44385c455911dfa0a620fe00954411600dee89a09d0fa359" "3e2fd2a175d4e5df50cc09948260c620167124d9fc11c0bf71849d523efcf375" default)))
  '(package-selected-packages
    (quote
     (flyspell-lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
