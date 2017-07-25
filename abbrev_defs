@@ -7,9 +7,13 @@
 
 (define-abbrev-table 'TeX-output-mode-abbrev-table '())
 
+(define-abbrev-table 'change-log-mode-abbrev-table '())
+
 (define-abbrev-table 'comint-mode-abbrev-table '())
 
 (define-abbrev-table 'completion-list-mode-abbrev-table '())
+
+(define-abbrev-table 'diff-mode-abbrev-table '())
 
 (define-abbrev-table 'doctex-mode-abbrev-table '())
 
@@ -17,13 +21,16 @@
 
 (define-abbrev-table 'elisp-byte-code-mode-abbrev-table '())
 
-(define-abbrev-table 'emacs-lisp-mode-abbrev-table '())
+(define-abbrev-table 'emacs-lisp-mode-abbrev-table
+  '(
+    ("rwthmail" "adrian.hinrichs@rwth-aachen.de" nil 1)
+   ))
 
 (define-abbrev-table 'fundamental-mode-abbrev-table '())
 
 (define-abbrev-table 'global-abbrev-table
   '(
-    ("ach" "Adrian C. Hinrichs" nil 0)
+    ("ach" "Adrian C. Hinrichs" nil 1)
     ("ahi" "Adrian Hinrichs" nil 0)
     ("mtr" "367129" nil 0)
    ))
@@ -37,6 +44,40 @@
    ))
 
 (define-abbrev-table 'lisp-mode-abbrev-table '())
+
+(define-abbrev-table 'log-edit-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-cherry-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-diff-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-log-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-log-select-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-merge-preview-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-popup-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-process-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-reflog-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-refs-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-repolist-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-revision-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-stash-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-stashes-mode-abbrev-table '())
+
+(define-abbrev-table 'magit-status-mode-abbrev-table '())
+
+(define-abbrev-table 'message-mode-abbrev-table '())
 
 (define-abbrev-table 'messages-buffer-mode-abbrev-table '())
 
@@ -69,4 +110,10 @@
 (define-abbrev-table 'tex-shell-abbrev-table '())
 
 (define-abbrev-table 'text-mode-abbrev-table '())
+
+(define-abbrev-table 'vc-git-log-edit-mode-abbrev-table '())
+
+(define-abbrev-table 'vc-git-log-view-mode-abbrev-table '())
+
+(define-abbrev-table 'vc-git-region-history-mode-abbrev-table '())
 
