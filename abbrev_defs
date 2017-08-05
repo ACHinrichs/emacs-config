@@ -21,18 +21,18 @@
 
 (define-abbrev-table 'elisp-byte-code-mode-abbrev-table '())
 
-(define-abbrev-table 'emacs-lisp-mode-abbrev-table
-  '(
-    ("rwthmail" "adrian.hinrichs@rwth-aachen.de" nil 1)
-   ))
+(define-abbrev-table 'emacs-lisp-mode-abbrev-table '())
+
+(define-abbrev-table 'eshell-mode-abbrev-table '())
 
 (define-abbrev-table 'fundamental-mode-abbrev-table '())
 
 (define-abbrev-table 'global-abbrev-table
   '(
-    ("ach" "Adrian C. Hinrichs" nil 1)
+    ("ach" "Adrian C. Hinrichs" nil 3)
     ("ahi" "Adrian Hinrichs" nil 0)
     ("mtr" "367129" nil 0)
+    ("rwthmail" "adrian.hinrichs@rwth-aachen.de" nil 2)
    ))
 
 (define-abbrev-table 'help-mode-abbrev-table '())
@@ -104,6 +104,8 @@
 (define-abbrev-table 'special-mode-abbrev-table '())
 
 (define-abbrev-table 'tabulated-list-mode-abbrev-table '())
+
+(define-abbrev-table 'term-mode-abbrev-table '())
 
 (define-abbrev-table 'tex-mode-abbrev-table '())
 

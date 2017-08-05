@@ -21,7 +21,7 @@
     ("127e9eb02699a58d44385c455911dfa0a620fe00954411600dee89a09d0fa359" "3e2fd2a175d4e5df50cc09948260c620167124d9fc11c0bf71849d523efcf375" default)))
  '(package-selected-packages
    (quote
-    (flyspell-lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
+    (rainbow-mode flyspell-lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
@@ -88,3 +88,8 @@
 
 ;; Enable Linenumbers
 (add-hook 'find-file-hook (lambda () (linum-mode 1)))
+
+
+
+;; Disable scrolbar
+(scroll-bar-mode -1)
