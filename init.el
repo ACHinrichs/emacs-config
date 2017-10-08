@@ -7,7 +7,6 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-;; Import deepest-blue
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/") 
 
 (custom-set-variables
@@ -15,17 +14,17 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (deepest-blue)))
+ '(custom-enabled-themes (quote (nightforest)))
  '(custom-safe-themes
    (quote
-    ("127e9eb02699a58d44385c455911dfa0a620fe00954411600dee89a09d0fa359" "3e2fd2a175d4e5df50cc09948260c620167124d9fc11c0bf71849d523efcf375" default)))
+    ("417128f71670e83fca0a9f87bbcfa38dd532ca78bd6524cafe1ea0ea21c87ab4" "07815c676b7d8a1d0c041b71d89f7f1d7d80209c44e3570d4bec2d524318b5ac" "4e68b9eb3b87f830c80596ffd599d39d77d06c2be408a4ea4c0d06cfa9b8753c" "d7ec73258cea32275faf9745b8bfd48498242ee862bf3895fefa972e0710602d" "2d6c158387e53bcb00fc262c6d046b5402dd37e89dae8ca05cff24326b6afa04" "af2d66af959d1a357f49463147a46cf7b770e557c0f84b0991e2936b7b759dd9" "22e976d099f53dabc4534f080c8c4a36e7c7c223edc2bdac8d7537611eaae321" "a82bd6ba32612663f33b8d7a7027ec28ca66f36abc6fb98d69deebb5ca4a4504" "3e2fd2a175d4e5df50cc09948260c620167124d9fc11c0bf71849d523efcf375" default)))
  '(package-selected-packages
    (quote
-    (rainbow-mode flyspell-lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
+    (color-theme-x color-theme-xe markdown-mode markdown-mode+mode rainbow-mode flyspell-lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-
-
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(package-initialize)
 ;; Unstalls all uninstalled, but selected packages
 (package-install-selected-packages)
 
@@ -34,7 +33,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono" :foundry "outline" :slant normal :weight normal :height 102 :width normal)))))
+ )
 
 
 ;; Multimode
@@ -93,3 +92,9 @@
 
 ;; Disable scrolbar
 (scroll-bar-mode -1)
+
+;; Transperency!
+;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
+;;(set-frame-parameter (selected-frame) 'alpha <both>)
+(set-frame-parameter (selected-frame) 'alpha '(75 . 75))
+(add-to-list 'default-frame-alist '(alpha . (75 . 75)))
