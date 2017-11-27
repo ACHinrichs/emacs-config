@@ -39,6 +39,9 @@
 
 (define-abbrev-table 'latex-mode-abbrev-table
   '(
+    ("<=" "\\Leftarrow" nil 1)
+    ("=>" "\\Rightarrow" nil 1)
+    ("<=>" "\\Leftrightarrow" nil 1)
     ("eqv" "\\Leftrightarrow" nil 1)
     ("indktan" "Gelte die Behauptung für ein beliebiges, aber Festes \\(n \\in \\mathds{N}\\)." nil 1)
    ))
