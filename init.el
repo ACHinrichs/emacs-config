@@ -1,6 +1,6 @@
 ;; Set Loadpath
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-
+;;(add-to-list 'load-path "~/.emacs.d/lisp/")
+(load "~/.emacs.d/lisp/firacode.el")  
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -21,7 +21,7 @@
  '(magit-commit-arguments (quote ("--signoff" "--gpg-sign=C27E656EA63D9C9E")))
  '(package-selected-packages
    (quote
-    (company auctex-latexmk color-theme-x color-theme-xe markdown-mode markdown-mode+mode rainbow-mode flyspell-lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
+    (company highlight-indentation auctex-latexmk color-theme-x color-theme-xe markdown-mode markdown-mode+mode rainbow-mode flyspell-lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
@@ -47,19 +47,21 @@
 (global-auto-revert-mode 1)
 ;;(desktop-save-mode 1)
 
+;; Use non-stupid indentation style
 (setq c-default-style "linux"
       c-basic-offset 4)
 
-;;Auto complete
-(require 'auto-complete)
-(global-auto-complete-mode t)
+;; Auto complete
+(require 'company)
+(global-company-complete-mode t)
 
 ;; Start server, so that emacsclient can open in emacs
 (server-start)
 
-;; Disable menu and toolbar
+;; Disable menu and tool- and scrolbar, because shell-like emacs > shell-emacs > gui-emacs >> vim
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(scroll-bar-mode 0)
 
 ;; Start neotree
 (require 'all-the-icons)
@@ -78,19 +80,17 @@
 
 ;;FlySpell+FlySpell-babel for Spellchecks using aspell
 (autoload 'flyspell-babel-setup "flyspell-babel")
-(setq-default ispell-program-name "aspell") 
+(setq-default ispell-program-name "aspell") 
 
 ;; Enable Linenumbers
 (add-hook 'find-file-hook (lambda () (linum-mode 1)))
 
-;; Disable scrolbar
-(scroll-bar-mode -1)
 
 ;; Transperency!
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
 ;;(set-frame-parameter (selected-frame) 'alpha <both>)
-(set-frame-parameter (selected-frame) 'alpha '(75 . 75))
-(add-to-list 'default-frame-alist '(alpha . (75 . 75)))
+;;(set-frame-parameter (selected-frame) 'alpha '(75 . 75))
+;;(add-to-list 'default-frame-alist '(alpha . (75 . 75)))
 
 (if (eq system-type 'windows-nt)
     (progn      (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
@@ -108,7 +108,6 @@
 			  (cons "\\(" "\\)"))))
 (setq LaTeX-electric-left-right-brace t)
 
-
 ;; Change bell from annoying piezo-beep to modline-flash
 (setq ring-bell-function
       (lambda ()
@@ -117,6 +116,15 @@
           (run-with-idle-timer 0.1 nil
                                (lambda (fg) (set-face-foreground 'mode-line fg))
                                orig-fg))))
+
+;; Set font to firacode
+;;(set-default-font "Fira Code")
+
+;; Set my (Linux) python-shell to python3
+(if (eq system-type 'windows-nt)
+    (progn      ())
+    (progn      (setq python-shell-interpreter "/usr/bin/python3"))
+)
 
 
 ;; Inverse search sumatra
