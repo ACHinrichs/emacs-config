@@ -1,14 +1,14 @@
 ;; 'djcb-org-article' for export org documents to the LaTex 'article', using
 ;; XeTeX and some fancy fonts; requires XeTeX (see org-latex-to-pdf-process)
-(require 'org)
-
-(add-to-list 'org-latex-classes
-	     '("xe-org-article"
-	       "\\documentclass[11pt,a4paper]{scrartcl}
+(with-eval-after-load 'ox-latex
+  (add-to-list 'org-latex-classes
+	       '("xe-org-article"
+		 "\\documentclass[11pt,a4paper]{scrartcl}
 \\usepackage[T1]{fontenc}
 \\usepackage{fontspec}
 \\usepackage{graphicx} 
 \\usepackage{hyperref}
+\\usepackage{longtable}
 \\usepackage[normalem]{ulem}
 \\defaultfontfeatures{Mapping=tex-text}
 %\\setromanfont{Gentium}\setsansfont{Gillius ADF}
@@ -23,11 +23,12 @@
 %\\title{}
       [NO-DEFAULT-PACKAGES]
       [NO-PACKAGES]"
-	       ("\\section{%s}" . "\\section*{%s}")
-	       ("\\subsection{%s}" . "\\subsection*{%s}")
-	       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-	       ("\\paragraph{%s}" . "\\paragraph*{%s}")
-	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-(setq org-latex-to-pdf-process 
-      '("xelatex -interaction nonstopmode %f"
-	"xelatex -interaction nonstopmode %f")) ;; for multiple passes
+		 ("\\section{%s}" . "\\section*{%s}")
+		 ("\\subsection{%s}" . "\\subsection*{%s}")
+		 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  (setq org-latex-to-pdf-process 
+	'("xelatex -interaction nonstopmode %f"
+	  "xelatex -interaction nonstopmode %f")) ;; for multiple passes
+)
