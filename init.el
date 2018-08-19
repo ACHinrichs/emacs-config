@@ -1,6 +1,7 @@
 ;; Set Loadpath
 ;;(add-to-list 'load-path "~/.emacs.d/lisp/")
 (load "~/.emacs.d/lisp/firacode.el")  
+;(load "~/.emacs.d/lisp/org-xelatex.el")  
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -53,7 +54,7 @@
 
 ;; Auto complete
 (require 'company)
-(global-company-complete-mode t)
+(global-company-mode t)
 
 ;; Disable menu and tool- and scrolbar, because shell-like emacs > shell-emacs > gui-emacs >> vim
 (tool-bar-mode 0)
@@ -86,8 +87,6 @@
 ;; Transperency!
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
 ;;(set-frame-parameter (selected-frame) 'alpha <both>)
-;;(set-frame-parameter (selected-frame) 'alpha '(75 . 75))
-;;(add-to-list 'default-frame-alist '(alpha . (75 . 75)))
 
 (if (eq system-type 'windows-nt)
     (progn      (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
@@ -122,6 +121,9 @@
     (progn      ())
     (progn      (setq python-shell-interpreter "/usr/bin/python3"))
 )
+
+
+(setq password-cache-expiry nil)
 
 ;; Start server, so that emacsclient can open in emacs
 (server-start)

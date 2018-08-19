@@ -7,11 +7,17 @@
 
 (define-abbrev-table 'TeX-output-mode-abbrev-table '())
 
+(define-abbrev-table 'bibtex-mode-abbrev-table '())
+
+(define-abbrev-table 'calendar-mode-abbrev-table '())
+
 (define-abbrev-table 'change-log-mode-abbrev-table '())
 
 (define-abbrev-table 'comint-mode-abbrev-table '())
 
 (define-abbrev-table 'completion-list-mode-abbrev-table '())
+
+(define-abbrev-table 'debugger-mode-abbrev-table '())
 
 (define-abbrev-table 'diff-mode-abbrev-table '())
 
@@ -29,8 +35,13 @@
 
 (define-abbrev-table 'global-abbrev-table
   '(
+    ("->" "→" nil 0)
+    ("AR" "⇒" nil 1)
+    ("LAR" "⇐" nil 0)
     ("ach" "Adrian C. Hinrichs" nil 3)
     ("ahi" "Adrian Hinrichs" nil 0)
+    ("ar" "→" nil 4)
+    ("lar" "←" nil 0)
     ("mtr" "367129" nil 0)
     ("rwthmail" "adrian.hinrichs@rwth-aachen.de" nil 2)
    ))
@@ -40,8 +51,8 @@
 (define-abbrev-table 'latex-mode-abbrev-table
   '(
     ("<=" "\\Leftarrow" nil 1)
-    ("=>" "\\Rightarrow" nil 1)
     ("<=>" "\\Leftrightarrow" nil 1)
+    ("=>" "\\Rightarrow" nil 1)
     ("eqv" "\\Leftrightarrow" nil 1)
     ("indktan" "Gelte die Behauptung für ein beliebiges, aber Festes \\(n \\in \\mathds{N}\\)." nil 1)
    ))
@@ -90,6 +101,10 @@
 
 (define-abbrev-table 'occur-mode-abbrev-table '())
 
+(define-abbrev-table 'org-export-stack-mode-abbrev-table '())
+
+(define-abbrev-table 'org-mode-abbrev-table '())
+
 (define-abbrev-table 'outline-mode-abbrev-table '())
 
 (define-abbrev-table 'package-menu-mode-abbrev-table '())
@@ -99,6 +114,8 @@
 (define-abbrev-table 'process-menu-mode-abbrev-table '())
 
 (define-abbrev-table 'prog-mode-abbrev-table '())
+
+(define-abbrev-table 'select-tags-table-mode-abbrev-table '())
 
 (define-abbrev-table 'shell-mode-abbrev-table '())
 
@@ -121,4 +138,6 @@
 (define-abbrev-table 'vc-git-log-view-mode-abbrev-table '())
 
 (define-abbrev-table 'vc-git-region-history-mode-abbrev-table '())
+
+(define-abbrev-table 'xref--xref-buffer-mode-abbrev-table '())
 
