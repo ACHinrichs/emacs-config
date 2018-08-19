@@ -2,6 +2,7 @@
 ;;(add-to-list 'load-path "~/.emacs.d/lisp/")
 (load "~/.emacs.d/lisp/firacode.el")  
 (load "~/.emacs.d/lisp/org-xelatex.el")  
+(load "~/.emacs.d/lisp/org-templates.el")  
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -121,7 +122,6 @@
     (progn      ())
     (progn      (setq python-shell-interpreter "/usr/bin/python3"))
 )
-
 
 (setq password-cache-expiry nil)
 
