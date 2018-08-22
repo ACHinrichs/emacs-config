@@ -1,3 +1,4 @@
+(require 'org)
 (add-to-list 'org-structure-template-alist
              '("J" "#+LaTeX_CLASS: xe-org-article
 #+LATEX_HEADER: \\usepackage[ngerman]{babel}
