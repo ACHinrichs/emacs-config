@@ -2,8 +2,8 @@
 ;;(add-to-list 'load-path "~/.emacs.d/lisp/")
 (load "~/.emacs.d/lisp/firacode.el")  
 (load "~/.emacs.d/lisp/org-xelatex.el")  
-(load "~/.emacs.d/lisp/org-templates.el")  
-;; Added by Package.el.  This must come before configurations of
+(load "~/.emacs.d/lisp/org-templates.el")    
+;;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
@@ -89,12 +89,12 @@
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
 ;;(set-frame-parameter (selected-frame) 'alpha <both>)
 
-(if (eq system-type 'windows-nt)
-    (progn      (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
-		(add-to-list 'default-frame-alist '(alpha . (100 . 100))))
-    (progn      (set-frame-parameter (selected-frame) 'alpha '(75 . 75))
-		(add-to-list 'default-frame-alist '(alpha . (75 . 75))))
-)
+;(if (eq system-type 'windows-nt)
+;    (progn      (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+;		(add-to-list 'default-frame-alist '(alpha . (100 . 100))))
+;    (progn      (set-frame-parameter (selected-frame) 'alpha '(75 . 75))
+;		(add-to-list 'default-frame-alist '(alpha . (75 . 75))))
+;)
 ;; Tweaks for Auctex
 ;; Inserts \( \) in LaTeX and $ $ in Tex when writing $
 (add-hook 'plain-TeX-mode-hook
@@ -127,3 +127,29 @@
 
 ;; Start server, so that emacsclient can open in emacs
 (server-start)
+
+
+;; Colored text in org-mode, taken from https://emacs.stackexchange.com/a/41472
+(load "~/.emacs.d/lisp/org-colored-text.el")
+(require 'org-colored-text)
+;; Taken and adapted from org-colored-text
+(org-add-link-type
+ "color"
+ (lambda (path)
+   "No follow action.")
+ (lambda (color description backend)
+   (cond
+    ((eq backend 'latex)                  ; added by TL
+     (format "{\\color{%s}%s}" color description)) ; added by TL
+    ((eq backend 'html)
+     (let ((rgb (assoc color color-name-rgb-alist))
+           r g b)
+       (if rgb
+           (progn
+             (setq r (* 255 (/ (nth 1 rgb) 65535.0))
+                   g (* 255 (/ (nth 2 rgb) 65535.0))
+                   b (* 255 (/ (nth 3 rgb) 65535.0)))
+             (format "<span style=\"color: rgb(%s,%s,%s)\">%s</span>"
+                     (truncate r) (truncate g) (truncate b)
+                     (or description color)))
+         (format "No Color RGB for %s" color)))))))
