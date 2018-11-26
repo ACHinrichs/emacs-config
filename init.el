@@ -2,8 +2,9 @@
 ;;(add-to-list 'load-path "~/.emacs.d/lisp/")
 (load "~/.emacs.d/lisp/firacode.el")  
 (load "~/.emacs.d/lisp/org-xelatex.el")  
-(load "~/.emacs.d/lisp/org-templates.el")    
-;;; Added by Package.el.  This must come before configurations of
+(load "~/.emacs.d/lisp/org-templates.el")  
+(load "~/.emacs.d/lisp/insert-date.el")  
+;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
@@ -23,7 +24,7 @@
  '(magit-commit-arguments (quote ("--signoff" "--gpg-sign=C27E656EA63D9C9E")))
  '(package-selected-packages
    (quote
-    (company highlight-indentation auctex-latexmk color-theme-x color-theme-xe markdown-mode markdown-mode+mode rainbow-mode flyspell-Lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
+    (## company highlight-indentation auctex-latexmk color-theme-x color-theme-xe markdown-mode markdown-mode+mode rainbow-mode flyspell-Lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
