@@ -45,6 +45,7 @@
     ("mtr" "367129" nil 0)
     ("rwthmail" "adrian.hinrichs@rwth-aachen.de" nil 2)
     ("tr" "Trainer" nil 1)
+    ("··" "•" nil 0)
    ))
 
 (define-abbrev-table 'help-mode-abbrev-table '())

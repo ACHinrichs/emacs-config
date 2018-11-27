@@ -11,3 +11,10 @@
 #+OPTIONS:   toc:nil
 
 *@@latex:\\textsf{Gruppe:}@@*  "))
+
+(add-to-list 'org-structure-template-alist
+	     '("blog" "#+Title: ?
+#+AUTHOR: Adrian C. Hinrichs
+#+DATE: 
+#+html_head: <link href=\"css/site.css\" rel=\"stylesheet\">
+#+options: html-style:nil html-scripts:nil"))
