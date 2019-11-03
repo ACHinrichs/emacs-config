@@ -25,7 +25,7 @@
  '(magit-commit-arguments (quote ("--signoff" "--gpg-sign=C27E656EA63D9C9E")))
  '(package-selected-packages
    (quote
-    (## company highlight-indentation auctex-latexmk color-theme-x color-theme-xe markdown-mode markdown-mode+mode rainbow-mode flyspell-Lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
+    (ini-mode pinentry dockerfile-mode yaml-mode fill-column-indicator ## company highlight-indentation auctex-latexmk color-theme-x color-theme-xe markdown-mode markdown-mode+mode rainbow-mode flyspell-Lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex))))
 (require 'package)
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -69,7 +69,7 @@
 (require 'all-the-icons)
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(setq neo-theme 'icons)
 
 ;; abbrevs - see https://www.emacswiki.org/emacs/AbbrevMode
 (setq abbrev-file-name             ;; tell emacs where to read abbrev
@@ -84,8 +84,9 @@
 (autoload 'flyspell-babel-setup "flyspell-babel")
 (setq-default ispell-program-name "aspell") 
 
-;; Enable Linenumbers
+;; Enable Linenumbers & FCI
 (add-hook 'find-file-hook (lambda () (linum-mode 1)))
+(add-hook 'find-file-hook (lambda () (fci-mode 1)))
 
 
 ;; Transperency!
