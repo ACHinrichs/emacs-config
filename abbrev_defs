@@ -7,6 +7,8 @@
 
 (define-abbrev-table 'TeX-output-mode-abbrev-table '())
 
+(define-abbrev-table 'TeX-special-mode-abbrev-table '())
+
 (define-abbrev-table 'bibtex-mode-abbrev-table '())
 
 (define-abbrev-table 'calendar-mode-abbrev-table '())
@@ -30,6 +32,8 @@
 (define-abbrev-table 'emacs-lisp-mode-abbrev-table '())
 
 (define-abbrev-table 'eshell-mode-abbrev-table '())
+
+(define-abbrev-table 'flymake-diagnostics-buffer-mode-abbrev-table '())
 
 (define-abbrev-table 'fundamental-mode-abbrev-table '())
 
@@ -55,6 +59,7 @@
     ("<=" "\\Leftarrow" nil 1)
     ("<=>" "\\Leftrightarrow" nil 1)
     ("=>" "\\Rightarrow" nil 1)
+    ("eps" "ε" nil 1)
     ("eqv" "\\Leftrightarrow" nil 1)
     ("indktan" "Gelte die Behauptung für ein beliebiges, aber Festes \\(n \\in \\mathds{N}\\)." nil 1)
    ))
