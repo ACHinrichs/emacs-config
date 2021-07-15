@@ -111,7 +111,7 @@ Related discussion: https://github.com/bbatsov/solarized-emacs/issues/158"
   :type 'number
   :group 'solarized)
 
-(defcustom solarized-scale-org-headlines t
+(defcustom solarized-scale-org-headlines nil
   "Whether scaling of outline-headlines should apply to `org-mode' headlines."
   :type 'boolean
   :group 'solarized)
@@ -1683,26 +1683,26 @@ customize the resulting theme."
      `(org-formula ((,class (:foreground ,yellow))))
      `(org-headline-done ((,class (:foreground ,green))))
      `(org-hide ((,class (:foreground ,base03))))
-     `(org-level-1 ((,class (:inherit ,s-variable-pitch :foreground ,orange
+     `(org-level-1 ((,class (:inherit ,s-variable-pitch :foreground ,blue
                                       ,@(when solarized-scale-org-headlines
                                           (list :height solarized-height-plus-4))))))
-     `(org-level-2 ((,class (:inherit ,s-variable-pitch :foreground ,green
+     `(org-level-2 ((,class (:inherit ,s-variable-pitch :foreground ,cyan
                                       ,@(when solarized-scale-org-headlines
                                           (list :height solarized-height-plus-3))))))
-     `(org-level-3 ((,class (:inherit ,s-variable-pitch :foreground ,blue
+     `(org-level-3 ((,class (:inherit ,s-variable-pitch :foreground ,green
                                       ,@(when solarized-scale-org-headlines
                                           (list :height solarized-height-plus-2))))))
      `(org-level-4 ((,class (:inherit ,s-variable-pitch :foreground ,yellow
                                       ,@(when solarized-scale-org-headlines
                                           (list :height solarized-height-plus-1))))))
      `(org-level-5 ((,class (:inherit ,s-variable-pitch
-                                      :foreground ,cyan))))
+                                      :foreground ,orange))))
      `(org-level-6 ((,class (:inherit ,s-variable-pitch
-                                      :foreground ,green))))
+                                      :foreground ,orange-l))))
      `(org-level-7 ((,class (:inherit ,s-variable-pitch
-                                      :foreground ,red))))
+                                      :foreground ,red-l))))
      `(org-level-8 ((,class (:inherit ,s-variable-pitch
-                                      :foreground ,blue))))
+                                      :foreground ,magenta-l))))
      `(org-link ((,class (:foreground ,yellow :underline t))))
      `(org-meta-line ((,class (:foreground ,base01 :slant italic))))
      `(org-sexp-date ((,class (:foreground ,violet))))
