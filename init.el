@@ -22,7 +22,6 @@
  '(custom-safe-themes
    '("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "ded46420eaf95b374713249a503cec464b5d7f672e3a9efe01a0bf27b2086b66" "417128f71670e83fca0a9f87bbcfa38dd532ca78bd6524cafe1ea0ea21c87ab4" "07815c676b7d8a1d0c041b71d89f7f1d7d80209c44e3570d4bec2d524318b5ac" "4e68b9eb3b87f830c80596ffd599d39d77d06c2be408a4ea4c0d06cfa9b8753c" "d7ec73258cea32275faf9745b8bfd48498242ee862bf3895fefa972e0710602d" "2d6c158387e53bcb00fc262c6d046b5402dd37e89dae8ca05cff24326b6afa04" "af2d66af959d1a357f49463147a46cf7b770e557c0f84b0991e2936b7b759dd9" "22e976d099f53dabc4534f080c8c4a36e7c7c223edc2bdac8d7537611eaae321" "a82bd6ba32612663f33b8d7a7027ec28ca66f36abc6fb98d69deebb5ca4a4504" "3e2fd2a175d4e5df50cc09948260c620167124d9fc11c0bf71849d523efcf375" default))
  '(ein:output-area-inlined-images t)
- 
  '(package-selected-packages
    '(flyspell-popup adaptive-wrap go-complete go-mode ein ini-mode pinentry dockerfile-mode yaml-mode fill-column-indicator ## company highlight-indentation auctex-latexmk color-theme-x color-theme-xe markdown-mode markdown-mode+mode rainbow-mode flyspell-Lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex)))
 (require 'package)
@@ -39,7 +38,15 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:height 110 :family "Fira Code"))))
- '(ein:cell-input-area ((t (:background "#2a3439")))))
+ '(ein:cell-input-area ((t (:background "#2a3439"))))
+ '(org-level-1 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+ '(org-level-2 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+ '(org-level-3 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+ '(org-level-4 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+ '(org-level-5 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+ '(org-level-6 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+ '(org-level-7 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+ '(org-level-8 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code")))))
 
 
 ;; Multimode
@@ -54,6 +61,14 @@
 ;(add-hook 'text-mode-hook (lambda () (setq adaptive-wrap-prefix-mode 1)))
 (defvar fill-column 80)
 (add-hook 'text-mode-hook 'visual-line-mode)
+;; Enable Linenumbers & fill-culumn-indicator
+(add-hook 'text-mode-hook (lambda () (display-line-numbers-mode 1)))
+(add-hook 'text-mode-hook (lambda () (display-fill-column-indicator-mode 1)))
+
+
+
+;;org-mode config
+(setq org-return-follows-link t)
 
 (global-auto-revert-mode 1)
 ;;(desktop-save-mode 1)
@@ -89,13 +104,13 @@
 ;;FlySpell+FlySpell-babel for Spellchecks using aspell
 (autoload 'flyspell-babel-setup "flyspell-babel")
 (setq-default ispell-program-name "aspell") 
-(define-key flyspell-mode-map (kbd "C-M-i") #'flyspell-popup-correct)
-(define-key flyspell-mode-map (kbd "C-<tab>") #'flyspell-popup-correct)
-
-
-;; Enable Linenumbers & fill-culumn-indicator
-(add-hook 'find-file-hook (lambda () (display-line-numbers-mode 1)))
-(add-hook 'find-file-hook (lambda () (display-fill-column-indicator-mode 1)))
+(global-set-key (kbd "C-M-i") 'flyspell-popup-correct)
+(global-set-key (kbd "C-<tab>") 'flyspell-popup-correct)
+(add-hook 'flyspell-mode-hook 'flyspell-popup-auto-correct-mode)
+;; enable flyspell in org-mode
+(add-hook 'org-mode-hook 'flyspell-mode)
+;; enable flyspell in latex-mode
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
 
 ;; Transperency!
@@ -175,7 +190,6 @@
             (setq auto-composition-mode nil)))
 
 (setq exec-path (append exec-path '("/home/ahi/.local/bin")))
-
 
 ;; start org-indent-mode in org files
 (add-hook 'org-mode-hook 'org-indent-mode)
