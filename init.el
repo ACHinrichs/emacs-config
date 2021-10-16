@@ -57,20 +57,26 @@
 (setq split-width-threshold 1 )
 (add-hook 'text-mode-hook 'turn-off-auto-fill)
 (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
+
 (add-hook 'text-mode-hook (lambda () (setq visual-fill-line-mode 1)))
 ;(add-hook 'text-mode-hook (lambda () (setq adaptive-wrap-prefix-mode 1)))
 (defvar fill-column 80)
+(setq visual-fill-column-width 80
+      visual-fill-column-center-text t)
 (add-hook 'text-mode-hook 'visual-line-mode)
 ;; Enable Linenumbers & fill-culumn-indicator
 (add-hook 'text-mode-hook (lambda () (display-line-numbers-mode 1)))
 (add-hook 'text-mode-hook (lambda () (display-fill-column-indicator-mode 1)))
 
 
-
 ;;org-mode config
+;;===============
 (setq org-return-follows-link t)
+;; stuff for org-present
 
 (global-auto-revert-mode 1)
+
+
 ;;(desktop-save-mode 1)
 
 ;; Use non-stupid indentation style
