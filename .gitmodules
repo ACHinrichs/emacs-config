@@ -1,0 +1,3 @@
+[submodule "lisp/org-present"]
+	path = lisp/org-present
+	url = https://github.com/rlister/org-present.git
