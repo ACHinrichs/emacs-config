@@ -151,6 +151,9 @@
     (progn      (setq python-shell-interpreter "/usr/bin/python3"))
 )
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages '((python . t)))
+
 (setq password-cache-expiry nil)
 
 ;; Start server, so that emacsclient can open in emacs
