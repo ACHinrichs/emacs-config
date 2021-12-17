@@ -56,7 +56,7 @@
 
 (setq split-width-threshold 1 )
 (add-hook 'text-mode-hook 'turn-off-auto-fill)
-(add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
+;(add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
 (add-hook 'text-mode-hook (lambda () (setq visual-fill-line-mode 1)))
 ;(add-hook 'text-mode-hook (lambda () (setq adaptive-wrap-prefix-mode 1)))
 (defvar fill-column 80)
@@ -64,8 +64,6 @@
 ;; Enable Linenumbers & fill-culumn-indicator
 (add-hook 'text-mode-hook (lambda () (display-line-numbers-mode 1)))
 (add-hook 'text-mode-hook (lambda () (display-fill-column-indicator-mode 1)))
-
-
 
 ;;org-mode config
 (setq org-return-follows-link t)
@@ -76,6 +74,11 @@
 ;; Use non-stupid indentation style
 (setq c-default-style "linux"
       c-basic-offset 4)
+
+(setq-default indent-tabs-mode t)
+(setq-default tab-width 4) ; or any other preferred value
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
 
 ;; Auto complete
 (require 'company)
@@ -196,3 +199,4 @@
 
 ;; start org-indent-mode in org files
 (add-hook 'org-mode-hook 'org-indent-mode)
+
