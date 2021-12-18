@@ -147,6 +147,11 @@
 (setq c-default-style "linux"
       c-basic-offset 4)
 
+(setq-default indent-tabs-mode t)
+(setq-default tab-width 4) ; or any other preferred value
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+
 ;; Auto complete
 (require 'company)
 (global-company-mode t)
@@ -222,6 +227,9 @@
     (progn      ())
     (progn      (setq python-shell-interpreter "/usr/bin/python3"))
 )
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages '((python . t)))
 
 (setq password-cache-expiry nil)
 
