@@ -1,0 +1,8 @@
+#+name: org-babel-haskell-formatter
+#+begin_src emacs-lisp :var strr="" :exports code
+  (format "%s"
+          (replace-regexp-in-string
+           (rx line-start
+               (+ (| alphanumeric blank "." "|" ">")))
+           "" (format "%s" strr)))
+#+end_src
