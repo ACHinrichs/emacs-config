@@ -58,7 +58,9 @@
 	    stringstyle=\\color{DarkBlue}\\upshape,
 	    emphstyle=\\color{Chocolate}\\upshape,
 	    showstringspaces=false,
-	    keepspaces=true}
+	    keepspaces=true,
+    breaklines=true,
+    postbreak=\\mbox{\\textcolor{gray}{$\\hookrightarrow$}\\space}}
 \\usepackage[a4paper,top=2cm,bottom=2.5cm]{geometry}
 \\usepackage{parskip}
 \\makeatletter
