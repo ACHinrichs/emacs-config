@@ -117,6 +117,7 @@
  'org-babel-load-languages
  '((python . t) (prolog . t) (haskell . t)))
 (set 'org-confirm-babel-evaluate nil)
+(setq prolog-program-name "/usr/bin/swipl")
 
 (add-hook 'org-mode-hook (lambda () (display-fill-column-indicator-mode -1)))
 
