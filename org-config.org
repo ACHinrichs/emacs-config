@@ -6,3 +6,13 @@
                (+ (| alphanumeric blank "." "|" ">")))
            "" (format "%s" strr)))
 #+end_src
+
+This is to add biblatex as bibliography processor
+
+#+begin_src emacs-lisp :exports code
+(require 'oc-biblatex)
+ (setq org-cite-export-processors
+	  '((latex biblatex)
+		(t ata)))
+
+#+end_src

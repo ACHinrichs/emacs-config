@@ -1,7 +1,8 @@
 ;; Set Loadpath
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 ;; (load "~/.emacs.d/lisp/firacode.el")  
-(load "~/.emacs.d/lisp/org-xelatex.el")  
+(load "~/.emacs.d/lisp/org-xelatex.el")
+(load "~/.emacs.d/lisp/org-tex-local-class.el")
 (load "~/.emacs.d/lisp/org-templates.el")  
 (load "~/.emacs.d/lisp/insert-date.el")
 
@@ -66,16 +67,16 @@
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class 'html-mode "\\.php\\'" 'html-php)
 
-(setq split-width-threshold 1 )
+;(setq split-width-threshold 1 )
 (add-hook 'text-mode-hook 'turn-off-auto-fill)
-(add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
+;(add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
 
-(add-hook 'text-mode-hook (lambda () (setq visual-fill-line-mode 1)))
+;(add-hook 'text-mode-hook (lambda () (setq visual-fill-line-mode 1)))
 ;(add-hook 'text-mode-hook (lambda () (setq adaptive-wrap-prefix-mode 1)))
-(defvar fill-column 80)
+;(defvar fill-column 80)
 (setq visual-fill-column-width 80
       visual-fill-column-center-text t)
-(add-hook 'text-mode-hook 'visual-line-mode)
+;(add-hook 'text-mode-hook 'visual-line-mode)
 ;; Enable Linenumbers & fill-culumn-indicator
 (add-hook 'text-mode-hook (lambda () (display-line-numbers-mode 1)))
 (add-hook 'text-mode-hook (lambda () (display-fill-column-indicator-mode 1)))
