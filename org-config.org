@@ -1,18 +1,27 @@
-#+name: org-babel-haskell-formatter
-#+begin_src emacs-lisp :var strr="" :exports code
-  (format "%s"
-          (replace-regexp-in-string
-           (rx line-start
-               (+ (| alphanumeric blank "." "|" ">")))
-           "" (format "%s" strr)))
+* Org-babel
+** haskell formatter
+#+begin_src emacs-lisp
+  ;;(format "%s"
+  ;;        (replace-regexp-in-string
+  ;;         (rx line-start
+  ;;             (+ (| alphanumeric blank "." "|" ">")))
+  ;;         "" (format "%s" strr)))
 #+end_src
 
 This is to add biblatex as bibliography processor
 
+* Paperwriting-stuff
+** Biblatex as citation driver
 #+begin_src emacs-lisp :exports code
 (require 'oc-biblatex)
  (setq org-cite-export-processors
 	  '((latex biblatex)
 		(t ata)))
+#+end_src
+** Glossary
 
+#+begin_src emacs-lisp
+  (require 'org-ref)
+  (add-hook 'org-export-before-parsing-hook 'org-ref-acronyms-before-parsing)
+  (add-hook 'org-export-before-parsing-hook 'org-ref-glossary-before-parsing)
 #+end_src
