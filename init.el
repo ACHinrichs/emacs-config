@@ -90,11 +90,10 @@
 ;; load rust-stuff
 (load "~/.emacs.d/lisp/rust_stuff.el")
 
-;;org-mode config
-;;===============
-(with-eval-after-load "org"
-  ;; load extra configs to org mode
-  (org-babel-load-file "~/.emacs.d/org-config.org"))
+(require 'org)
+(org-babel-load-file
+ (expand-file-name "emacs-init.org"
+                   user-emacs-directory))
 
 (setq org-return-follows-link t)
 ;; stuff for org-present
@@ -294,3 +293,5 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+
