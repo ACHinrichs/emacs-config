@@ -25,3 +25,12 @@ This is to add biblatex as bibliography processor
   (add-hook 'org-export-before-parsing-hook 'org-ref-acronyms-before-parsing)
   (add-hook 'org-export-before-parsing-hook 'org-ref-glossary-before-parsing)
 #+end_src
+** Subfigures
+#+begin_src emacs-lisp
+;; (package-initialize)
+(use-package ox-latex-subfigure
+  :init
+  (setq org-latex-prefer-user-labels t)
+  :load-path "~/Dropbox/ProjectWeekends/lisp/ox-latex-subfigure/"
+  :config (require 'ox-latex-subfigure))
+#+end_src
