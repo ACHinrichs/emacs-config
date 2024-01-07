@@ -1,0 +1,11 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("org-capture-last-stored"
+ (filename . "~/sciebo/org-roam/20231218071846-ontology.org")
+ (front-context-string . "\nIn information ")
+ (rear-context-string . "title: Ontology\n")
+ (position . 86)
+ (last-modified 25983 58785 763068 427000))
+)
