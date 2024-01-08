@@ -63,7 +63,7 @@ Sets locations for notes, the bibtex-file and pdfs, specifies the template for n
 #+RESULTS:
 #+begin_example
 :PROPERTIES:
-:ID: %(org-id-uuid)
+:ID:         %(org-id-uuid)
 :ROAM_REFS: @${=key=}
 :END:
 ,#+TITLE: ${title}
