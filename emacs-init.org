@@ -22,6 +22,7 @@ Load Packages
 	   ("C-c n i" . org-roam-node-insert)
 	   ("C-c n g" . org-roam-graph)
 	   ("C-c n c" . org-roam-capture)
+
 	   :map org-mode-map
 	   ("C-M-i"    . completion-at-point))
   :config
@@ -72,6 +73,15 @@ Sets locations for notes, the bibtex-file and pdfs, specifies the template for n
 :END:
 
 #+end_example
+
+Set keybinding, ~C-c n~ is org-roam prefix, so that fits
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c n r") 'ivy-bibtex) ; keybinding 
+#+end_src
+
+#+RESULTS:
+: ivy-bibtex
 
 ** Org-Roam-Bibtex
 #+begin_src emacs-lisp
