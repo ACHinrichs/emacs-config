@@ -28,36 +28,47 @@ Load Packages
   :config
   (org-roam-db-autosync-mode))
 #+end_src
+** Add tags to node display
+#+begin_src emacs-lisp
+  (setq org-roam-node-display-template
+      (concat "${title:*} "
+              (propertize "${tags:10}" 'face 'org-tag)))
+#+end_src
+
+#+RESULTS:
+: ${title:*} ${tags:10}
 
 ** bibtex config
 Sets locations for notes, the bibtex-file and pdfs, specifies the template for notes
 #+begin_src emacs-lisp
-      (setq
-       bibtex-completion-notes-path "~/sciebo/org-roam"
-       bibtex-completion-bibliography "~/sciebo/org-roam/bibliography.bib"
-       bibtex-completion-library-path "~/sciebo/org-roam/pdfs"
-       bibtex-completion-pdf-field "file"
-       bibtex-completion-notes-template-multiple-files
-       (concat
-        ":PROPERTIES:\n:"
-        "ID:         %(org-id-uuid)\n"
-        ":ROAM_REFS: @${=key=}\n"
-        ":END:\n"
-        "#+TITLE: ${title}\n"
-        "#+ROAM_KEY: cite:${=key=}\n"
-        "* TODO Notes\n"
-        ":PROPERTIES:\n"
-        ":Custom_ID: ${=key=}\n"
-        ":NOTER_DOCUMENT: [[${file}]]\n"
-        ":AUTHOR: ${author-abbrev}\n"
-        ":JOURNAL: ${journaltitle}\n"
-        ":DATE: ${date}\n"
-        ":YEAR: ${year}\n"
-        ":DOI: ${doi}\n"
-        ":URL: ${url}\n"
-        ":END:\n\n"
-        )
-       )
+    (setq
+     bibtex-completion-notes-path "~/sciebo/org-roam"
+     bibtex-completion-bibliography "~/sciebo/org-roam/bibliography.bib"
+     bibtex-completion-library-path "~/sciebo/org-roam/pdfs"
+     bibtex-completion-pdf-field "file"
+     bibtex-completion-notes-template-multiple-files
+     (concat
+      ":PROPERTIES:\n:"
+      "ID:         %(org-id-uuid)\n"
+      ":ROAM_REFS: @${=key=}\n"
+      ":END:\n"
+      "#+TITLE: ${title}\n"
+      "#+ROAM_KEY: cite:${=key=}\n"
+      "#+FILETAGS: paper\n"
+      "- keywords :: ${keywords}\n"
+      "* TODO Notes\n"
+      ":PROPERTIES:\n"
+      ":Custom_ID: ${=key=}\n"
+      ":NOTER_DOCUMENT: [[${file}]]\n"
+      ":AUTHOR: ${author-abbrev}\n"
+      ":JOURNAL: ${journaltitle}\n"
+      ":DATE: ${date}\n"
+      ":YEAR: ${year}\n"
+      ":DOI: ${doi}\n"
+      ":URL: ${url}\n"
+      ":END:\n\n"
+      )
+     )
 #+end_src
 
 #+RESULTS:
