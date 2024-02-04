@@ -89,4 +89,10 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/linux,emacs,windowsorg-roam.db
+# End of https://www.gitignore.io/api/linux,emacs,windows
+
+# additional stuff
+*.orig
+org-roam.db
+bookmarks
+*-backup
