@@ -129,3 +129,41 @@ Set keybinding, ~C-c n~ is org-roam prefix, so that fits
 #+RESULTS:
 | org-roam-bibtex-mode |
 
+
+* Github Co-Pilot
+Setup using [[https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/][this blogpost]]
+
+Ensure requirements are installed
+#+begin_src elisp
+  (require 'cl)
+  (let ((pkg-list '(use-package
+                     s
+                     dash
+                     editorconfig
+                     company
+                     jsonrpc)))
+    (package-initialize)
+    (when-let ((to-install (map-filter (lambda (pkg _) (not (package-installed-p pkg))) pkg-list)))
+      (package-refresh-contents)
+      (mapc (lambda (pkg) (package-install pkg)) pkg-list)))
+#+end_src
+
+#+RESULTS:
+
+Load =copilot.el=
+
+#+begin_src elisp
+  (use-package copilot
+    :load-path (lambda () (expand-file-name "copilot.el" user-emacs-directory))
+    ;; don't show in mode line
+    :diminish
+    :bind (("C-c c c" . copilot-complete)
+           ("C-c c a" . copilot-accept-completion)
+           ("C-c c <left>" . copilot-accept-completion-by-word)
+           ("C-c c C-<left>" . copilot-accept-completion-by-line)
+           ("C-c c <down>" . copilot-next-completion)
+           ("C-c c <up>". copilot-previous-completion)))  
+#+end_src
+
+#+RESULTS:
+: copilot-previous-completion
