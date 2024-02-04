@@ -11,10 +11,15 @@
 	 ("C-c n i" . org-roam-node-insert)
 	 ("C-c n g" . org-roam-graph)
 	 ("C-c n c" . org-roam-capture)
+
 	 :map org-mode-map
 	 ("C-M-i"    . completion-at-point))
 :config
 (org-roam-db-autosync-mode))
+
+(setq org-roam-node-display-template
+    (concat "${title:*} "
+            (propertize "${tags:10}" 'face 'org-tag)))
 
 (setq
  bibtex-completion-notes-path "~/sciebo/org-roam"
@@ -23,8 +28,14 @@
  bibtex-completion-pdf-field "file"
  bibtex-completion-notes-template-multiple-files
  (concat
+  ":PROPERTIES:\n:"
+  "ID:         %(org-id-uuid)\n"
+  ":ROAM_REFS: @${=key=}\n"
+  ":END:\n"
   "#+TITLE: ${title}\n"
   "#+ROAM_KEY: cite:${=key=}\n"
+  "#+FILETAGS: paper\n"
+  "- keywords :: ${keywords}\n"
   "* TODO Notes\n"
   ":PROPERTIES:\n"
   ":Custom_ID: ${=key=}\n"
@@ -39,21 +50,24 @@
   )
  )
 
+(global-set-key (kbd "C-c n r") 'ivy-bibtex) ; keybinding
+
 (use-package org-roam-bibtex
-  :after (org-roam)
-  :hook (org-roam-mode . org-roam-bibtex-mode)
-  :config
-  (setq org-roam-bibtex-preformat-keywords
-   '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
-  (setq orb-templates
-        '(("r" "ref" plain (function org-roam-capture--get-point)
-           ""
-           :file-name "${slug}"
-           :head "#+TITLE: ${=key=}: ${title}\n#+ROAM_KEY: ${ref}
+    :after (org-roam)
+    :hook (org-roam-mode . org-roam-bibtex-mode)
+    :config
+    (setq org-roam-bibtex-preformat-keywords
+     '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
+    (setq orb-templates
+          '(("r" "ref" plain (function org-roam-capture--get-point)
+             ""
+             :file-name "${slug}"
+             :head ":PROPERTIES:\n:ID:%(org-id-get-create)\n:ROAM_REFS:@${=key=}\n:END:\n
+#+TITLE: ${=key=}: ${title}\n#+ROAM_KEY: ${ref}
 
-- tags ::
-- keywords :: ${keywords}
+  - tags ::
+  - keywords :: ${keywords}
 
-\n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n  :NOTER_PAGE: \n  :END:\n\n"
+  \n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n  :NOTER_PAGE: \n  :END:\n\n"
 
-           :unnarrowed t))))
+             :unnarrowed t))))
