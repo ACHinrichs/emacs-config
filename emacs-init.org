@@ -6,6 +6,7 @@ Load general org-config from other file
   ;; load extra configs to org mode
   (org-babel-load-file "~/.emacs.d/org-config.org"))
 #+end_src
+
 ** Org-Roam
 
 Partly stolen from the following sites:
@@ -323,3 +324,28 @@ Using diminish to hide specific modes from the mode line
 
 #+RESULTS:
 | substring | basic | partial-completion | emacs22 |
+
+* Python Venvs
+#+begin_src elisp
+  (use-package pyvenv
+    :ensure t
+    :config
+    (pyvenv-mode t)
+
+    (setq pyvenv-post-activate-hooks
+          (list (lambda ()
+                  (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+    (setq pyvenv-post-deactivate-hooks
+          (list (lambda ()
+                  (setq python-shell-interpreter "python3")))))
+#+end_src
+
+#+RESULTS:
+: t
+
+* Magit
+#+begin_src elisp
+  (use-package magit
+    :ensure t
+    :bind ("C-x g" . magit-status))
+#+end_src
