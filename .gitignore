@@ -96,3 +96,6 @@ $RECYCLE.BIN/
 org-roam.db
 bookmarks
 *-backup
+/init_removed.el
+/lisp_unused/
+emacs-init.el
