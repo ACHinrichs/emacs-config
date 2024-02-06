@@ -251,3 +251,41 @@ We activate =copilot= in some specific modes:
 #+RESULTS:
 | company-box-mode | company-mode-set-explicitly |
 
+* Spellchecking
+Using ~company-spell~ and ~flyspell~
+#+begin_src emacs-lisp 
+  (use-package company-spell
+        :ensure t
+        :config (push 'company-spell company-backends))
+  
+  (use-package flyspell
+    :ensure t
+    :config
+    (setq ispell-program-name "aspell")
+    (setq ispell-dictionary "en")
+    (add-hook 'text-mode-hook 'flyspell-mode)
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+#+end_src
+
+#+RESULTS:
+: t
+(use-package flyspell
+    :ensure t
+    :config
+    (setq ispell-program-name "aspell")
+    (setq ispell-dictionary "en")
+    (add-hook 'text-mode-hook 'flyspell-mode)
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+  
+
+;;FlySpell+FlySpell-babel for Spellchecks using aspell
+(autoload 'flyspell-babel-setup "flyspell-babel")
+(setq-default ispell-program-name "aspell") 
+(global-set-key (kbd "C-M-i") 'flyspell-popup-correct)
+(global-set-key (kbd "C-<tab>") 'flyspell-popup-correct)
+(add-hook 'flyspell-mode-hook 'flyspell-popup-auto-correct-mode)
+;; enable flyspell in org-mode
+(add-hook 'org-mode-hook 'flyspell-mode)
+;; enable flyspell in latex-mode
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+

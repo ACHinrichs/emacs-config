@@ -188,17 +188,6 @@
 (setq-default abbrev-mode t)
 
 
-;;FlySpell+FlySpell-babel for Spellchecks using aspell
-(autoload 'flyspell-babel-setup "flyspell-babel")
-(setq-default ispell-program-name "aspell") 
-(global-set-key (kbd "C-M-i") 'flyspell-popup-correct)
-(global-set-key (kbd "C-<tab>") 'flyspell-popup-correct)
-(add-hook 'flyspell-mode-hook 'flyspell-popup-auto-correct-mode)
-;; enable flyspell in org-mode
-(add-hook 'org-mode-hook 'flyspell-mode)
-;; enable flyspell in latex-mode
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-
 ;; Increase size of LaTeX fragment previews
 (plist-put org-format-latex-options :scale 2)
 
