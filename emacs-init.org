@@ -175,3 +175,60 @@ Load =copilot.el=
 
 #+RESULTS:
 : copilot-previous-completion
+
+Set up tabulator to use copilot, company or indentation.
+
+#+begin_src elisp
+  (defun rk/copilot-tab ()
+    "Tab command that will complet with copilot if a completion is
+  available. Otherwise will try company, yasnippet or normal
+  tab-indent."
+    (interactive)
+    (or (copilot-accept-completion)
+        (minibuffer-complete)
+        (company-complete)
+        (company-spell)
+        (indent-for-tab-command)))
+  
+  (define-key global-map (kbd "<tab>") #'rk/copilot-tab)
+#+end_src
+
+#+RESULTS:
+: rk/copilot-tab
+
+We activate =copilot= in some specific modes:
+#+begin_src elisp
+  (add-hook 'text-mode-hook #'copilot-mode)
+#+end_src
+
+#+RESULTS:
+| rk/copilot-disable-predicate |
+
+#+begin_src elisp
+  (defvar rk/copilot-manual-mode nil
+    "When `t' will only show completions when manually triggered, e.g. via M-C-<return>.")
+
+  (defun rk/copilot-change-activation ()
+    "Switch between three activation modes:
+  - automatic: copilot will automatically overlay completions
+  - manual: you need to press a key (M-C-<return>) to trigger completions
+  - off: copilot is completely disabled."
+    (interactive)
+    (if (and copilot-mode rk/copilot-manual-mode)
+	(progn
+	  (message "deactivating copilot")
+	  (global-copilot-mode -1)
+	  (setq rk/copilot-manual-mode nil))
+      (if copilot-mode
+	  (progn
+	    (message "activating copilot manual mode")
+	    (setq rk/copilot-manual-mode t))
+	(message "activating copilot mode")
+	(global-copilot-mode))))
+
+  (define-key global-map (kbd "M-C-<escape>") #'rk/copilot-change-activation)
+#+end_src
+
+#+RESULTS:
+: rk/copilot-change-activation
+
