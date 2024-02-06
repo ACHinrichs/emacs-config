@@ -289,3 +289,17 @@ Using ~company-spell~ and ~flyspell~
 ;; enable flyspell in latex-mode
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
+* Mixed Pitch mode
+#+begin_src elisp
+  (use-package mixed-pitch
+    :hook
+    (text-mode . mixed-pitch-mode)
+    :diminish mixed-pitch-mode
+    :config
+    (set-face-attribute 'default nil :font "Fira Code" :height 120)
+    (set-face-attribute 'fixed-pitch nil :font "Fira Code")
+    (set-face-attribute 'variable-pitch nil :family "Inter"))
+#+end_src
+
+#+RESULTS:
+| flyspell-mode | copilot-mode | (lambda nil (display-fill-column-indicator-mode 1)) | (lambda nil (display-line-numbers-mode 1)) | visual-line-mode | (lambda nil (setq adaptive-wrap-prefix-mode 1)) | (lambda nil (setq visual-fill-line-mode 1)) | turn-off-auto-fill | mixed-pitch-mode | text-mode-hook-identify |

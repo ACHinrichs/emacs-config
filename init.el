@@ -54,13 +54,6 @@
 
 
 (require 'use-package)
-(use-package mixed-pitch
-  :hook
-  (text-mode . mixed-pitch-mode)
-  :config
-  (set-face-attribute 'default nil :font "Fira Code" :height 120)
-  (set-face-attribute 'fixed-pitch nil :font "Fira Code")
-  (set-face-attribute 'variable-pitch nil :family "Inter"))
 
 ;; Multimode
 (require 'mmm-auto)
