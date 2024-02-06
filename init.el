@@ -41,7 +41,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 110 :family "Fira Code")))))
+ '(default ((t (:height 110 :family "Fira Code"))))
+ '(copilot-overlay-face ((t (:background "#38454c"))))
+ '(org-drawer ((t (:foreground "#26d1a9" :family "Fira Mono"))))
+ '(org-property-value ((t (:inherit default :family "Fira Code"))))
+ '(org-special-keyword ((t (:foreground "#51636e" :weight bold :family "Fira Code")))))
  ;'(ein:cell-input-area ((t (:background "#2a3439")))))
  ;'(org-level-1 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
  ;'(org-level-2 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
