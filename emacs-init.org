@@ -310,3 +310,14 @@ Using diminish to hide specific modes from the mode line
 
 #+RESULTS:
 | flyspell-mode | copilot-mode | (lambda nil (display-fill-column-indicator-mode 1)) | (lambda nil (display-line-numbers-mode 1)) | visual-line-mode | (lambda nil (setq adaptive-wrap-prefix-mode 1)) | (lambda nil (setq visual-fill-line-mode 1)) | turn-off-auto-fill | mixed-pitch-mode | text-mode-hook-identify |
+
+* Change comletion behaviour in minibuffer
+#+begin_src elisp
+  (setq completion-styles '(substring
+                            basic
+                            partial-completion
+                            emacs22))
+#+end_src
+
+#+RESULTS:
+| substring | basic | partial-completion | emacs22 |
