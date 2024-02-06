@@ -289,6 +289,13 @@ Using ~company-spell~ and ~flyspell~
 ;; enable flyspell in latex-mode
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
+* De-Clutter Mode Line
+Using diminish to hide specific modes from the mode line
+
+#+begin_src elisp
+  (use-package diminish
+    :ensure t)
+#+end_src
 * Mixed Pitch mode
 #+begin_src elisp
   (use-package mixed-pitch
