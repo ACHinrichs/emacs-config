@@ -164,7 +164,7 @@ Load =copilot.el=
     :load-path (lambda () (expand-file-name "copilot.el" user-emacs-directory))
     ;; don't show in mode line
     :diminish
-    :config (setq copilot--infer-indentation-offset 1) 
+    :config (setq copilot-indent-offset-warning-disable t) 
     :bind (("C-c c c" . copilot-complete)
            ("C-c c a" . copilot-accept-completion) ; probably im going to use Tab more often
            ("C-c <right>" . copilot-accept-completion-by-word)
