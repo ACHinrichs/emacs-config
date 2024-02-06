@@ -167,9 +167,6 @@
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
 
-;; Auto complete
-(require 'company)
-(global-company-mode t)
 
 ;; Disable menu and tool- and scrolbar, because shell-like emacs > shell-emacs > gui-emacs >> vim
 (tool-bar-mode 0)

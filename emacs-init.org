@@ -232,3 +232,22 @@ We activate =copilot= in some specific modes:
 #+RESULTS:
 : rk/copilot-change-activation
 
+* Company Mode
+
+#+begin_src emacs-lisp
+  (use-package company
+    :ensure t
+    :config
+    (global-company-mode t))
+  (setq company-idle-delay 0.1)
+
+  (use-package company-box 
+    :ensure t
+    :diminish company-box-mode
+    :hook (company-mode . company-box-mode))
+
+#+end_src
+
+#+RESULTS:
+| company-box-mode | company-mode-set-explicitly |
+
