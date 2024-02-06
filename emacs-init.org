@@ -179,30 +179,32 @@ Load =copilot.el=
 Set up tabulator to use copilot, company or indentation.
 
 #+begin_src elisp
-  (defun rk/copilot-tab ()
+  (defun ahi-custom-tab ()
     "Tab command that will complet with copilot if a completion is
   available. Otherwise will try company, yasnippet or normal
   tab-indent."
     (interactive)
-    (or (copilot-accept-completion)
-        (minibuffer-complete)
-        (company-complete)
-        (company-spell)
-        (indent-for-tab-command)))
-  
-  (define-key global-map (kbd "<tab>") #'rk/copilot-tab)
+    (cond ((minibufferp) (minibuffer-complete))
+          ((use-region-p) (indent-region (region-beginning) (region-end)))
+          ((and (bound-and-true-p copilot-mode) (copilot-accept-completion)))
+          ((and (bound-and-true-p company-mode) (company-complete)))
+          ((and (bound-and-true-p yas-minor-mode) (yas-expand))) 
+          (t (indent-for-tab-command))))
+
+  (define-key global-map (kbd "<tab>") #'ahi-custom-tab)
 #+end_src
 
 #+RESULTS:
-: rk/copilot-tab
+: ahi-custom-tab
 
 We activate =copilot= in some specific modes:
 #+begin_src elisp
   (add-hook 'text-mode-hook #'copilot-mode)
+  (add-hook 'prog-mode-hook #'copilot-mode)
 #+end_src
 
 #+RESULTS:
-| rk/copilot-disable-predicate |
+| copilot-mode | flyspell-prog-mode |
 
 #+begin_src elisp
   (defvar rk/copilot-manual-mode nil
