@@ -1,3 +1,12 @@
+* Plugin loaders
+#+begin_src elisp
+  (use-package quelpa
+	:ensure t)
+  (use-package quelpa-use-package
+	:ensure t)
+#+end_src
+
+#+RESULTS:
 
 * Org-related external file
 Load general org-config from other file 
@@ -42,34 +51,35 @@ Load Packages
 ** bibtex config
 Sets locations for notes, the bibtex-file and pdfs, specifies the template for notes
 #+begin_src emacs-lisp
-    (setq
-     bibtex-completion-notes-path "~/sciebo/org-roam"
-     bibtex-completion-bibliography "~/sciebo/org-roam/bibliography.bib"
-     bibtex-completion-library-path "~/sciebo/org-roam/pdfs"
-     bibtex-completion-pdf-field "file"
-     bibtex-completion-notes-template-multiple-files
-     (concat
-      ":PROPERTIES:\n:"
-      "ID:         %(org-id-uuid)\n"
-      ":ROAM_REFS: @${=key=}\n"
-      ":END:\n"
-      "#+TITLE: ${title}\n"
-      "#+ROAM_KEY: cite:${=key=}\n"
-      "#+FILETAGS: paper\n"
-      "- keywords :: ${keywords}\n"
-      "* TODO Notes\n"
-      ":PROPERTIES:\n"
-      ":Custom_ID: ${=key=}\n"
-      ":NOTER_DOCUMENT: [[${file}]]\n"
-      ":AUTHOR: ${author-abbrev}\n"
-      ":JOURNAL: ${journaltitle}\n"
-      ":DATE: ${date}\n"
-      ":YEAR: ${year}\n"
-      ":DOI: ${doi}\n"
-      ":URL: ${url}\n"
-      ":END:\n\n"
-      )
-     )
+  (setq
+   bibtex-completion-notes-path "~/sciebo/org-roam"
+   bibtex-completion-bibliography "~/sciebo/org-roam/bibliography.bib"
+   bibtex-completion-library-path "~/sciebo/org-roam/pdfs"
+   bibtex-completion-pdf-field "file"
+   bibtex-completion-notes-template-multiple-files
+   (concat
+	":PROPERTIES:\n:"
+	"ID:         %(org-id-uuid)\n"
+	":ROAM_REFS: @${=key=}\n"
+	":ROAM_ALIASES: ${=key=}\n"
+	":END:\n"
+	"#+TITLE: ${title}\n"
+	"#+ROAM_KEY: cite:${=key=}\n"
+	"#+FILETAGS: paper\n"
+	"- keywords :: ${keywords}\n"
+	"* TODO Notes\n"
+	":PROPERTIES:\n"
+	":Custom_ID: ${=key=}\n"
+	":NOTER_DOCUMENT: ./pdfs/${=key=}.pdf\n"
+	":AUTHOR: ${author-abbrev}\n"
+	":JOURNAL: ${journaltitle}\n"
+	":DATE: ${date}\n"
+	":YEAR: ${year}\n"
+	":DOI: ${doi}\n"
+	":URL: ${url}\n"
+	":END:\n\n"
+	)
+   )
 #+end_src
 
 #+RESULTS:
@@ -77,13 +87,16 @@ Sets locations for notes, the bibtex-file and pdfs, specifies the template for n
 :PROPERTIES:
 :ID:         %(org-id-uuid)
 :ROAM_REFS: @${=key=}
+:ROAM_ALIASES: ${=key=}
 :END:
 ,#+TITLE: ${title}
 ,#+ROAM_KEY: cite:${=key=}
+,#+FILETAGS: paper
+- keywords :: ${keywords}
 ,* TODO Notes
 :PROPERTIES:
 :Custom_ID: ${=key=}
-:NOTER_DOCUMENT: [[${file}]]
+:NOTER_DOCUMENT: ./pdfs/${file}.pdf
 :AUTHOR: ${author-abbrev}
 :JOURNAL: ${journaltitle}
 :DATE: ${date}
@@ -121,7 +134,7 @@ Set keybinding, ~C-c n~ is org-roam prefix, so that fits
     - tags ::
     - keywords :: ${keywords}
 
-    \n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n  :NOTER_PAGE: \n  :END:\n\n"
+    \n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\").pdf\n  :NOTER_PAGE: \n  :END:\n\n"
 
                :unnarrowed t))))
 
@@ -138,34 +151,62 @@ Set keybinding, ~C-c n~ is org-roam prefix, so that fits
 #+RESULTS:
 : sqlite
 
-* Github Co-Pilot
-Setup using [[https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/][this blogpost]]
-
-Ensure requirements are installed
+* PDF-Tools
 #+begin_src elisp
-  (require 'cl)
-  (let ((pkg-list '(use-package
-                     s
-                     dash
-                     editorconfig
-                     company
-                     jsonrpc)))
-    (package-initialize)
-    (when-let ((to-install (map-filter (lambda (pkg _) (not (package-installed-p pkg))) pkg-list)))
-      (package-refresh-contents)
-      (mapc (lambda (pkg) (package-install pkg)) pkg-list)))
+  (use-package pdf-tools
+	:ensure t
+	:config
+	(pdf-tools-install))
 #+end_src
 
 #+RESULTS:
+: t
+
+** org-noter
+Requires pdf-annot as workaround to a bug
+#+begin_src elisp
+  (use-package org-noter	
+	:after (:any org pdf-view)
+	:requires (pdf-tools pdf-annot)
+	:ensure t
+	:config
+	(setq
+	 org-noter-notes-window-location 'other-frame
+	 org-noter-always-create-frame nil
+	 org-noter-hide-other nil
+	 org-noter-notes-search-path (list "~/sciebo/org-roam")
+	 ))
+
+  (use-package org-pdftools
+	:hook (org-mode . org-pdftools-setup-link))
+#+end_src
+
+#+RESULTS:
+| (closure (t) nil (font-lock-add-keywords nil '((next-color-link (0 'org-link t))) t)) | (lambda nil (display-fill-column-indicator-mode -1)) | org-indent-mode | org-pdftools-setup-link | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | org-ref-org-menu | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
+
+Setup integration of org-noter with org-roam
+#+begin_src elisp
+   
+#+end_src
+
+
+* Github Co-Pilot
+Setup using [[https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/][this blogpost]]
 
 Load =copilot.el=
 
 #+begin_src elisp
   (use-package copilot
-    :load-path (lambda () (expand-file-name "copilot.el" user-emacs-directory))
+    :quelpa (copilot :fetcher github
+                   :repo "copilot-emacs/copilot.el"
+                   :branch "main"
+                   :files ("dist" "*.el"))
+    :ensure t
     ;; don't show in mode line
     :diminish
-    :config (setq copilot-indent-offset-warning-disable t) 
+    :config (setq copilot-indent-offset-warning-disable t)
+                                          ;start copilot agent
+    (copilot--start-agent) 
     :bind (("C-c c c" . copilot-complete)
            ("C-c c a" . copilot-accept-completion) ; probably im going to use Tab more often
            ("C-c <right>" . copilot-accept-completion-by-word)
@@ -349,3 +390,76 @@ Using diminish to hide specific modes from the mode line
     :ensure t
     :bind ("C-x g" . magit-status))
 #+end_src
+
+* Configure line-numbers, line lengths etc.
+Configure line length
+#+begin_src elisp
+  (use-package visual-fill-column)
+  (defvar fill-column 80)
+  (setq visual-fill-column-width 80
+		visual-fill-column-center-text t)
+#+end_src
+
+#+RESULTS:
+: t
+
+Setup hooks
+#+begin_src elisp
+
+  (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
+
+  ;; enable in text-mode buffers
+  (add-hook 'text-mode-hook (lambda () (setq visual-fill-line-mode 1)))
+  (add-hook 'text-mode-hook (lambda () (setq adaptive-wrap-prefix-mode 1)))
+  
+  (add-hook 'text-mode-hook 'visual-line-mode)
+  ;; Enable Linenumbers & fill-culumn-indicator
+  (add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode 1)))
+  (add-hook 'prog-mode-hook (lambda () (display-fill-column-indicator-mode 1)))
+
+  ;; disable in ein:notebook buffer
+  (add-hook 'ein:markdown-mode-hook (lambda () (visual-fill-coloumn-mode -1) ))
+#+end_src
+
+#+RESULTS:
+| lambda | nil | (visual-fill-coloumn-mode -1) |
+
+** Multi-line mode
+#+begin_src elisp
+  (use-package multi-line
+	:ensure t
+	;;:hook (prog-mode . multi-line-mode)
+	:bind ("C-c m" . multi-line))
+#+end_src
+
+#+RESULTS:
+: multi-line
+
+* Ebib
+Use ebib mode for bibtex files
+#+begin_src elisp
+  (use-package ebib
+	:ensure t
+	:config
+	(setq ebib-preload-bib-files '("~/sciebo/org-roam/bibliography.bib"))
+	(setq ebib-file-search-dirs '("~/sciebo/org-roam")))
+#+end_src
+
+#+RESULTS:
+: t
+
+* Electric Pair Mode
+Automatically close brakets, parentheses etc.
+Add $ to the list of characters that trigger electric pair mode
+#+begin_src elisp
+  (electric-pair-mode 1)
+  (setq electric-pair-pairs '(
+                              (?\" . ?\")
+                              (?\{ . ?\})
+                              (?\( . ?\))
+                              (?\[ . ?\])
+                              (?$ . ?$)
+                              ))
+#+end_src
+#+RESULTS:
+: ((34 . 34) (123 . 125) (40 . 41) (91 . 93) (36 . 36))

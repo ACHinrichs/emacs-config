@@ -9,6 +9,7 @@
 \\setsansfont[Scale=MatchLowercase]{Gillius ADF}
 %\\setmonofont[Scale=MatchLowercase]{Operator Mono SSm}
 \\usepackage{sectsty}
+\\usepackage{mathtools}
 \\allsectionsfont{\\sffamily}
 \\usepackage{enumitem}
 \\setlist[description]{style=unboxed,font=\\sffamily\\bfseries}

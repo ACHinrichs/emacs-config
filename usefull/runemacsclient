@@ -1,2 +1,8 @@
 #!/bin/sh
-exec /usr/bin/emacsclient --alternate-editor="" -c "$@"
+# Open file, if argument is passed
+if [ -n "$1" ]; then
+	exec /usr/bin/emacsclient --alternate-editor="" -c "$@"
+# Open new frame, if no argument is passed
+else
+	exec /usr/bin/emacsclient --alternate-editor="" -c 
+fi
