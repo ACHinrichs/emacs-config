@@ -13,11 +13,16 @@ This is to add biblatex as bibliography processor
 * Paperwriting-stuff
 ** Biblatex as citation driver
 #+begin_src emacs-lisp :exports code
-(require 'oc-biblatex)
- (setq org-cite-export-processors
-	  '((latex biblatex)
-		(t ata)))
+  (require 'oc-biblatex)
+   (setq org-cite-export-processors
+        '((latex biblatex)
+          (t csl)))
 #+end_src
+
+#+RESULTS:
+| latex | biblatex |
+| t     | apa      |
+
 ** Glossary
 
 #+begin_src emacs-lisp
@@ -34,3 +39,21 @@ This is to add biblatex as bibliography processor
   :load-path "~/Dropbox/ProjectWeekends/lisp/ox-latex-subfigure/"
   :config (require 'ox-latex-subfigure))
 #+end_src
+
+* Export to Jupiter notebook
+from github
+#+begin_src emacs-lisp
+  (use-package ox-ipynb
+
+    :quelpa (ox-ipynb :fetcher github
+                     :repo "jkitchin/ox-ipynb"
+                     :branch "master"
+                     :files ("dist" "*.el"))
+      :ensure t
+      :after ox
+      :config
+      (require 'ox-ipynb))
+#+end_src
+
+#+RESULTS:
+: t
