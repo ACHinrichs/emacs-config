@@ -1,0 +1,99 @@
+#+Title: Notebook containing stuff for Python programming
+
+* Python Venvs
+Load package =pyvenv= and configure it to use the virtualenv's =python3= interpreter.
+#+begin_src elisp
+  (use-package pyvenv
+    :ensure t
+    :config
+    (pyvenv-mode t)
+
+    (setq pyvenv-post-activate-hooks
+          (list (lambda ()
+                  (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+    (setq pyvenv-post-deactivate-hooks
+          (list (lambda ()
+                  (setq python-shell-interpreter "python3")))))
+#+end_src
+
+#+RESULTS:
+: t
+
+* Linter for Python
+
+Load package =pylint= and configure it to use the =pylint= executable. This package is used to check for errors in Python code.
+#+begin_src elisp
+  (use-package pylint
+    :ensure t)
+#+end_src
+
+#+RESULTS:
+
+** TODO
+- [ ] Add keybinding
+- [ ] Execute linter on save?
+
+* Execute Python code
+** Workaround for imports not beeing reloaded
+Because essentially we are always running our code in the same shell, a file or module is imported only once, even if it is changed in between runs.
+To work around this we steal code from [[http://lgmoneda.github.io/2017/02/19/emacs-python-shell-config-eng.html][here]]. This code will:
+- force the Python process to restart on each python-shell-send-buffer
+- start a shell automatically the first time a buffer is send
+- pop the shell buffer to the front if it is already open and not visible
+#+begin_src elisp
+  (defun my-python-shell-run ()
+    (interactive)
+    ;; kill the python shell
+    (when (get-buffer-process "*Python*")
+      (kill-process (get-buffer-process "*Python*"))
+      (sleep-for 0.5))
+    ;; start a python shell
+    (run-python (python-shell-parse-command) nil 1)
+    (sleep-for 0.5)
+    (python-shell-send-buffer)
+    ;; Pop new window only if shell isnt visible
+    ;; in any frame.
+    (unless (get-buffer-window "*Python*" t) 
+      (python-shell-switch-to-shell)))
+
+  (defun my-python-shell-run-region ()
+    (interactive)
+    (python-shell-send-region (region-beginning) (region-end))
+    (python-shell-switch-to-shell))
+
+  (eval-after-load "python"
+    '(progn
+       (define-key python-mode-map (kbd "C-c C-c") 'my-python-shell-run)
+       (define-key python-mode-map (kbd "C-c C-r") 'my-python-shell-run-region)))
+#+end_src
+
+#+RESULTS:
+: my-python-shell-run-region
+
+I think this might create problems if working in an org-babel notebook at the same time as developing a script, but this can be solved by either the ostrich approach or by setting a =:session= header argument in the org-babel block, as this will lead to the python process getting a different name.
+
+** Execute file with arguments
+Standard =C-c C-c= keybinding does not execute scripts with arguments.
+This snippet (stolen from [[https://stackoverflow.com/a/2906371][here]]) allows to execute Python scripts with arguments.  Uses the function from above to restart the Python shell.
+#+begin_src elisp
+  (defun python-send-buffer-with-my-args (args)
+    (interactive "sPython arguments: ")
+    (let ((source-buffer (current-buffer)))
+      (with-temp-buffer
+        (insert "import sys; sys.argv = '''emacs-interactive " args "'''.split()\n") ; the first argument is supposed to be the script name, because i am lazy i just put emacs-interactive as dummy
+        (insert-buffer-substring source-buffer)
+        ;; (python-shell-send-buffer)
+        (my-python-shell-run)
+        )))
+#+end_src
+
+#+RESULTS:
+: python-send-buffer-with-my-args
+
+I bind this function to =C-c C-a=.
+#+begin_src elisp
+  (global-set-key "\C-c\C-a" 'python-send-buffer-with-my-args)
+#+end_src
+
+#+RESULTS:
+: python-send-buffer-with-my-args
