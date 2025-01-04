@@ -101,3 +101,5 @@ bookmarks
 emacs-init.el
 emacs-init.el
 org-config.el
+history
+history.el
