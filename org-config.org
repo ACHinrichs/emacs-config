@@ -57,3 +57,17 @@ from github
 
 #+RESULTS:
 : t
+
+* Todos
+** ToDo keywords
+- TODO
+- IN-PROGRESS
+- BLOCKED
+- DONE
+- CANCELED
+
+  #+begin_src emacs-lisp
+    (setq org-todo-keywords
+          '((sequence "TODO" "IN-PROGRESS" "BLOCKED" "|" "DONE" "CANCELED")))
+    #+end_src
+  

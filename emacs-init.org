@@ -215,6 +215,7 @@ Setup integration of org-noter with org-roam
 
 
 * Github Co-Pilot
+** copilot-mode (Autocompletion)
 Setup using [[https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/][this blogpost]]
 
 Load =copilot.el=
@@ -299,6 +300,25 @@ We activate =copilot= in some specific modes:
 
 #+RESULTS:
 : rk/copilot-change-activation
+** copilot-chat (Chat with Co-Pilot)
+
+#+begin_src elisp
+  (use-package copilot-chat
+    :quelpa (copilot-chat :fetcher github
+                          :repo "chep/copilot-chat.el"
+                          :branch "master"
+                          :files ("*.el"))
+    :after (request shell-maker)
+    :custom
+    (copilot-chat-frontend 'shell-maker)
+    :config
+    (require 'copilot-chat-shell-maker)
+    (push '(shell-maker . copilot-chat-shell-maker-init) copilot-chat-frontend-list)
+    (copilot-chat-shell-maker-init))
+#+end_src
+
+#+RESULTS:
+: t
 
 * Company Mode
 
@@ -378,8 +398,8 @@ Using diminish to hide specific modes from the mode line
 
 #+RESULTS:
 | flyspell-mode | copilot-mode | (lambda nil (display-fill-column-indicator-mode 1)) | (lambda nil (display-line-numbers-mode 1)) | visual-line-mode | (lambda nil (setq adaptive-wrap-prefix-mode 1)) | (lambda nil (setq visual-fill-line-mode 1)) | turn-off-auto-fill | mixed-pitch-mode | text-mode-hook-identify |
-
-* Change comletion behaviour in minibuffer
+* Minibuffer stuff
+** Change comletion behaviour in minibuffer
 #+begin_src elisp
   (setq completion-styles '(substring
                             basic
@@ -389,25 +409,15 @@ Using diminish to hide specific modes from the mode line
 
 #+RESULTS:
 | substring | basic | partial-completion | emacs22 |
-
-* Python Venvs
+** Activate save history mode
 #+begin_src elisp
-  (use-package pyvenv
-    :ensure t
-    :config
-    (pyvenv-mode t)
-
-    (setq pyvenv-post-activate-hooks
-          (list (lambda ()
-                  (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
-    (setq pyvenv-post-deactivate-hooks
-          (list (lambda ()
-                  (setq python-shell-interpreter "python3")))))
+  (savehist-mode 1)
 #+end_src
 
 #+RESULTS:
 : t
 
+    
 * Magit
 #+begin_src elisp
   (use-package magit
@@ -487,3 +497,46 @@ Add $ to the list of characters that trigger electric pair mode
 #+end_src
 #+RESULTS:
 : ((34 . 34) (123 . 125) (40 . 41) (91 . 93) (36 . 36))
+
+* Auto-formatting
+Load format-all and enable it in programming modes. Load default formatter for python
+#+begin_src elisp
+  (use-package format-all
+    :ensure t
+    :hook ((prog-mode . format-all-mode)
+           (format-all-mode . format-all-ensure-formatter)
+           )
+    :config (setq format-all-formatters
+                    '(("Python" (black))
+                      ("Shell" (shfmt "-i" "4" "-ci")))))
+#+end_src
+
+#+RESULTS:
+| format-all-ensure-formatter |
+
+* Include other files
+#+begin_src elisp
+  (org-babel-load-file
+   (expand-file-name "python_stuff.org"
+                   user-emacs-directory))
+#+end_src
+
+#+RESULTS:
+: Loaded /home/ahi/.emacs.d/python_stuff.el
+
+
+* scratch as org mode buffer
+I use the scratch buffer for text more often than not, so I set it to org mode
+#+begin_src elisp
+  (setq initial-major-mode 'org-mode)
+  (setq initial-scratch-message "#+TITLE: Scratch\n#+Description: Scratch buffer for notes and ideas. Save it to a file to keep it.\n\n")
+#+end_src
+
+#+RESULTS:
+: #+TITLE: Scratch
+: #+Description: Scratch buffer for notes and ideas. Save it to a file to keep it.
+
+* Disable startup screen
+#+begin_src elisp
+  (setq inhibit-startup-screen t)
+#+end_src
