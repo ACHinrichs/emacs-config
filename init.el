@@ -4,15 +4,15 @@
 
 ;; Set Loadpath
 (add-to-list 'load-path "/home/ahi/.emacs.d/lisp/")
-;; (load "~/.emacs.d/lisp/firacode.el")  
+;; (load "~/.emacs.d/lisp/firacode.el")
 (load "~/.emacs.d/lisp/org-xelatex.el")
 (load "~/.emacs.d/lisp/org-tex-local-class.el")
-(load "~/.emacs.d/lisp/org-templates.el")  
+(load "~/.emacs.d/lisp/org-templates.el")
 (load "~/.emacs.d/lisp/insert-date.el")
 
 (setq solarized-use-variable-pitch t
       solarized-scale-org-headlines t)
-(load "~/.emacs.d/lisp/solarized.el")  
+(load "~/.emacs.d/lisp/solarized.el")
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -20,7 +20,7 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/") 
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -117,7 +117,7 @@
 (setq org-latex-compiler "xelatex")
 (setq org-latex-pdf-process
       (list (concat "latexmk -"
-                    org-latex-compiler 
+                    org-latex-compiler
                     " -recorder -synctex=1 -bibtex-cond %b")))
 (setq org-latex-listings t)
 
@@ -174,7 +174,7 @@
 
 
 ;; Increase size of LaTeX fragment previews
-(plist-put org-format-latex-options :scale 0.75)
+(plist-put org-format-latex-options :scale 2)
 
 ;; Transperency!
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
@@ -266,6 +266,3 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-
-

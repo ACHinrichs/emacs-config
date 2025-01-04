@@ -57,17 +57,43 @@ from github
 
 #+RESULTS:
 : t
-
-* Todos
-** ToDo keywords
+* Customization of TODOS
+** Customization of TODO keywords
+Cycle between the states:
 - TODO
-- IN-PROGRESS
-- BLOCKED
-- DONE
-- CANCELED
+- IN-PROGRESS or BLOCKED
+- DONE or CANCELED
 
-  #+begin_src emacs-lisp
-    (setq org-todo-keywords
-          '((sequence "TODO" "IN-PROGRESS" "BLOCKED" "|" "DONE" "CANCELED")))
-    #+end_src
-  
+#+begin_src emacs-lisp
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "IN-PROGRESS(p)" "BLOCKED(b@/!)" "|" "DONE(d/!)" "CANCELED(c@/!)")))
+#+end_src
+
+#+RESULTS:
+| sequence | TODO(t) | IN-PROGRESS(p) | BLOCKED(b@/!) |   |   | DONE(d/!) | CANCELED(c@/!) |
+
+** Pretty export
+
+#+begin_src emacs-lisp
+  (defun my-org-latex-format-headline-function
+      (todo todo-type priority text tags _info)
+    "Default format function for a headline.
+  See `org-latex-format-headline-function' for details."
+    (concat
+     (and todo (format "{\\bfseries\\sffamily\\color{%s} \\framebox{%s}} "
+                       (pcase todo-type
+                         ('todo "orange")
+                         ('done "olive"))
+                       todo))
+     (and priority (format "\\framebox{\\#%c} " priority))
+     text
+     (and tags
+      (format "\\hfill{}\\textsf{%s}"
+          (mapconcat #'org-latex--protect-text tags ":")))
+     ))
+
+  (setq org-latex-format-headline-function 'my-org-latex-format-headline-function)
+#+end_src
+
+#+RESULTS:
+: my-org-latex-format-headline-
