@@ -7,6 +7,7 @@
 ;; (load "~/.emacs.d/lisp/firacode.el")
 (load "~/.emacs.d/lisp/org-xelatex.el")
 (load "~/.emacs.d/lisp/org-tex-local-class.el")
+(load "~/.emacs.d/lisp/org-templates.el")
 (load "~/.emacs.d/lisp/insert-date.el")
 
 (setq solarized-use-variable-pitch t
@@ -42,7 +43,7 @@
 	 "3e2fd2a175d4e5df50cc09948260c620167124d9fc11c0bf71849d523efcf375"
 	 default))
  '(ein:output-area-inlined-images t)
- '(format-all-debug t)
+ '(org-list-allow-alphabetical t)
  '(package-selected-packages
    '(jinja2-mode ox-tufte-latex tufte-org-mode tufte copilot-chat
 				 chatgpt-shell shell-maker format-all pylint ox-ipynb
@@ -131,9 +132,6 @@
                  (org-remove-inline-images)
                  (org-present-show-cursor)
                  (org-present-read-write)))))
-
-;; start org-indent-mode in org files
-(add-hook 'org-mode-hook 'org-indent-mode)
 
 ;; Code-execution
 (org-babel-do-load-languages
@@ -254,8 +252,11 @@
 
 (setq password-cache-expiry nil)
 
-;; Start server, so that emacsclient can open in emacs
-(server-start)
+;; If there is a server, connect to it, otherwise start it
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 
 ;; Colored text in org-mode, taken from https://emacs.stackexchange.com/a/41472
 (load "~/.emacs.d/lisp/org-colored-text.el")

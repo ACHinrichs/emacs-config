@@ -1590,9 +1590,9 @@ customize the resulting theme."
 ;;;;; nav-flash
      ;; `(nav-flash-face ((,class (:background ,base02))))
      `(nav-flash-face ((,light-class (:foreground ,(solarized-color-blend yellow base1 0.2)
-                                      :background ,(solarized-color-blend yellow base03 0.2)))
+												  :background ,(solarized-color-blend yellow base03 0.2)))
                        (,dark-class (:foreground ,(solarized-color-blend cyan base1 0.1)
-                                     :background ,(solarized-color-blend cyan base03 0.3)))))
+												 :background ,(solarized-color-blend cyan base03 0.3)))))
 ;;;;; navi2ch
      `(navi2ch-list-category-face ((,class (:foreground ,blue ))))
      `(navi2ch-list-add-board-name-face ((,class (:foreground ,yellow))))
@@ -1673,37 +1673,37 @@ customize the resulting theme."
                           :foreground ,blue :background ,base03))))
      `(org-agenda-done ((,class (:foreground ,base01 :slant italic))))
      `(org-archived ((,class (:foreground ,base01 :weight normal))))
-     `(org-block ((,class (:foreground ,base01))))
+     `(org-block ((,class (:foreground ,base0 :background ,base02))))
      `(org-checkbox ((,class (:background ,base03 :foreground ,base0
                                           :box (:line-width 1 :style released-button)))))
-     `(org-code ((,class (:foreground ,base01))))
+     `(org-code ((,class (:foreground ,base0))))
      `(org-date ((,class (:foreground ,blue :underline t))))
      `(org-done ((,class (:weight bold :foreground ,green))))
      `(org-ellipsis ((,class (:foreground ,base01))))
      `(org-formula ((,class (:foreground ,yellow))))
      `(org-headline-done ((,class (:foreground ,green))))
      `(org-hide ((,class (:foreground ,base03))))
-     `(org-level-1 ((,class (:inherit ,s-variable-pitch :foreground ,blue
+     `(org-level-1 ((,class (:inherit ,s-variable-pitch :foreground ,base0 :weight bold :underline t
                                       ,@(when solarized-scale-org-headlines
                                           (list :height solarized-height-plus-4))))))
-     `(org-level-2 ((,class (:inherit ,s-variable-pitch :foreground ,cyan
-                                      ,@(when solarized-scale-org-headlines
-                                          (list :height solarized-height-plus-3))))))
-     `(org-level-3 ((,class (:inherit ,s-variable-pitch :foreground ,green
+     `(org-level-2 ((,class (:inherit ,s-variable-pitch :foreground ,base0 :weight bold :underline t
                                       ,@(when solarized-scale-org-headlines
                                           (list :height solarized-height-plus-2))))))
-     `(org-level-4 ((,class (:inherit ,s-variable-pitch :foreground ,yellow
+     `(org-level-3 ((,class (:inherit ,s-variable-pitch :foreground ,base1 :weight bold :underline t
                                       ,@(when solarized-scale-org-headlines
-                                          (list :height solarized-height-plus-1))))))
+                                          (list :height solarized-height-plus-2))))))
+     `(org-level-4 ((,class (:inherit ,s-variable-pitch :foreground ,base1 :underline t
+                                      ,@(when solarized-scale-org-headlines
+                                          (list :height solarized-height-plus-2))))))
      `(org-level-5 ((,class (:inherit ,s-variable-pitch
-                                      :foreground ,orange))))
+                                      :foreground ,base01 :slant italic))))
      `(org-level-6 ((,class (:inherit ,s-variable-pitch
-                                      :foreground ,orange-l))))
+                                      :foreground ,base01 :slant italic))))
      `(org-level-7 ((,class (:inherit ,s-variable-pitch
-                                      :foreground ,red-l))))
+                                      :foreground ,base01 :slant italic))))
      `(org-level-8 ((,class (:inherit ,s-variable-pitch
-                                      :foreground ,magenta-l))))
-     `(org-link ((,class (:foreground ,yellow :underline t))))
+                                      :foreground ,base01 :slant italic))))
+     `(org-link ((,class (:foreground ,blue-l :underline t))))
      `(org-meta-line ((,class (:foreground ,base01 :slant italic))))
      `(org-sexp-date ((,class (:foreground ,violet))))
      `(org-scheduled ((,class (:foreground ,green))))
