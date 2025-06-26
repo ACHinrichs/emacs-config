@@ -97,3 +97,43 @@ Cycle between the states:
 
 #+RESULTS:
 : my-org-latex-format-headline-
+
+* LaTeX-Export
+** Load custom classes
+Load "legacy" stuff:
+#+begin_src emacs-lisp
+  (load "~/.emacs.d/lisp/org-xelatex.el")
+  (load "~/.emacs.d/lisp/org-tex-local-class.el")
+  (load "~/.emacs.d/lisp/org-latex-classes.el")
+#+end_src
+
+Load classes I implemented in org-files:
+AJC formal, informal and letter
+#+begin_src emacs-lisp
+  ;(org-babel-load-file "~/.emacs.d/org-latex-ajc.org")
+#+end_src
+
+Load tufte layout which I defined in org file ox-latex/ox-tufte.org
+#+begin_src emacs-lisp
+    (org-babel-load-file "~/.emacs.d/ox-latex/ox-tufte.org")
+#+end_src
+
+#+RESULTS:
+
+* Org-structure templates
+Defines some templates to be inserted with =org-insert-structure-template= or =C-c C-,=.
+
+** Code-Blocks
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-structure-template-alist
+               '("selisp" . "SRC emacs-lisp"))
+  (add-to-list 'org-structure-template-alist
+               '("slatex" . "SRC latex"))
+  (add-to-list 'org-structure-template-alist
+               '("spython" . "SRC python :results value :exports both :session :async"))
+
+#+END_SRC
+
+#+RESULTS:
+: ((spython . SRC python :results value :exports both :session :async) (slatex . SRC latex) (selisp . SRC emacs-lisp) (el . SRC emacs-lisp) (a . export ascii) (c . center) (C . comment) (e . example) (E . export) (h . export html) (l . export latex) (q . quote) (s . src) (v . verse))
