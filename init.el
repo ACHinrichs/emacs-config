@@ -29,10 +29,47 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(solarized-dark))
  '(custom-safe-themes
-   '("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "ded46420eaf95b374713249a503cec464b5d7f672e3a9efe01a0bf27b2086b66" "417128f71670e83fca0a9f87bbcfa38dd532ca78bd6524cafe1ea0ea21c87ab4" "07815c676b7d8a1d0c041b71d89f7f1d7d80209c44e3570d4bec2d524318b5ac" "4e68b9eb3b87f830c80596ffd599d39d77d06c2be408a4ea4c0d06cfa9b8753c" "d7ec73258cea32275faf9745b8bfd48498242ee862bf3895fefa972e0710602d" "2d6c158387e53bcb00fc262c6d046b5402dd37e89dae8ca05cff24326b6afa04" "af2d66af959d1a357f49463147a46cf7b770e557c0f84b0991e2936b7b759dd9" "22e976d099f53dabc4534f080c8c4a36e7c7c223edc2bdac8d7537611eaae321" "a82bd6ba32612663f33b8d7a7027ec28ca66f36abc6fb98d69deebb5ca4a4504" "3e2fd2a175d4e5df50cc09948260c620167124d9fc11c0bf71849d523efcf375" default))
+   '("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4"
+	 "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879"
+	 "ded46420eaf95b374713249a503cec464b5d7f672e3a9efe01a0bf27b2086b66"
+	 "417128f71670e83fca0a9f87bbcfa38dd532ca78bd6524cafe1ea0ea21c87ab4"
+	 "07815c676b7d8a1d0c041b71d89f7f1d7d80209c44e3570d4bec2d524318b5ac"
+	 "4e68b9eb3b87f830c80596ffd599d39d77d06c2be408a4ea4c0d06cfa9b8753c"
+	 "d7ec73258cea32275faf9745b8bfd48498242ee862bf3895fefa972e0710602d"
+	 "2d6c158387e53bcb00fc262c6d046b5402dd37e89dae8ca05cff24326b6afa04"
+	 "af2d66af959d1a357f49463147a46cf7b770e557c0f84b0991e2936b7b759dd9"
+	 "22e976d099f53dabc4534f080c8c4a36e7c7c223edc2bdac8d7537611eaae321"
+	 "a82bd6ba32612663f33b8d7a7027ec28ca66f36abc6fb98d69deebb5ca4a4504"
+	 "3e2fd2a175d4e5df50cc09948260c620167124d9fc11c0bf71849d523efcf375"
+	 default))
  '(ein:output-area-inlined-images t)
+ '(org-list-allow-alphabetical t)
  '(package-selected-packages
-   '(copilot-chat chatgpt-shell shell-maker format-all pylint ox-ipynb org-roam-dailies copilot quelpa-use-package quelpa org-noter-pdftools org-pdftools pdf-tools org-noter ebib multi-line pyvenv diminish company-spell company-flyspell companyflyspell company-box company-posframe jsonrpc editorconfig dash s company-jedi epresent citar-org-roam org-download ox-latex-subfigure org-ref visual-fill-column jupyter multiple-cursors ob-prolog lsp-mode rustic mixed-pitch use-package flyspell-popup adaptive-wrap go-complete go-mode ein ini-mode pinentry dockerfile-mode yaml-mode fill-column-indicator ## company highlight-indentation auctex-latexmk color-theme-x color-theme-xe markdown-mode markdown-mode+mode rainbow-mode flyspell-Lazy all-the-icons neotree markdown-preview-eww ac-haskell-process ac-math auto-complete auto-complete-auctex auto-complete-c-headers auto-complete-clang auto-complete-clang-async php-mode paradox mmm-mode magit auctex)))
+   '(## ac-haskell-process ac-math adaptive-wrap all-the-icons auctex
+						   auctex-latexmk auto-complete
+						   auto-complete-auctex
+						   auto-complete-c-headers auto-complete-clang
+						   auto-complete-clang-async chatgpt-shell
+						   citar-org-roam color-theme-x color-theme-xe
+						   company company-box company-flyspell
+						   company-jedi company-posframe company-spell
+						   companyflyspell copilot copilot-chat dash
+						   diminish dockerfile-mode ebib editorconfig
+						   ein epresent fill-column-indicator
+						   flyspell-Lazy flyspell-popup format-all
+						   go-complete go-mode highlight-indentation
+						   ini-mode jsonrpc jupyter lsp-mode magit
+						   markdown-mode markdown-mode+mode
+						   markdown-preview-eww mixed-pitch mmm-mode
+						   multi-line multiple-cursors neotree
+						   ob-prolog org-download org-inline-pdf
+						   org-noter org-noter-pdftools org-pdftools
+						   org-phscroll org-roam-dailies ox-ipynb
+						   ox-latex-subfigure paradox pdf-tools
+						   php-mode phscroll pinentry pylint pyvenv
+						   quelpa quelpa-use-package rainbow-mode
+						   rustic s shell-maker use-package
+						   visual-fill-column yaml-mode)))
 (require 'package)
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -50,15 +87,15 @@
  '(org-drawer ((t (:foreground "#26d1a9" :family "Fira Mono"))))
  '(org-property-value ((t (:inherit default :family "Fira Code"))))
  '(org-special-keyword ((t (:foreground "#51636e" :weight bold :family "Fira Code")))))
- ;'(ein:cell-input-area ((t (:background "#2a3439")))))
- ;'(org-level-1 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
- ;'(org-level-2 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
- ;'(org-level-3 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
- ;'(org-level-4 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
- ;'(org-level-5 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
- ;'(org-level-6 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
- ;'(org-level-7 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
- ;'(org-level-8 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code")))))
+										;'(ein:cell-input-area ((t (:background "#2a3439")))))
+										;'(org-level-1 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+										;'(org-level-2 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+										;'(org-level-3 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+										;'(org-level-4 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+										;'(org-level-5 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+										;'(org-level-6 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+										;'(org-level-7 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
+										;'(org-level-8 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code")))))
 
 
 (require 'use-package)
@@ -68,7 +105,7 @@
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class 'html-mode "\\.php\\'" 'html-php)
 
-;(setq split-width-threshold 1 )
+										;(setq split-width-threshold 1 )
 (add-hook 'text-mode-hook 'turn-off-auto-fill)
 
 
@@ -92,16 +129,13 @@
                  (org-display-inline-images)
                  ;;(org-present-hide-cursor)
                  ;;(org-present-read-only)
-		 ))
+				 ))
      (add-hook 'org-present-mode-quit-hook
                (lambda ()
                  (org-present-small)
                  (org-remove-inline-images)
                  (org-present-show-cursor)
                  (org-present-read-write)))))
-
-;; start org-indent-mode in org files
-(add-hook 'org-mode-hook 'org-indent-mode)
 
 ;; Code-execution
 (org-babel-do-load-languages
@@ -180,23 +214,23 @@
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
 ;;(set-frame-parameter (selected-frame) 'alpha <both>)
 
-;(if (eq system-type 'windows-nt)
-;    (progn      (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
-;		(add-to-list 'default-frame-alist '(alpha . (100 . 100))))
-;    (progn      (set-frame-parameter (selected-frame) 'alpha '(75 . 75))
-;		(add-to-list 'default-frame-alist '(alpha . (75 . 75))))
-;)
+										;(if (eq system-type 'windows-nt)
+										;    (progn      (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+										;		(add-to-list 'default-frame-alist '(alpha . (100 . 100))))
+										;    (progn      (set-frame-parameter (selected-frame) 'alpha '(75 . 75))
+										;		(add-to-list 'default-frame-alist '(alpha . (75 . 75))))
+										;)
 ;; Tweaks for Auctex
 ;; Inserts \( \) in LaTeX and $ $ in Tex when writing $
 (add-hook 'plain-TeX-mode-hook
-	  (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
-			  (cons "$" "$"))))
+		  (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
+						  (cons "$" "$"))))
 (add-hook 'LaTeX-mode-hook
-	  (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
-			  (cons "\\(" "\\)"))))
+		  (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
+						  (cons "\\(" "\\)"))))
 (add-hook 'org-mode-hook
-	  (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
-			  (cons "\\(" "\\)"))))
+		  (lambda () (set (make-variable-buffer-local 'TeX-electric-math)
+						  (cons "\\(" "\\)"))))
 (setq LaTeX-electric-left-right-brace t)
 
 ;; Change bell from annoying piezo-beep to modline-flash
@@ -214,16 +248,19 @@
 ;; Set my (Linux) python-shell to python3
 (if (eq system-type 'windows-nt)
     (progn      ())
-    (progn      (setq python-shell-interpreter "/usr/bin/python3"))
-)
+  (progn      (setq python-shell-interpreter "/usr/bin/python3"))
+  )
 
 (org-babel-do-load-languages
  'org-babel-load-languages '((python . t)))
 
 (setq password-cache-expiry nil)
 
-;; Start server, so that emacsclient can open in emacs
-(server-start)
+;; If there is a server, connect to it, otherwise start it
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 
 ;; Colored text in org-mode, taken from https://emacs.stackexchange.com/a/41472
 (load "~/.emacs.d/lisp/org-colored-text.el")
@@ -259,10 +296,3 @@
 
 (setq exec-path (append exec-path '("/home/ahi/.local/bin")))
 (setq exec-path (append exec-path '("/usr/bin")))
-
-
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)

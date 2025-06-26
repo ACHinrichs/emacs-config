@@ -540,3 +540,16 @@ I use the scratch buffer for text more often than not, so I set it to org mode
 #+begin_src elisp
   (setq inhibit-startup-screen t)
 #+end_src
+
+* Multiple cursors mode
+
+#+begin_src elisp
+(use-package multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+#+end_src
+
+#+RESULTS:
+: mc/mark-all-like-this

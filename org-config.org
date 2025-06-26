@@ -26,10 +26,14 @@ This is to add biblatex as bibliography processor
 ** Glossary
 
 #+begin_src emacs-lisp
-  (require 'org-ref)
+  (use-package org-ref)
   (add-hook 'org-export-before-parsing-hook 'org-ref-acronyms-before-parsing)
   (add-hook 'org-export-before-parsing-hook 'org-ref-glossary-before-parsing)
 #+end_src
+
+#+RESULTS:
+| org-ref-glossary-before-parsing | org-ref-acronyms-before-parsing |
+
 ** Subfigures
 #+begin_src emacs-lisp
 ;; (package-initialize)
@@ -97,3 +101,34 @@ Cycle between the states:
 
 #+RESULTS:
 : my-org-latex-format-headline-
+
+* PDF as inline images
+
+Install package from github https://github.com/shg/org-inline-pdf.el.git and add org-inline-pdf-mode to the org mode hook
+#+begin_src emacs-lisp
+  (use-package org-inline-pdf :quelpa (org-inline-pdf :fetcher github :repo "shg/org-inline-pdf.el")
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook 'org-inline-pdf-mode))
+#+end_src
+
+#+RESULTS:
+: t
+
+* Org-phscroll
+To fix the damn autowrapping of tables (and code blocks) in org mode, use the package org-phscroll
+#+begin_src emacs-lisp
+  (use-package phscroll
+    :quelpa (phscroll
+  			 :fetcher github
+  			 :repo "misohena/phscroll"
+  			 :files ("phscroll.el" "org-phscroll.el")
+  			 )
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook 'phscroll-mode))
+#+end_src
+
+#+RESULTS:
+: t
+
