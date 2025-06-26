@@ -1,0 +1,108 @@
+#+Title: ox-tufte
+#+LaTeX_CLASS: tufte-handout
+
+This document describes the ox-tufte package, which is an exporter for Org. It exports Org files to LaTeX files that use the Tufte-LaTeX document class.
+
+The Tufte-LaTeX document class is a LaTeX class that tries to emulate the style of Edward Tufte's books. It is designed for producing books and handouts that are rich in typographic detail.
+
+#+begin_src emacs-lisp :export code
+   (with-eval-after-load 'ox-latex
+     (add-to-list 'org-latex-classes
+                  '("tufte-handout"
+                    "\\documentclass[nobib]{tufte-handout}
+   \\usepackage{amsmath,amsfonts,amssymb}
+   \\usepackage{graphicx}
+   \\usepackage{booktabs}
+   \\usepackage{hyperref}
+   \\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue}
+   \\usepackage{listings}
+   \\lstset{frame=single,aboveskip=1em,
+           commentstyle=\\basicdefault,
+       framesep=.5em,backgroundcolor=\\color{AliceBlue},
+       rulecolor=\\color{LightSteelBlue},framerule=1pt}
+   \\usepackage{xcolor}
+  \\newcommand\\basicdefault[1]{\\scriptsize\\color{Black}\\ttfamily#1}
+   \\lstset{basicstyle=\\basicdefault{\\spaceskip1em}}
+   \\lstset{literate=
+           {§}{{\\S}}1
+           {©}{{\\raisebox{.125ex}{\\copyright}\\enspace}}1
+           {«}{{\\guillemotleft}}1
+           {»}{{\\guillemotright}}1
+           {Á}{{\\'A}}1
+           {Ä}{{\\\"A}}1
+           {É}{{\\'E}}1
+           {Í}{{\\'I}}1
+           {Ó}{{\\'O}}1
+           {Ö}{{\\\"O}}1
+           {Ú}{{\\'U}}1
+           {Ü}{{\\\"U}}1
+           {ß}{{\\ss}}2
+           {à}{{\\`a}}1
+           {á}{{\\'a}}1
+           {ä}{{\\\"a}}1
+           {é}{{\\'e}}1
+           {í}{{\\'i}}1
+           {ó}{{\\'o}}1
+           {ö}{{\\\"o}}1
+           {ú}{{\\'u}}1
+           {ü}{{\\\"u}}1
+           {¹}{{\\textsuperscript1}}1
+               {²}{{\\textsuperscript2}}1
+               {³}{{\\textsuperscript3}}1
+           {ı}{{\\i}}1
+           {—}{{---}}1
+           {’}{{'}}1
+           {…}{{\\dots}}1
+               {⮠}{{$\\hookleftarrow$}}1
+           {␣}{{\\textvisiblespace}}1,
+           keywordstyle=\\color{DarkGreen}\\bfseries,
+           identifierstyle=\\color{DarkRed},
+           commentstyle=\\color{Gray}\\upshape,
+           stringstyle=\\color{DarkBlue}\\upshape,
+           emphstyle=\\color{Chocolate}\\upshape,
+           showstringspaces=false,
+           keepspaces=true,
+       breaklines=true,
+       postbreak=\\mbox{\\textcolor{gray}{$\\hookrightarrow$}\\space}}
+  % fix an error
+  \\usepackage{ifxetex}
+    \\ifxetex
+    \\newcommand{\\textls}[2][5]{%
+    \\begingroup\\addfontfeatures{LetterSpace=#1}#2\\endgroup
+    }
+    \\renewcommand{\\allcapsspacing}[1]{\\textls[15]{#1}}
+    \\renewcommand{\\smallcapsspacing}[1]{\\textls[10]{#1}}
+    \\renewcommand{\\allcaps}[1]{\\textls[15]{\\MakeTextUppercase{#1}}} \\renewcommand{\\smallcaps}[1]{\\smallcapsspacing{\\scshape\\MakeTextLowercase{#1}}}
+    \\renewcommand{\\textsc}[1]{\\smallcapsspacing{\\textsmallcaps{#1}}}
+  \\fi
+
+  \\usepackage{titlesec}
+
+  \\titleformat*{\\section}{\\Large\\sffamily}
+  \\titleformat*{\\subsection}{\\large\\sffamily}
+  \\titleformat*{\\subsubsection}{\\itshape\\sffamily}
+  \\makeatletter
+  \\renewcommand{\\maketitle}{%
+    \\thispagestyle{plain}
+    \\begingroup\\parindent0pt
+    {\\sffamily
+  \\LARGE{\\textsc{\\@title}}}\\\\\\rule{\\linewidth}{0.75pt}\\\\
+    \\normalsize{\\itshape\\@author}\\hfill%\\par\\medskip
+    \\normalsize{\\itshape\\@date}\\par\\bigskip
+    \\endgroup\\@afterindentfalse\\@afterheading}
+  \\makeatother
+
+  \\setsansfont{Gillius ADF}
+  \\setmonofont{Fira Code}
+  \\setmainfont{TeX Gyre Pagella}
+  [DEFAULT-PACKAGES]
+     "
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+#+RESULTS:
+| tufte-handout | \documentclass[nobib]{tufte-handout} |
