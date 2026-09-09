@@ -1,4 +1,5 @@
 #+Title: ox-tufte
+#+Description: Tufte-handout Org LaTeX export class.
 #+PROPERTY: header-args:emacs-lisp :tangle yes
 #+LaTeX_CLASS: tufte-handout
 

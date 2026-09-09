@@ -1,5 +1,10 @@
 
+#+Title: Private LaTeX classes
+#+Description: Personal letter class; loaded only when explicitly enabled.
+#+PROPERTY: header-args:emacs-lisp :tangle yes
+
 #+begin_src emacs-lisp :export code :tangle yes
+  ;;; -*- lexical-binding: t; -*-
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-classes
     			   '("pontemacs-letter"

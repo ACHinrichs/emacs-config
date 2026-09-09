@@ -60,8 +60,8 @@ code; this module documents the decision to load and use them.
         ("" "rotating" nil) ("normalem" "ulem" t) ("" "amsmath" t)
         ("" "textcomp" t) ("" "amssymb" t) ("" "capt-of" nil) ("" "hyperref" nil)))
 (load (locate-user-emacs-file "lisp/org-latex-classes.el"))
-(dolist (file '("ajcclasses.org" "ox-tufte.org" "ox-scrbook-chapter.org" "bkclasses.org"))
-  (org-babel-load-file (expand-file-name file (locate-user-emacs-file "ox-latex/"))))
+;; The additional local classes are loaded by the dedicated Org modules in
+;; config/modules/latex/ after this module has initialized ox-latex.
 (add-hook 'plain-TeX-mode-hook
           (lambda () (setq-local TeX-electric-math '("$" . "$"))))
 (dolist (hook '(LaTeX-mode-hook org-mode-hook))

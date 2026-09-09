@@ -1,4 +1,5 @@
 #+Title: ox-scrbook-chapter
+#+Description: Scrbook export class with chapters as the top heading.
 #+PROPERTY: header-args:emacs-lisp :tangle yes
 
 The scrbook class is used by i5 as a base for thesis templates.

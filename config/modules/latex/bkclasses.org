@@ -1,4 +1,5 @@
 #+Title: BKN Classes
+#+Description: Berufskolleg-specific Org LaTeX classes.
 #+PROPERTY: header-args:emacs-lisp :tangle yes
 Klassen für meine Arbeit am Berufskolleg
 

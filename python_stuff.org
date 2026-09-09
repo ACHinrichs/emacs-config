@@ -1,4 +1,0 @@
-#+title: Moved Python configuration
-
-Python support is now documented alongside the other programming settings in
-[[file:config/modules/60-programming.org][60-programming.org]].

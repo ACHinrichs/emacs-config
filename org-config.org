@@ -1,6 +1,0 @@
-#+title: Moved Org configuration
-
-The Org, bibliography, export, and LaTeX settings now live in
-[[file:config/modules/40-org.org][40-org.org]] and
-[[file:config/modules/50-writing.org][50-writing.org]].  Keeping the settings
-there makes their load order explicit and avoids a second, hidden entry point.

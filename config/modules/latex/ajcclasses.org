@@ -1,4 +1,5 @@
 #+Title: AJC Classes
+#+Description: AJC-specific Org LaTeX classes.
 #+PROPERTY: header-args:emacs-lisp :tangle yes
 Klassen für meine Arbeit im Aachener Judo Club 1953 e.V.
 

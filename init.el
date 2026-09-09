@@ -22,6 +22,10 @@
                     "30-editing.org"
                     "40-org.org"
                     "50-writing.org"
+                    "latex/ajcclasses.org"
+                    "latex/bkclasses.org"
+                    "latex/ox-tufte.org"
+                    "latex/ox-scrbook-chapter.org"
                     "60-programming.org"))
     (org-babel-load-file (expand-file-name module modules))))
 

@@ -16,6 +16,7 @@ in numerical order with =org-babel-load-file=.
 | 30-editing.org | completion, editing, mode hooks, and minibuffer |
 | 40-org.org | Org, Org-roam, PDF notes, and notebook export |
 | 50-writing.org | spelling, bibliography, LaTeX, and export |
+| latex/*.org | individual local LaTeX export classes |
 | 60-programming.org | language modes, Python, Rust, and formatting |
 
 * Editing and applying changes
