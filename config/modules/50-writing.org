@@ -1,0 +1,81 @@
+#+title: Writing, spelling, and LaTeX export
+#+PROPERTY: header-args:emacs-lisp :tangle yes
+
+* Spell checking
+
+Aspell provides English by default; Org files can select English or German with
+a =#+LANGUAGE:= keyword.  Install =aspell= and the relevant dictionaries.
+
+#+begin_src emacs-lisp
+;;; -*- lexical-binding: t; -*-
+(use-package company-spell :ensure t :config (push 'company-spell company-backends))
+(use-package flyspell
+  :ensure t
+  :config
+  (setq ispell-program-name "aspell" ispell-dictionary "en")
+  (add-hook 'text-mode-hook #'flyspell-mode)
+  (add-hook 'prog-mode-hook #'flyspell-prog-mode))
+(autoload 'flyspell-babel-setup "flyspell-babel")
+(global-set-key (kbd "C-M-i") #'flyspell-popup-correct)
+(global-set-key (kbd "C-<tab>") #'flyspell-popup-correct)
+(add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
+(add-hook 'org-mode-hook #'flyspell-mode)
+(add-hook 'LaTeX-mode-hook #'flyspell-mode)
+(defun ahi-org-set-flyspell-language ()
+  "Choose the Flyspell dictionary from the current Org file's language keyword."
+  (when (derived-mode-p 'org-mode)
+    (save-excursion
+      (goto-char (point-min))
+      (when (re-search-forward "^#\\+LANGUAGE: \\(.*\\)" nil t)
+        (pcase (match-string 1)
+          ("en" (ispell-change-dictionary "english"))
+          ("de" (ispell-change-dictionary "deutsch")))))))
+(add-hook 'org-mode-hook #'ahi-org-set-flyspell-language)
+#+end_src
+
+* Org export and TeX editing
+
+XeLaTeX and =latexmk= render PDFs.  The local class files are implementation
+code; this module documents the decision to load and use them.
+
+#+begin_src emacs-lisp
+(require 'oc-biblatex)
+(setq org-cite-export-processors '((latex biblatex) (t csl)))
+(use-package org-ref :ensure t)
+(add-hook 'org-export-before-parsing-hook #'org-ref-acronyms-before-parsing)
+(add-hook 'org-export-before-parsing-hook #'org-ref-glossary-before-parsing)
+(use-package ox-latex-subfigure
+  :init (setq org-latex-prefer-user-labels t)
+  :load-path "~/Dropbox/ProjectWeekends/lisp/ox-latex-subfigure/"
+  :config (require 'ox-latex-subfigure))
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "IN-PROGRESS(p)" "BLOCKED(b@/!)" "|" "DONE(d/!)" "CANCELED(c@/!)")))
+(require 'ox-latex)
+(setq org-latex-compiler "xelatex"
+      org-latex-pdf-process (list (concat "latexmk -" org-latex-compiler
+                                          " -recorder -synctex=1 -bibtex-cond %b"))
+      org-latex-listings t
+      org-latex-default-packages-alist
+      '(("" "graphicx" t) ("" "grffile" t) ("" "longtable" t) ("" "wrapfig" nil)
+        ("" "rotating" nil) ("normalem" "ulem" t) ("" "amsmath" t)
+        ("" "textcomp" t) ("" "amssymb" t) ("" "capt-of" nil) ("" "hyperref" nil)))
+(load (locate-user-emacs-file "lisp/org-latex-classes.el"))
+(dolist (file '("ajcclasses.org" "ox-tufte.org" "ox-scrbook-chapter.org" "bkclasses.org"))
+  (org-babel-load-file (expand-file-name file (locate-user-emacs-file "ox-latex/"))))
+(add-hook 'plain-TeX-mode-hook
+          (lambda () (setq-local TeX-electric-math '("$" . "$"))))
+(dolist (hook '(LaTeX-mode-hook org-mode-hook))
+  (add-hook hook (lambda () (setq-local TeX-electric-math '("\\(" . "\\)")))))
+(setq LaTeX-electric-left-right-brace t)
+#+end_src
+
+* Bibliography interface
+
+Ebib opens the bibliography and searches the same note directory as Org-roam.
+
+#+begin_src emacs-lisp
+(use-package ebib
+  :ensure t
+  :config (setq ebib-preload-bib-files '("~/sciebo/org-roam/bibliography.bib")
+                ebib-file-search-dirs '("~/sciebo/org-roam")))
+#+end_src

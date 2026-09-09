@@ -1,7 +1,10 @@
 # emacs-config
-This is my personal `.emacs.d`-directory, and some other usefull
-things (located in /usefull) like a linux `.desktop` file to run
-emacsclient
+This is my personal `.emacs.d` directory and a few useful extras (in
+`/usefull`), including a Linux `.desktop` file for `emacsclient`.
+
+The configuration is literate and modular.  All preferences are documented in
+[config/README.org](config/README.org); edit the topic-specific Org notebook
+there rather than `init.el`.
 
 
 ## Installation

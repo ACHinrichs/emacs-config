@@ -1,9 +1,11 @@
 #+Title: ox-scrbook-chapter
+#+PROPERTY: header-args:emacs-lisp :tangle yes
 
 The scrbook class is used by i5 as a base for thesis templates.
 However, in the i5 thesis template, the top most level heading is chapter
 
 #+begin_src emacs-lisp :export code
+    ;;; -*- lexical-binding: t; -*-
     (with-eval-after-load 'ox-latex
       (add-to-list 'org-latex-classes
       			   '("scrbook-chapter"

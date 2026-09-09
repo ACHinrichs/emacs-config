@@ -1,0 +1,60 @@
+#+title: Tools and navigation
+#+PROPERTY: header-args:emacs-lisp :tangle yes
+
+* Package builders
+
+Quelpa is used by the modules that install packages directly from GitHub.
+
+#+begin_src emacs-lisp
+;;; -*- lexical-binding: t; -*-
+(use-package quelpa :ensure t)
+(use-package quelpa-use-package :ensure t)
+#+end_src
+
+* File tree and version control
+
+#+begin_src emacs-lisp
+(use-package all-the-icons :ensure t)
+(use-package neotree :ensure t)
+(global-set-key [f8] #'neotree-toggle)
+(setq neo-theme 'icons)
+(use-package magit :ensure t :bind ("C-x g" . magit-status))
+#+end_src
+
+* Copilot
+
+Copilot is enabled in text and programming buffers.  =M-C-<escape>= cycles
+between automatic, manual, and disabled completion.
+
+#+begin_src emacs-lisp
+(use-package copilot
+  :quelpa (copilot :fetcher github :repo "copilot-emacs/copilot.el" :branch "main"
+                    :files ("dist" "*.el"))
+  :ensure t :diminish
+  :config (setq copilot-indent-offset-warning-disable t)
+  :bind (("C-c c c" . copilot-complete) ("C-c c a" . copilot-accept-completion)
+         ("C-c <right>" . copilot-accept-completion-by-word)
+         ("C-c S-<right>" . copilot-accept-completion-by-line)
+         ("C-c c <down>" . copilot-next-completion) ("C-c c <up>" . copilot-previous-completion)))
+(add-hook 'text-mode-hook #'copilot-mode)
+(add-hook 'prog-mode-hook #'copilot-mode)
+(defvar ahi-copilot-manual-mode nil "Whether Copilot only offers manually requested completions.")
+(defun ahi-copilot-change-activation ()
+  "Cycle Copilot through automatic, manual, and disabled states."
+  (interactive)
+  (cond ((and copilot-mode ahi-copilot-manual-mode)
+         (global-copilot-mode -1) (setq ahi-copilot-manual-mode nil))
+        (copilot-mode (setq ahi-copilot-manual-mode t))
+        (t (global-copilot-mode 1))))
+(global-set-key (kbd "M-C-<escape>") #'ahi-copilot-change-activation)
+#+end_src
+
+* Multiple cursors
+
+#+begin_src emacs-lisp
+(use-package multiple-cursors :ensure t)
+(global-set-key (kbd "C-S-c C-S-c") #'mc/edit-lines)
+(global-set-key (kbd "C->") #'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") #'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") #'mc/mark-all-like-this)
+#+end_src

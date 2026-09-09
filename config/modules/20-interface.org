@@ -1,0 +1,42 @@
+#+title: Interface and appearance
+#+PROPERTY: header-args:emacs-lisp :tangle yes
+
+* Theme and chrome
+
+Use the repository theme and keep the window chrome out of the way.
+
+#+begin_src emacs-lisp
+;;; -*- lexical-binding: t; -*-
+(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory))
+(load-theme 'pontemacs t)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+#+end_src
+
+* Fonts and faces
+
+Fira Code is the fixed-width face used by editing and Org metadata.
+
+#+begin_src emacs-lisp
+(custom-set-faces
+ '(default ((t (:height 110 :family "Fira Code"))))
+ '(copilot-overlay-face ((t (:background "#38454c"))))
+ '(org-drawer ((t (:foreground "#26d1a9" :family "Fira Mono"))))
+ '(org-property-value ((t (:inherit default :family "Fira Code"))))
+ '(org-special-keyword ((t (:foreground "#51636e" :weight bold :family "Fira Code")))))
+#+end_src
+
+* Audible bell replacement
+
+Flash the mode line briefly instead of using the terminal-like audible bell.
+
+#+begin_src emacs-lisp
+(setq ring-bell-function
+      (lambda ()
+        (let ((original (face-foreground 'mode-line)))
+          (set-face-foreground 'mode-line "#F2804F")
+          (run-with-idle-timer 0.1 nil
+                               (lambda (face) (set-face-foreground 'mode-line face))
+                               original))))
+#+end_src

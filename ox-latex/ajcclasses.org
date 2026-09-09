@@ -1,7 +1,9 @@
 #+Title: AJC Classes
+#+PROPERTY: header-args:emacs-lisp :tangle yes
 Klassen für meine Arbeit im Aachener Judo Club 1953 e.V.
 
 #+begin_src emacs-lisp :export code :tangle yes
+  ;;; -*- lexical-binding: t; -*-
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-classes
     			   '("ajc-letter"

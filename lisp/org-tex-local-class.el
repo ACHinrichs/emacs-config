@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; for export to a .tex file using he (hopefully) local classfile.cls (for one-of papers and such)
 (with-eval-after-load 'ox-latex
   (add-to-list 'org-latex-classes

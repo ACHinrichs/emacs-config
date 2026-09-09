@@ -1,4 +1,5 @@
 #+Title: ox-tufte
+#+PROPERTY: header-args:emacs-lisp :tangle yes
 #+LaTeX_CLASS: tufte-handout
 
 This document describes the ox-tufte package, which is an exporter for Org. It exports Org files to LaTeX files that use the Tufte-LaTeX document class.
@@ -6,6 +7,7 @@ This document describes the ox-tufte package, which is an exporter for Org. It e
 The Tufte-LaTeX document class is a LaTeX class that tries to emulate the style of Edward Tufte's books. It is designed for producing books and handouts that are rich in typographic detail.
 
 #+begin_src emacs-lisp :export code
+   ;;; -*- lexical-binding: t; -*-
    (with-eval-after-load 'ox-latex
      (add-to-list 'org-latex-classes
                   '("tufte-handout"

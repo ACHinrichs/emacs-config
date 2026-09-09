@@ -1,0 +1,34 @@
+#+title: Packages and Custom settings
+#+PROPERTY: header-args:emacs-lisp :tangle yes
+
+* Package sources
+
+These archives are consulted by the bootstrap when a package is installed.
+Package installation is intentionally performed by =use-package= declarations
+in the feature modules, rather than by a startup-wide install sweep.
+
+#+begin_src emacs-lisp
+;;; -*- lexical-binding: t; -*-
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(setq use-package-always-ensure t)
+#+end_src
+
+* Custom-managed settings
+
+Custom writes these values, so they are kept together instead of allowing a
+second =custom-set-variables= form elsewhere in the configuration.
+
+#+begin_src emacs-lisp
+(custom-set-variables
+ '(custom-safe-themes
+   '("b9a79b7c82cfbe95d376b9958e34d95a17b72eac068bfc82403df12229b49df9"
+     "d7689bccf43c07dea8af1e47d13c45ad81b727a65c7db625edd67f1a395482b8"
+     "0620b0e3416eac155be1571786c95b227332c60495dd1c33da6df119c1d5561d"
+     "b2aba8dcd3d48b13b14c1360a581999d50431ad0c40a23dbf0397aa3a3ac4223"
+     "21875d7e0ca402ce472d760a33f2c30456cca819c7b4234adbab4f8eb97a5c26"
+     "8c9396ede052b20dc3dc4f20254c081f7359c0eaebf886ccfd99dcdee13ee1df" default))
+ '(ein:output-area-inlined-images t)
+ '(org-list-allow-alphabetical t))
+#+end_src

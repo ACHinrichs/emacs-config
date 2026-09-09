@@ -1,0 +1,33 @@
+#+title: Configuration guide
+
+* How this configuration is organized
+
+Every user-facing Emacs option and key binding belongs in one of the Org files
+under [[file:modules/][modules/]].  Each notebook is both documentation and
+executable Emacs Lisp.  =init.el= is a bootstrap only; it loads these notebooks
+in numerical order with =org-babel-load-file=.
+
+| File | Responsibility |
+|------+----------------|
+| 00-packages.org | package archives and Custom-managed values |
+| 70-tools.org | package builders (loaded early) plus navigation tools |
+| 10-core.org | paths, startup, server, and shared defaults |
+| 20-interface.org | theme, frame, and interface behaviour |
+| 30-editing.org | completion, editing, mode hooks, and minibuffer |
+| 40-org.org | Org, Org-roam, PDF notes, and notebook export |
+| 50-writing.org | spelling, bibliography, LaTeX, and export |
+| 60-programming.org | language modes, Python, Rust, and formatting |
+
+* Editing and applying changes
+
+Edit the relevant =.org= file, then restart Emacs or evaluate its source block
+with =C-c C-c=.  Starting Emacs tangles a sibling =.el= cache automatically.
+Those generated files are ignored by Git; the Org notebooks are the source of
+truth.  Keep credentials and machine-specific secrets out of these files.
+
+* External programs
+
+Some modules expect optional executables: =aspell= for spell checking,
+=latexmk= and =xelatex= for export, =rustfmt= and =cargo= for Rust, and
+=black=, =shfmt=, or =djlint= for formatting.  A module documents each use at
+the setting that needs it.

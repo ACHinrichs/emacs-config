@@ -1,0 +1,141 @@
+#+title: Org workflow, notes, and PDFs
+#+PROPERTY: header-args:emacs-lisp :tangle yes
+
+* Core Org and Babel
+
+Org source blocks may run Python, Prolog, and Haskell without confirmation.
+Prolog uses SWI-Prolog.  Change these only if executing document code should
+require confirmation again.
+
+#+begin_src emacs-lisp
+;;; -*- lexical-binding: t; -*-
+(require 'org)
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '((python . t) (prolog . t) (haskell . t)))
+(setq org-confirm-babel-evaluate nil
+      prolog-program-name "/usr/bin/swipl"
+      org-return-follows-link t)
+(add-hook 'org-mode-hook (lambda () (display-fill-column-indicator-mode -1)))
+(plist-put org-format-latex-options :scale 2)
+(add-to-list 'org-structure-template-alist '("selisp" . "SRC emacs-lisp"))
+(add-to-list 'org-structure-template-alist '("slatex" . "SRC latex"))
+(add-to-list 'org-structure-template-alist
+             '("spython" . "SRC python :results value :exports both :session :async"))
+(add-to-list 'org-structure-template-alist
+             '("J" . "#+LaTeX_CLASS: xe-org-article\n#+LATEX_HEADER: \\usepackage[ngerman]{babel}\n#+LATEX_HEADER: \\usepackage{color, colortbl}\n#+TITLE:     \n#+AUTHOR:    \n#+LANGUAGE:  de\n#+OPTIONS:   toc:nil\n\n*@@latex:\\textsf{Gruppe:}@@*  "))
+(add-to-list 'org-structure-template-alist
+             '("blog" . "#+Title: ?\n#+AUTHOR: Adrian C. Hinrichs\n#+DATE: \n#+html_head: <link href=\"css/site.css\" rel=\"stylesheet\">\n#+options: html-style:nil html-scripts:nil"))
+#+end_src
+
+* Presentations and coloured text
+
+=org-present= enlarges text and shows inline images while presenting.  The
+=color:= link type is exported as a LaTeX or HTML colour without navigation.
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path (locate-user-emacs-file "lisp/org-present"))
+(autoload 'org-present "org-present" nil t)
+(with-eval-after-load 'org-present
+  (add-hook 'org-present-mode-hook
+            (lambda () (org-present-big) (org-display-inline-images)))
+  (add-hook 'org-present-mode-quit-hook
+            (lambda () (org-present-small) (org-remove-inline-images)
+              (org-present-show-cursor) (org-present-read-write))))
+(load (locate-user-emacs-file "lisp/org-colored-text.el"))
+(require 'org-colored-text)
+(org-add-link-type
+ "color" (lambda (_path) "No follow action.")
+ (lambda (color description backend)
+   (pcase backend
+     ('latex (format "{\\color{%s}%s}" color description))
+     ('html (let ((rgb (assoc color color-name-rgb-alist)))
+              (if rgb
+                  (format "<span style=\"color: rgb(%s,%s,%s)\">%s</span>"
+                          (truncate (* 255 (/ (nth 1 rgb) 65535.0)))
+                          (truncate (* 255 (/ (nth 2 rgb) 65535.0)))
+                          (truncate (* 255 (/ (nth 3 rgb) 65535.0)))
+                          (or description color))
+                (format "No Color RGB for %s" color)))))))
+#+end_src
+
+* Org-roam and bibliography notes
+
+These paths point at the user's Sciebo note collection.  The capture templates
+and bibliography template describe the structure expected in that collection.
+
+#+begin_src emacs-lisp
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory "~/sciebo/org-roam")
+  (org-roam-completion-everywhere t)
+  (org-roam-mode-section-functions
+   (list #'org-roam-backlinks-section #'org-roam-reflinks-section
+         #'org-roam-unlinked-references-section))
+  :bind (("C-c n l" . org-roam-buffer-toggle) ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert) ("C-c n g" . org-roam-graph)
+         ("C-c n c" . org-roam-capture)
+         :map org-mode-map ("C-M-i" . completion-at-point))
+  :config
+  (require 'org-roam-dailies)
+  (org-roam-db-autosync-mode))
+(with-eval-after-load 'org-roam-dailies
+  (global-set-key (kbd "C-c n d") org-roam-dailies-map)
+  (define-key org-roam-dailies-map (kbd "Y") #'org-roam-dailies-capture-yesterday)
+  (define-key org-roam-dailies-map (kbd "T") #'org-roam-dailies-capture-tomorrow))
+(setq org-roam-database-connector 'sqlite
+      org-roam-node-display-template
+      (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
+      org-roam-capture-templates
+      '(("a" "Allgemein" plain (file "~/sciebo/org-roam/templates/template.org")
+         :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+Title: ${title}\n") :unnarrowed t)
+        ("b" "Berufskolleg" plain (file "~/sciebo/org-roam/bkn-teaching/templates/template.org")
+         :target (file+head "bkn-teaching/${slug}.org" "#+Title: ${title}\n") :unnarrowed t)
+        ("c" "Berufskolleg Kursübersicht" plain (file "~/sciebo/org-roam/bkn-teaching/templates/class_overview.org")
+         :target (file+head "bkn-teaching/fachuebersicht_${slug}.org" "#+Title: ${title}\n") :unnarrowed t)))
+(setq bibtex-completion-notes-path "~/sciebo/org-roam"
+      bibtex-completion-bibliography "~/sciebo/org-roam/bibliography.bib"
+      bibtex-completion-library-path "~/sciebo/org-roam/pdfs"
+      bibtex-completion-pdf-field "file"
+      bibtex-completion-notes-template-multiple-files
+      (concat ":PROPERTIES:\n:ID:         %(org-id-uuid)\n:ROAM_REFS: @${=key=}\n:END:\n"
+              "#+TITLE: ${title}\n#+ROAM_KEY: cite:${=key=}\n#+FILETAGS: paper\n"
+              "* TODO Notes\n:PROPERTIES:\n:Custom_ID: ${=key=}\n"
+              ":NOTER_DOCUMENT: ./pdfs/${=key=}.pdf\n:AUTHOR: ${author-abbrev}\n"
+              ":JOURNAL: ${journaltitle}\n:DATE: ${date}\n:YEAR: ${year}\n:DOI: ${doi}\n:URL: ${url}\n:END:\n\n"))
+(global-set-key (kbd "C-c n r") #'ivy-bibtex)
+#+end_src
+
+* Attachments, PDFs, and notebooks
+
+PDF Tools supplies viewing and annotation; Org Noter stores notes in the note
+collection.  The optional exporters are fetched through Quelpa when absent.
+
+#+begin_src emacs-lisp
+(use-package org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :config (setq org-roam-bibtex-preformat-keywords
+                '("=key=" "title" "url" "file" "author-or-editor" "keywords")))
+(use-package org-download :ensure t
+  :config (setq-default org-download-image-dir "~/sciebo/org-roam/images"
+                        org-download-heading-lvl nil))
+(use-package pdf-tools :ensure t :config (pdf-tools-install))
+(use-package org-noter :after (:any org pdf-view) :requires (pdf-tools pdf-annot)
+  :ensure t
+  :config (setq org-noter-notes-window-location 'other-frame
+                org-noter-always-create-frame nil org-noter-hide-other nil
+                org-noter-notes-search-path '("~/sciebo/org-roam")))
+(use-package org-pdftools :hook (org-mode . org-pdftools-setup-link))
+(use-package ox-ipynb
+  :quelpa (ox-ipynb :fetcher github :repo "jkitchin/ox-ipynb" :branch "master"
+                    :files ("dist" "*.el"))
+  :ensure t :after ox :config (require 'ox-ipynb))
+(use-package org-inline-pdf
+  :quelpa (org-inline-pdf :fetcher github :repo "shg/org-inline-pdf.el")
+  :ensure t :hook (org-mode . org-inline-pdf-mode))
+(use-package phscroll
+  :quelpa (phscroll :fetcher github :repo "misohena/phscroll"
+                     :files ("phscroll.el" "org-phscroll.el"))
+  :ensure t :hook (org-mode . phscroll-mode))
+#+end_src

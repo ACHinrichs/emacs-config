@@ -1,0 +1,84 @@
+#+title: Editing, completion, and text layout
+#+PROPERTY: header-args:emacs-lisp :tangle yes
+
+* General editing defaults
+
+Use Linux-style C indentation, tabs of four columns, automatic pairing, and
+abbreviations stored in the repository.
+
+#+begin_src emacs-lisp
+;;; -*- lexical-binding: t; -*-
+(setq c-default-style "linux" c-basic-offset 4)
+(setq-default indent-tabs-mode t tab-width 4)
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+(setq abbrev-file-name (locate-user-emacs-file "abbrev_defs") save-abbrevs t)
+(setq-default abbrev-mode t)
+(electric-pair-mode 1)
+(setq electric-pair-pairs '((?\" . ?\") (?\{ . ?\}) (?\( . ?\)) (?\[ . ?\]) (?$ . ?$)))
+(add-hook 'text-mode-hook #'turn-off-auto-fill)
+#+end_src
+
+* Completion
+
+Company provides in-buffer completion.  The selected completion styles make
+minibuffer matching flexible while retaining Emacs' standard completion.
+
+#+begin_src emacs-lisp
+(use-package company
+  :ensure t
+  :config (global-company-mode 1))
+(setq company-idle-delay 0.1)
+(use-package company-box
+  :ensure t
+  :diminish company-box-mode
+  :hook (company-mode . company-box-mode))
+(setq completion-styles '(substring basic partial-completion emacs22))
+(savehist-mode 1)
+(use-package diminish :ensure t)
+#+end_src
+
+* Mode-specific layout
+
+Programming buffers show line numbers and an 80-column guide.  Text buffers
+wrap visually and use adaptive wrapping for continuation lines.
+
+#+begin_src emacs-lisp
+(defun ahi-prog-mode-setup ()
+  "Apply the preferred layout to programming buffers."
+  (display-line-numbers-mode 1)
+  (setq fill-column 80)
+  (display-fill-column-indicator-mode 1)
+  (visual-line-mode -1))
+
+(defun ahi-text-mode-setup ()
+  "Apply the preferred layout to prose buffers."
+  (display-line-numbers-mode 0)
+  (visual-line-mode 1)
+  (adaptive-wrap-prefix-mode 1)
+  (display-fill-column-indicator-mode 1))
+
+(add-hook 'prog-mode-hook #'ahi-prog-mode-setup)
+(add-hook 'text-mode-hook #'ahi-text-mode-setup)
+(add-hook 'html-mode-hook #'ahi-prog-mode-setup)
+(add-hook 'web-mode-hook #'ahi-prog-mode-setup)
+(use-package mixed-pitch
+  :hook (text-mode . mixed-pitch-mode)
+  :diminish mixed-pitch-mode
+  :config
+  (set-face-attribute 'default nil :font "Fira Code" :height 120)
+  (set-face-attribute 'fixed-pitch nil :font "Fira Code")
+  (set-face-attribute 'variable-pitch nil :family "Inter"))
+#+end_src
+
+* Mixed HTML and PHP
+
+Enable MMM only when needed by PHP files, rather than globally forcing it on.
+
+#+begin_src emacs-lisp
+(use-package mmm-mode
+  :ensure t
+  :config
+  (setq mmm-global-mode 'maybe)
+  (mmm-add-mode-ext-class 'html-mode "\\.php\\'" 'html-php))
+#+end_src

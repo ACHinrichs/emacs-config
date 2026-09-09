@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; 'djcb-org-article' for export org documents to the LaTex 'article', using
 ;; XeTeX and some fancy fonts; requires XeTeX (see org-latex-to-pdf-process)
 (with-eval-after-load 'ox-latex

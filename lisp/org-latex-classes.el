@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (add-to-list 'org-latex-classes
 			 '(("article"
 				"\\RequirePackage{fix-cm}

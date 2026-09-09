@@ -1,0 +1,41 @@
+#+title: Core behaviour
+#+PROPERTY: header-args:emacs-lisp :tangle yes
+
+* Local libraries
+
+The repository's =lisp/= directory contains supporting implementations.  The
+settings that enable them stay in this notebook.
+
+#+begin_src emacs-lisp
+;;; -*- lexical-binding: t; -*-
+(add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory))
+(load (locate-user-emacs-file "lisp/org-xelatex.el"))
+(load (locate-user-emacs-file "lisp/org-tex-local-class.el"))
+(load (locate-user-emacs-file "lisp/insert-date.el"))
+#+end_src
+
+* Startup and persistence
+
+Native compilation is disabled as a workaround for the referenced org-noter
+issue.  The server lets =emacsclient= connect to the running instance.
+
+#+begin_src emacs-lisp
+(setq native-comp-speed -1)
+(global-auto-revert-mode 1)
+(setq password-cache-expiry nil)
+(setq initial-major-mode 'org-mode)
+(setq initial-scratch-message
+      "#+TITLE: Scratch\n#+Description: Scratch buffer for notes and ideas. Save it to a file to keep it.\n\n")
+(setq inhibit-startup-screen t)
+(require 'server)
+(unless (server-running-p) (server-start))
+#+end_src
+
+* Executable lookup
+
+These directories provide personal and system command-line tools to Emacs.
+
+#+begin_src emacs-lisp
+(dolist (directory '("/home/ahi/.local/bin" "/usr/bin"))
+  (add-to-list 'exec-path directory))
+#+end_src

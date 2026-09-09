@@ -1,3 +1,5 @@
+;;; pontemacs-theme.el --- Minimal light theme -*- lexical-binding: t; -*-
+
 (deftheme pontemacs "Minimal light theme using custom palette")
 
 ;; Palette
