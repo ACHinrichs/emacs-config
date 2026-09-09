@@ -1,0 +1,117 @@
+#+Title: BKN Classes
+Klassen für meine Arbeit am Berufskolleg
+
+#+begin_src emacs-lisp :export code :tangle yes
+    (with-eval-after-load 'ox-latex
+      (add-to-list 'org-latex-classes
+      			   '("bknworksheet"
+      				 "\\documentclass{bknworksheet}
+  [NO-DEFAULT-PACKAGES]
+  [EXTRA]"
+      		   ("\\section{%s}" . "\\section*{%s}")
+      		   ("\\subsection{%s}" . "\\subsection*{%s}")
+      		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+      		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+      		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+#+RESULTS:
+| bknworksheet | \documentclass{bknworksheet} |
+
+
+#+begin_src emacs-lisp :export code :tangle yes
+    (with-eval-after-load 'ox-latex
+      (add-to-list 'org-latex-classes
+      			   '("bknexam"
+      				 "\\documentclass{bknexam}
+  [NO-DEFAULT-PACKAGES]
+  [EXTRA]"
+      		   ("\\section{%s}" . "\\section*{%s}")
+      		   ("\\subsection{%s}" . "\\subsection*{%s}")
+      		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+      		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+      		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+#+RESULTS:
+| bknexam | \documentclass{bknexam} |
+
+#+begin_src emacs-lisp :export code :tangle yes
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+    			   '("bknexamcover"
+  		         "\\documentclass{bknexamcover}
+   		   [NO-DEFAULT-PACKAGES]
+   	           [EXTRA]"
+    		   ("\\section{%s}" . "\\section*{%s}")
+    		   ("\\subsection{%s}" . "\\subsection*{%s}")
+    		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+    		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+    		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+Beamer class:
+#+begin_src emacs-lisp :export code :tangle yes
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+    			   '("bknbeamer"
+  		         "\\documentclass{bknbeamer}
+   		   [NO-DEFAULT-PACKAGES]
+   	           [EXTRA]"
+    		   ("\\section{%s}" . "\\section*{%s}")
+    		   ("\\subsection{%s}" . "\\subsection*{%s}")
+    		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+#+end_src
+
+Normal Document class:
+#+begin_src emacs-lisp :export code :tangle yes
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+    			   '("bknarticle"
+  		         "\\documentclass{bknarticle}
+   		   [NO-DEFAULT-PACKAGES]
+   	           [EXTRA]"
+    		   ("\\section{%s}" . "\\section*{%s}")
+    		   ("\\subsection{%s}" . "\\subsection*{%s}")
+    		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+    		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+    		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+#+RESULTS:
+| bkndocument | \documentclass{bkndocument} |
+
+
+#+begin_src emacs-lisp :export code :tangle yes
+    (with-eval-after-load 'ox-latex
+      (add-to-list 'org-latex-classes
+      			   '("bknerwartungshorizont"
+      				 "\\documentclass{bknerwartungshorizont}
+  [NO-DEFAULT-PACKAGES]
+  [EXTRA]"
+      		   ("\\section{%s}" . "\\section*{%s}")
+      		   ("\\subsection{%s}" . "\\subsection*{%s}")
+      		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+      		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+      		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+#+RESULTS:
+| bknerwartungshorizont | \documentclass{bknerwartungshorizont} |
+
+#+begin_src emacs-lisp :export code :tangle yes
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+    			   '("bknprotokoll"
+  		         "\\documentclass{bknprotokoll}
+   		   [NO-DEFAULT-PACKAGES]
+   	           [EXTRA]"
+    		   ("\\section{%s}" . "\\section*{%s}")
+    		   ("\\subsection{%s}" . "\\subsection*{%s}")
+    		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+    		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+    		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+#+RESULTS:
+| bknprotokoll | \documentclass{bknarticle} |

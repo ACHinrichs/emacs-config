@@ -1,6 +1,6 @@
 * Org-babel
 ** haskell formatter
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;;(format "%s"
   ;;        (replace-regexp-in-string
   ;;         (rx line-start
@@ -12,7 +12,7 @@ This is to add biblatex as bibliography processor
 
 * Paperwriting-stuff
 ** Biblatex as citation driver
-#+begin_src emacs-lisp :exports code
+#+begin_src emacs-lisp :exports code :tangle yes
   (require 'oc-biblatex)
    (setq org-cite-export-processors
         '((latex biblatex)
@@ -25,7 +25,7 @@ This is to add biblatex as bibliography processor
 
 ** Glossary
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (require 'org-ref)
   (add-hook 'org-export-before-parsing-hook 'org-ref-acronyms-before-parsing)
   (add-hook 'org-export-before-parsing-hook 'org-ref-glossary-before-parsing)
@@ -35,7 +35,7 @@ This is to add biblatex as bibliography processor
 | org-ref-glossary-before-parsing | org-ref-acronyms-before-parsing |
 
 ** Subfigures
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 ;; (package-initialize)
 (use-package ox-latex-subfigure
   :init
@@ -46,7 +46,7 @@ This is to add biblatex as bibliography processor
 
 * Export to Jupiter notebook
 from github
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package ox-ipynb
 
     :quelpa (ox-ipynb :fetcher github
@@ -68,7 +68,7 @@ Cycle between the states:
 - IN-PROGRESS or BLOCKED
 - DONE or CANCELED
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp  :tangle yes
   (setq org-todo-keywords
         '((sequence "TODO(t)" "IN-PROGRESS(p)" "BLOCKED(b@/!)" "|" "DONE(d/!)" "CANCELED(c@/!)")))
 #+end_src
@@ -78,7 +78,7 @@ Cycle between the states:
 
 ** Pretty export
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp  :tangle yes
   (defun my-org-latex-format-headline-function
       (todo todo-type priority text tags _info)
     "Default format function for a headline.
@@ -103,9 +103,22 @@ Cycle between the states:
 : my-org-latex-format-headline-
 
 * LaTeX-Export
+I think I need to load =ox-latex= before loading custom classes, otherwise they won't be recognized.
+#+begin_src emacs-lisp  :tangle yes
+  (require 'ox-latex)
+#+end_src
+
+#+RESULTS:
+: ox-latex
+
+** Letters
+#+begin_src emacs-lisp  :tangle yes
+  (require 'ox-koma-letters)
+#+end_src
+
 ** Load custom classes
 Load "legacy" stuff:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp  :tangle yes
   (load "~/.emacs.d/lisp/org-xelatex.el")
   (load "~/.emacs.d/lisp/org-tex-local-class.el")
   (load "~/.emacs.d/lisp/org-latex-classes.el")
@@ -113,23 +126,44 @@ Load "legacy" stuff:
 
 Load classes I implemented in org-files:
 AJC formal, informal and letter
-#+begin_src emacs-lisp
-  ;(org-babel-load-file "~/.emacs.d/org-latex-ajc.org")
-#+end_src
-
-Load tufte layout which I defined in org file ox-latex/ox-tufte.org
-#+begin_src emacs-lisp
-    (org-babel-load-file "~/.emacs.d/ox-latex/ox-tufte.org")
+#+begin_src emacs-lisp  :tangle yes
+  (org-babel-load-file "~/.emacs.d/ox-latex/ajcclasses.org")
 #+end_src
 
 #+RESULTS:
+: Loaded ~/.emacs.d/ox-latex/ajcclasses.el
+
+Load tufte layout which I defined in org file ox-latex/ox-tufte.org
+#+begin_src emacs-lisp  :tangle yes
+  (org-babel-load-file "~/.emacs.d/ox-latex/ox-tufte.org")
+#+end_src
+
+#+RESULTS:
+: Loaded ~/.emacs.d/ox-latex/ox-tufte.el
+
+Load scrbook-chapter, whcih i use to be able to use the thesis template of i5 correctly
+
+#+begin_src emacs-lisp  :tangle yes
+  (org-babel-load-file "~/.emacs.d/ox-latex/ox-scrbook-chapter.org")
+#+end_src
+
+#+RESULTS:
+: Loaded ~/.emacs.d/ox-latex/ox-scrbook-chapter.el
+
+Load bkn classes
+#+begin_src emacs-lisp  :tangle yes
+  (org-babel-load-file (locate-user-emacs-file "ox-latex/bkclasses.org"))
+#+end_src
+
+#+RESULTS:
+: Loaded ~/.emacs.d/ox-latex/bkclasses.el
 
 * Org-structure templates
 Defines some templates to be inserted with =org-insert-structure-template= or =C-c C-,=.
 
 ** Code-Blocks
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp  :tangle yes
   (add-to-list 'org-structure-template-alist
                '("selisp" . "SRC emacs-lisp"))
   (add-to-list 'org-structure-template-alist
@@ -145,7 +179,7 @@ Defines some templates to be inserted with =org-insert-structure-template= or =C
 * PDF as inline images
 
 Install package from github https://github.com/shg/org-inline-pdf.el.git and add org-inline-pdf-mode to the org mode hook
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp  :tangle yes
   (use-package org-inline-pdf :quelpa (org-inline-pdf :fetcher github :repo "shg/org-inline-pdf.el")
     :ensure t
     :config
@@ -157,7 +191,7 @@ Install package from github https://github.com/shg/org-inline-pdf.el.git and add
 
 * Org-phscroll
 To fix the damn autowrapping of tables (and code blocks) in org mode, use the package org-phscroll
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp  :tangle yes
   (use-package phscroll
     :quelpa (phscroll
   			 :fetcher github

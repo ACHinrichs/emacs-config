@@ -10,10 +10,6 @@
 (load "~/.emacs.d/lisp/org-templates.el")
 (load "~/.emacs.d/lisp/insert-date.el")
 
-(setq solarized-use-variable-pitch t
-      solarized-scale-org-headlines t)
-(load "~/.emacs.d/lisp/solarized.el")
-
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -21,51 +17,38 @@
 (package-initialize)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(load-theme 'pontemacs t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(solarized-dark))
  '(custom-safe-themes
-   '("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4"
-	 "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879"
-	 "ded46420eaf95b374713249a503cec464b5d7f672e3a9efe01a0bf27b2086b66"
-	 "417128f71670e83fca0a9f87bbcfa38dd532ca78bd6524cafe1ea0ea21c87ab4"
-	 "07815c676b7d8a1d0c041b71d89f7f1d7d80209c44e3570d4bec2d524318b5ac"
-	 "4e68b9eb3b87f830c80596ffd599d39d77d06c2be408a4ea4c0d06cfa9b8753c"
-	 "d7ec73258cea32275faf9745b8bfd48498242ee862bf3895fefa972e0710602d"
-	 "2d6c158387e53bcb00fc262c6d046b5402dd37e89dae8ca05cff24326b6afa04"
-	 "af2d66af959d1a357f49463147a46cf7b770e557c0f84b0991e2936b7b759dd9"
-	 "22e976d099f53dabc4534f080c8c4a36e7c7c223edc2bdac8d7537611eaae321"
-	 "a82bd6ba32612663f33b8d7a7027ec28ca66f36abc6fb98d69deebb5ca4a4504"
-	 "3e2fd2a175d4e5df50cc09948260c620167124d9fc11c0bf71849d523efcf375"
-	 default))
+   '("b9a79b7c82cfbe95d376b9958e34d95a17b72eac068bfc82403df12229b49df9"
+	 "d7689bccf43c07dea8af1e47d13c45ad81b727a65c7db625edd67f1a395482b8"
+	 "0620b0e3416eac155be1571786c95b227332c60495dd1c33da6df119c1d5561d"
+	 "b2aba8dcd3d48b13b14c1360a581999d50431ad0c40a23dbf0397aa3a3ac4223"
+	 "21875d7e0ca402ce472d760a33f2c30456cca819c7b4234adbab4f8eb97a5c26"
+	 "8c9396ede052b20dc3dc4f20254c081f7359c0eaebf886ccfd99dcdee13ee1df" default))
  '(ein:output-area-inlined-images t)
  '(org-list-allow-alphabetical t)
  '(package-selected-packages
-   '(jinja2-mode ox-tufte-latex tufte-org-mode tufte copilot-chat
-				 chatgpt-shell shell-maker format-all pylint ox-ipynb
-				 org-roam-dailies copilot quelpa-use-package quelpa
-				 org-noter-pdftools org-pdftools pdf-tools org-noter
-				 ebib multi-line pyvenv diminish company-spell
-				 company-flyspell companyflyspell company-box
-				 company-posframe jsonrpc editorconfig dash s
-				 company-jedi epresent citar-org-roam org-download
-				 ox-latex-subfigure org-ref jupyter
-				 multiple-cursors ob-prolog lsp-mode rustic
-				 mixed-pitch use-package flyspell-popup adaptive-wrap
-				 go-complete go-mode ein ini-mode pinentry
-				 dockerfile-mode yaml-mode fill-column-indicator ##
-				 company highlight-indentation auctex-latexmk
-				 color-theme-x color-theme-xe markdown-mode
-				 markdown-mode+mode rainbow-mode flyspell-Lazy
-				 all-the-icons neotree markdown-preview-eww
-				 ac-haskell-process ac-math auto-complete
-				 auto-complete-auctex auto-complete-c-headers
-				 auto-complete-clang auto-complete-clang-async
-				 php-mode paradox mmm-mode magit auctex)))
+   '(## ac-haskell-process ac-math adaptive-wrap all-the-icons auctex
+		auctex-latexmk auto-complete auto-complete-auctex
+		auto-complete-c-headers auto-complete-clang auto-complete-clang-async
+		chatgpt-shell citar-org-roam color-theme-x color-theme-xe company
+		company-box company-flyspell company-jedi company-posframe company-spell
+		companyflyspell copilot dash diminish dockerfile-mode ebib editorconfig
+		ein epresent fill-column-indicator flyspell-Lazy flyspell-popup
+		format-all go-complete go-mode highlight-indentation ini-mode
+		jinja2-mode jsonrpc jupyter lsp-mode magit markdown-mode
+		markdown-mode+mode markdown-preview-eww mixed-pitch mmm-mode multi-line
+		multiple-cursors neotree ob-prolog org-download org-noter
+		org-noter-pdftools org-pdftools org-present org-ref org-roam-dailies
+		ox-ipynb ox-latex-subfigure ox-tufte-latex paradox pdf-tools php-mode
+		pinentry pylint pyvenv quelpa quelpa-use-package rainbow-mode rustic s
+		shell-maker tufte tufte-org-mode use-package yaml-mode)))
 (require 'package)
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -73,25 +56,6 @@
 ;; Installs all uninstalled, but selected packages
 (package-install-selected-packages)
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:height 110 :family "Fira Code"))))
- '(copilot-overlay-face ((t (:background "#38454c"))))
- '(org-drawer ((t (:foreground "#26d1a9" :family "Fira Mono"))))
- '(org-property-value ((t (:inherit default :family "Fira Code"))))
- '(org-special-keyword ((t (:foreground "#51636e" :weight bold :family "Fira Code")))))
-										;'(ein:cell-input-area ((t (:background "#2a3439")))))
-										;'(org-level-1 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
-										;'(org-level-2 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
-										;'(org-level-3 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
-										;'(org-level-4 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
-										;'(org-level-5 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
-										;'(org-level-6 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
-										;'(org-level-7 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code"))))
-										;'(org-level-8 ((t (:inherit variable-pitch :extend nil :weight bold :height 113 :width normal :foundry "CTDB" :family "Fira Code")))))
 
 
 (require 'use-package)
@@ -109,9 +73,7 @@
 (load "~/.emacs.d/lisp/rust_stuff.el")
 
 (require 'org)
-(org-babel-load-file
- (expand-file-name "emacs-init.org"
-                   user-emacs-directory))
+(org-babel-load-file (expand-file-name "~/.emacs.d/emacs-init.org"))
 
 (setq org-return-follows-link t)
 ;; stuff for org-present
@@ -299,3 +261,13 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:height 110 :family "Fira Code"))))
+ '(copilot-overlay-face ((t (:background "#38454c"))))
+ '(org-drawer ((t (:foreground "#26d1a9" :family "Fira Mono"))))
+ '(org-property-value ((t (:inherit default :family "Fira Code"))))
+ '(org-special-keyword ((t (:foreground "#51636e" :weight bold :family "Fira Code")))))

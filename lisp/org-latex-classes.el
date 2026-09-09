@@ -1,6 +1,6 @@
-(setq org-latex-classes
-'(("article"
-"\\RequirePackage{fix-cm}
+(add-to-list 'org-latex-classes
+			 '(("article"
+				"\\RequirePackage{fix-cm}
 \\PassOptionsToPackage{svgnames}{xcolor}
 \\documentclass[11pt]{article}
 \\usepackage[AUTO]{babel}
@@ -79,27 +79,27 @@
 \\AtBeginDocument{\\renewcommand{\\UrlFont}{\\ttfamily}}
 [PACKAGES]
 [EXTRA]"
-("\\section{%s}" . "\\section*{%s}")
-("\\subsection{%s}" . "\\subsection*{%s}")
-("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-("\\paragraph{%s}" . "\\paragraph*{%s}")
-("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+				("\\section{%s}" . "\\section*{%s}")
+				("\\subsection{%s}" . "\\subsection*{%s}")
+				("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+				("\\paragraph{%s}" . "\\paragraph*{%s}")
+				("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
 
-("report" "\\documentclass[11pt]{report}"
-("\\part{%s}" . "\\part*{%s}")
-("\\chapter{%s}" . "\\chapter*{%s}")
-("\\section{%s}" . "\\section*{%s}")
-("\\subsection{%s}" . "\\subsection*{%s}")
-("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+			   ("report" "\\documentclass[11pt]{report}"
+				("\\part{%s}" . "\\part*{%s}")
+				("\\chapter{%s}" . "\\chapter*{%s}")
+				("\\section{%s}" . "\\section*{%s}")
+				("\\subsection{%s}" . "\\subsection*{%s}")
+				("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
 
-("book" "\\documentclass[11pt]{book}"
-("\\part{%s}" . "\\part*{%s}")
-("\\chapter{%s}" . "\\chapter*{%s}")
-("\\section{%s}" . "\\section*{%s}")
-("\\subsection{%s}" . "\\subsection*{%s}")
-("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+			   ("book" "\\documentclass[11pt]{book}"
+				("\\part{%s}" . "\\part*{%s}")
+				("\\chapter{%s}" . "\\chapter*{%s}")
+				("\\section{%s}" . "\\section*{%s}")
+				("\\subsection{%s}" . "\\subsection*{%s}")
+				("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
 
-("teilnehmerliste" "\\documentclass[11pt]{article}
+			   ("teilnehmerliste" "\\documentclass[11pt]{article}
 \\usepackage{fontspec}
 \\usepackage{longtable}
 \\usepackage[normalem]{ulem}
@@ -110,7 +110,7 @@
 \\pagestyle{fancy}
 \\renewcommand{\\headrulewidth}{0pt}
 \\fancyhf{}
-\\makeatletter 
+\\makeatletter
 \\fancyfoot[R]{\\tiny Stand: \\@date}
 \\makeatother
 \\usepackage[table]{xcolor}
@@ -118,17 +118,17 @@
 \\usepackage{tabularx}
 \\usepackage{ltablex}
 \\usepackage{hhline}
-\\makeatletter 
+\\makeatletter
 \\renewcommand\\maketitle{{\\sffamily\\textbf{\\@author}\\hfill \\@title\\\\ }}
 \\makeatother
 \\setlength\\parindent{0pt}
 \\setcounter{secnumdepth}{0}
 
 "
-("\\part{%s}" . "\\part*{%s}")
-("\\chapter{%s}" . "\\chapter*{%s}")
-("\\section{%s}" . "\\section*{%s}")
-("\\subsection{%s}" . "\\subsection*{%s}")
-("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+				("\\part{%s}" . "\\part*{%s}")
+				("\\chapter{%s}" . "\\chapter*{%s}")
+				("\\section{%s}" . "\\section*{%s}")
+				("\\subsection{%s}" . "\\subsection*{%s}")
+				("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
 
-))
+			   ))

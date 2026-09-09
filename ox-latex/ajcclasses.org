@@ -1,0 +1,55 @@
+#+Title: AJC Classes
+Klassen für meine Arbeit im Aachener Judo Club 1953 e.V.
+
+#+begin_src emacs-lisp :export code :tangle yes
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+    			   '("ajc-letter"
+   		         "\\documentclass{ajc-letter}
+                       [DEFAULT-PACKAGES]
+    	           [EXTRA]
+                       \\renewcommand\\raggedsignature{\\raggedright}
+                       "
+     		   ("\\section{%s}" . "\\section*{%s}")
+     		   ("\\subsection{%s}" . "\\subsection*{%s}")
+     		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+     		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+     		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+		   #+end_src
+
+		   #+RESULTS:
+		   | ajc-letter | \documentclass{ajc-letter} |
+
+#+begin_src emacs-lisp :export code :tangle yes
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+    			   '("ajc-formal"
+   		         "\\documentclass{ajc-formal}
+    		   [DEFAULT-PACKAGES]
+    	           [EXTRA]"
+     		   ("\\section{%s}" . "\\section*{%s}")
+     		   ("\\subsection{%s}" . "\\subsection*{%s}")
+     		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+     		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+     		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+#+RESULTS:
+| ajc-formal | \documentclass{ajc-formal} |
+
+#+begin_src emacs-lisp :export code :tangle yes
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+    			   '("ajc-informal"
+   		         "\\documentclass{ajc-informal}
+    		   [DEFAULT-PACKAGES]
+    	           [EXTRA]"
+     		   ("\\section{%s}" . "\\section*{%s}")
+     		   ("\\subsection{%s}" . "\\subsection*{%s}")
+     		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+     		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+     		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+#+RESULTS:
+| ajc-informal | \documentclass{ajc-informal} |

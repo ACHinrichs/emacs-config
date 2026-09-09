@@ -1,0 +1,22 @@
+#+Title: ox-scrbook-chapter
+
+The scrbook class is used by i5 as a base for thesis templates.
+However, in the i5 thesis template, the top most level heading is chapter
+
+#+begin_src emacs-lisp :export code
+    (with-eval-after-load 'ox-latex
+      (add-to-list 'org-latex-classes
+      			   '("scrbook-chapter"
+      				 "\\documentclass[a4paper,BCOR5mm,11pt,pointlessnumbers,twoside,openany]{scrbook}
+  [NO-DEFAULT-PACKAGES]
+  [EXTRA]"
+      		   ("\\chapter{%s}". "\\chapter*{%s}")
+      		   ("\\section{%s}" . "\\section*{%s}")
+      		   ("\\subsection{%s}" . "\\subsection*{%s}")
+      		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+      		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+      		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+#+RESULTS:
+| scrbook-chapter | \documentclass[a4paper,BCOR5mm,11pt,pointlessnumbers,twoside,openany]{scrbook} |

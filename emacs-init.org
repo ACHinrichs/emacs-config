@@ -1,5 +1,5 @@
 * Plugin loaders
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package quelpa
 	:ensure t)
   (use-package quelpa-use-package
@@ -10,11 +10,15 @@
 
 * Org-related external file
 Load general org-config from other file 
-#+begin_src emacs-lisp
-(with-eval-after-load "org"
-  ;; load extra configs to org mode
-  (org-babel-load-file "~/.emacs.d/org-config.org"))
+#+begin_src emacs-lisp :tangle yes
+  (require 'org)
+  (load-file "~/.emacs.d/org-config.el")
+
+  (load-file (locate-user-emacs-file "ox-latex/bkclasses.el"))
 #+end_src
+
+#+RESULTS:
+: t
 
 * Org-Roam
 
@@ -22,7 +26,7 @@ Partly stolen from the following sites:
  - https://systemcrafters.net/build-a-second-brain-in-emacs/getting-started-with-org-roam/
 
 Load Packages
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (require 'org-roam-dailies)
   (use-package org-roam
     :ensure t
@@ -48,13 +52,30 @@ Load Packages
            ("C-M-i" . completion-at-point))
   :config
   (org-roam-db-autosync-mode))
+
+  (setq org-roam-capture-templates
+  	'(
+  	  ("a" "Allgemein" plain (file "~/sciebo/org-roam/templates/template.org")
+  	   :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+  						  "#+Title: ${title}\n") :unnarrowed t)
+  	  ("b" "Berufskolleg" plain (file "~/sciebo/org-roam/bkn-teaching/templates/template.org")
+  	   :target (file+head "bkn-teaching/${slug}.org"
+  						  "#+Title: ${title}\n") :unnarrowed t)
+  	  ("c" "Berufskolleg Kursübersicht" plain (file "~/sciebo/org-roam/bkn-teaching/templates/class_overview.org")
+  	   :target (file+head "bkn-teaching/fachuebersicht_${slug}.org"
+  						  "#+Title: ${title}\n") :unnarrowed t)
+  	  ("c" "Berufskolleg Kursübersicht" plain (file "~/sciebo/org-roam/bkn-teaching/templates/class_overview.org")
+  	   :target (file+head "bkn-teaching/fachuebersicht_${slug}.org"
+  						  "#+Title: ${title}\n") :unnarrowed t)
+  	  )
+  	)
 #+end_src
 
 #+RESULTS:
-: completion-at-point
+| a | Allgemein | plain | (file ~/sciebo/org-roam/templates/template.org) | :target | (file+head %<%Y%m%d%H%M%S>-${slug}.org #+Title: ${title} |
 
 ** Add tags to node display
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq org-roam-node-display-template
       (concat "${title:*} "
               (propertize "${tags:10}" 'face 'org-tag)))
@@ -65,7 +86,7 @@ Load Packages
 
 ** bibtex config
 Sets locations for notes, the bibtex-file and pdfs, specifies the template for notes
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq
    bibtex-completion-notes-path "~/sciebo/org-roam"
    bibtex-completion-bibliography "~/sciebo/org-roam/bibliography.bib"
@@ -124,7 +145,7 @@ Sets locations for notes, the bibtex-file and pdfs, specifies the template for n
 
 Set keybinding, ~C-c n~ is org-roam prefix, so that fits
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (global-set-key (kbd "C-c n r") 'ivy-bibtex) ; keybinding 
 #+end_src
 
@@ -132,7 +153,7 @@ Set keybinding, ~C-c n~ is org-roam prefix, so that fits
 : ivy-bibtex
 
 ** Org-Roam-Bibtex
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
     (use-package org-roam-bibtex
       :after (org-roam)
       :hook (org-roam-mode . org-roam-bibtex-mode)
@@ -159,7 +180,7 @@ Set keybinding, ~C-c n~ is org-roam prefix, so that fits
 | org-roam-bibtex-mode |
 
 ** Fix multiple-tag bug in ~org-roam-ui~
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
 (setq org-roam-database-connector 'sqlite)
 #+end_src
 
@@ -167,7 +188,7 @@ Set keybinding, ~C-c n~ is org-roam prefix, so that fits
 : sqlite
 
 ** Org-download
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package org-download
     :ensure t
     :config
@@ -176,7 +197,7 @@ Set keybinding, ~C-c n~ is org-roam prefix, so that fits
 #+end_src
     
 * PDF-Tools
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package pdf-tools
 	:ensure t
 	:config
@@ -188,7 +209,7 @@ Set keybinding, ~C-c n~ is org-roam prefix, so that fits
 
 ** org-noter
 Requires pdf-annot as workaround to a bug
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package org-noter	
 	:after (:any org pdf-view)
 	:requires (pdf-tools pdf-annot)
@@ -220,7 +241,7 @@ Setup using [[https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/][this 
 
 Load =copilot.el=
 
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package copilot
     :quelpa (copilot :fetcher github
                    :repo "copilot-emacs/copilot.el"
@@ -231,7 +252,7 @@ Load =copilot.el=
     :diminish
     :config (setq copilot-indent-offset-warning-disable t)
                                           ;start copilot agent
-    (copilot--start-agent) 
+    ;(copilot--start-agent) 
     :bind (("C-c c c" . copilot-complete)
            ("C-c c a" . copilot-accept-completion) ; probably im going to use Tab more often
            ("C-c <right>" . copilot-accept-completion-by-word)
@@ -267,7 +288,7 @@ tab behavior, e.g. causing problems with magit
 : ahi-custom-tab
 
 We activate =copilot= in some specific modes:
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (add-hook 'text-mode-hook #'copilot-mode)
   (add-hook 'prog-mode-hook #'copilot-mode)
 #+end_src
@@ -275,7 +296,7 @@ We activate =copilot= in some specific modes:
 #+RESULTS:
 | copilot-mode | flyspell-prog-mode |
 
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (defvar rk/copilot-manual-mode nil
     "When `t' will only show completions when manually triggered, e.g. via M-C-<return>.")
 
@@ -303,8 +324,8 @@ We activate =copilot= in some specific modes:
 #+RESULTS:
 : rk/copilot-change-activation
 ** copilot-chat (Chat with Co-Pilot)
-
-#+begin_src elisp
+# deactivated by removing emacs-lisp language hint and :tanlge yes
+#+begin_src 
   (use-package copilot-chat
     :quelpa (copilot-chat :fetcher github
                           :repo "chep/copilot-chat.el"
@@ -324,7 +345,7 @@ We activate =copilot= in some specific modes:
 
 * Company Mode
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package company
     :ensure t
     :config
@@ -343,7 +364,7 @@ We activate =copilot= in some specific modes:
 
 * Spellchecking
 Using ~company-spell~ and ~flyspell~
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp :tangle yes 
   (use-package company-spell
         :ensure t
         :config (push 'company-spell company-backends))
@@ -381,7 +402,7 @@ Using ~company-spell~ and ~flyspell~
 
 In org-files we select the Dictionary for Flyspell based on the language tag in the header
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (defun ahi-org-set-flyspell-language ()
   "Set Flyspell dictionary based on the #+LANGUAGE tag in the Org file."
   (when (derived-mode-p 'org-mode)
@@ -404,14 +425,14 @@ In org-files we select the Dictionary for Flyspell based on the language tag in 
 * De-Clutter Mode Line
 Using diminish to hide specific modes from the mode line
 
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package diminish
     :ensure t)
 #+end_src
 
 * Programming Modes
 ** Mixed Pitch mode
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package mixed-pitch
     :hook
     (text-mode . mixed-pitch-mode)
@@ -426,7 +447,7 @@ Using diminish to hide specific modes from the mode line
 | flyspell-mode | copilot-mode | (lambda nil (display-fill-column-indicator-mode 1)) | (lambda nil (display-line-numbers-mode 1)) | visual-line-mode | (lambda nil (setq adaptive-wrap-prefix-mode 1)) | (lambda nil (setq visual-fill-line-mode 1)) | turn-off-auto-fill | mixed-pitch-mode | text-mode-hook-identify |
 
 ** Jinja2 Mode
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle yes
     (use-package jinja2-mode
         :ensure t
         :mode ("\\.jinja2\\'" . jinja2-mode)
@@ -435,11 +456,11 @@ Using diminish to hide specific modes from the mode line
 #+END_SRC
 
 #+RESULTS:
-: ((\.j2\' . jinja2-mode) (\.jinja2\' . jinja2-mode) (\.[pP][dD][fF]\' . pdf-view-mode) (\.odc\' . archive-mode) (\.odf\' . archive-mode) (\.odi\' . archive-mode) (\.otp\' . archive-mode) (\.odp\' . archive-mode) (\.otg\' . archive-mode) (\.odg\' . archive-mode) (\.ots\' . archive-mode) (\.ods\' . archive-mode) (\.odm\' . archive-mode) (\.ott\' . archive-mode) (\.odt\' . archive-mode) (\.hva\' . LaTeX-mode) (\.dockerfile\' . dockerfile-mode) ([/\]\(?:Containerfile\|Dockerfile\)\(?:\.[^/\]*\)?\' . dockerfile-mode) (\.editorconfig\' . editorconfig-conf-mode) (\.ipynb\' . ein:ipynb-mode) (\.fsti?\' . fstar-mode) (go\.work\' . go-dot-work-mode) (go\.mod\' . go-dot-mod-mode) (\.go\' . go-mode) (\.hsc\' . haskell-mode) (\.l[gh]s\' . haskell-literate-mode) (\.hsig\' . haskell-mode) (\.[gh]s\' . haskell-mode) (\.cabal\'\|/cabal\.project\|/\.cabal/config\' . haskell-cabal-mode) (\.chs\' . haskell-c2hs-mode) (\.ghci\' . ghci-script-mode) (\.dump-simpl\' . ghc-core-mode) (\.hcr\' . ghc-core-mode) (\.ini\' . ini-mode) (/git-rebase-todo\' . git-rebase-mode) (\.\(?:php[s345]?\|phtml\)\' . php-mode-maybe) (\.\(?:php\.inc\|stub\)\' . php-mode) (/\.php_cs\(?:\.dist\)?\' . php-mode) (\.rs\' . rustic-mode) (\.\(?:md\|markdown\|mkd\|mdown\|mkdn\|mdwn\)\' . markdown-mode) (\.rs\' . rust-mode) (\.\(e?ya?\|ra\)ml\' . yaml-mode) (\.gpg\(~\|\.~[0-9]+~\)?\' nil epa-file) (\.elc\' . elisp-byte-code-mode) (\.zst\' nil jka-compr) (\.dz\' nil jka-compr) (\.xz\' nil jka-compr) (\.lzma\' nil jka-compr) (\.lz\' nil jka-compr) (\.g?z\' nil jka-compr) (\.bz2\' nil jka-compr) (\.Z\' nil jka-compr) (\.vr[hi]?\' . vera-mode) (\(?:\.\(?:rbw?\|ru\|rake\|thor\|jbuilder\|rabl\|gemspec\|podspec\)\|/\(?:Gem\|Rake\|Cap\|Thor\|Puppet\|Berks\|Brew\|Vagrant\|Guard\|Pod\)file\)\' . ruby-mode) (\.re?st\' . rst-mode) (\.py[iw]?\' . python-mode) (\.m\' . octave-maybe-mode) (\.less\' . less-css-mode) (\.scss\' . scss-mode) (\.cs\' . csharp-mode) (\.awk\' . awk-mode) (\.\(u?lpc\|pike\|pmod\(\.in\)?\)\' . pike-mode) (\.idl\' . idl-mode) (\.java\' . java-mode) (\.m\' . objc-mode) (\.ii\' . c++-mode) (\.i\' . c-mode) (\.lex\' . c-mode) (\.y\(acc\)?\' . c-mode) (\.h\' . c-or-c++-mode) (\.c\' . c-mode) (\.\(CC?\|HH?\)\' . c++-mode) (\.[ch]\(pp\|xx\|\+\+\)\' . c++-mode) (\.\(cc\|hh\)\' . c++-mode) (\.\(bat\|cmd\)\' . bat-mode) (\.[sx]?html?\(\.[a-zA-Z_]+\)?\' . mhtml-mode) (\.svgz?\' . image-mode) (\.svgz?\' . xml-mode) (\.x[bp]m\' . image-mode) (\.x[bp]m\' . c-mode) (\.p[bpgn]m\' . image-mode) (\.tiff?\' . image-mode) (\.gif\' . image-mode) (\.png\' . image-mode) (\.jpe?g\' . image-mode) (\.webp\' . image-mode) (\.te?xt\' . text-mode) (\.[tT]e[xX]\' . tex-mode) (\.ins\' . tex-mode) (\.ltx\' . latex-mode) (\.dtx\' . doctex-mode) (\.org\' . org-mode) (\.dir-locals\(?:-2\)?\.el\' . lisp-data-mode) (\.eld\' . lisp-data-mode) (eww-bookmarks\' . lisp-data-mode) (tramp\' . lisp-data-mode) (/archive-contents\' . lisp-data-mode) (places\' . lisp-data-mode) (\.emacs-places\' . lisp-data-mode) (\.el\' . emacs-lisp-mode) (Project\.ede\' . emacs-lisp-mode) (\.\(scm\|sls\|sld\|stk\|ss\|sch\)\' . scheme-mode) (\.l\' . lisp-mode) (\.li?sp\' . lisp-mode) (\.[fF]\' . fortran-mode) (\.for\' . fortran-mode) (\.p\' . pascal-mode) (\.pas\' . pascal-mode) (\.\(dpr\|DPR\)\' . delphi-mode) (\.\([pP]\([Llm]\|erl\|od\)\|al\)\' . perl-mode) (Imakefile\' . makefile-imake-mode) (Makeppfile\(?:\.mk\)?\' . makefile-makepp-mode) (\.makepp\' . makefile-makepp-mode) (\.mk\' . makefile-gmake-mode) (\.make\' . makefile-gmake-mode) ([Mm]akefile\' . makefile-gmake-mode) (\.am\' . makefile-automake-mode) (\.texinfo\' . texinfo-mode) (\.te?xi\' . texinfo-mode) (\.[sS]\' . asm-mode) (\.asm\' . asm-mode) (\.css\' . css-mode) (\.mixal\' . mixal-mode) (\.gcov\' . compilation-mode) (/\.[a-z0-9-]*gdbinit . gdb-script-mode) (-gdb\.gdb . gdb-script-mode) ([cC]hange\.?[lL]og?\' . change-log-mode) ([cC]hange[lL]og[-.][0-9]+\' . change-log-mode) (\$CHANGE_LOG\$\.TXT . change-log-mode) (\.scm\.[0-9]*\' . scheme-mode) (\.[ckz]?sh\'\|\.shar\'\|/\.z?profile\' . sh-mode) (\.bash\' . sh-mode) (/PKGBUILD\' . sh-mode) (\(/\|\`\)\.\(bash_\(profile\|history\|log\(in\|out\)\)\|z?log\(in\|out\)\)\' . sh-mode) (\(/\|\`\)\.\(shrc\|zshrc\|m?kshrc\|bashrc\|t?cshrc\|esrc\)\' . sh-mode) (\(/\|\`\)\.\([kz]shenv\|xinitrc\|startxrc\|xsession\)\' . sh-mode) (\.m?spec\' . sh-mode) (\.m[mes]\' . nroff-mode) (\.man\' . nroff-mode) (\.sty\' . latex-mode) (\.cl[so]\' . latex-mode) (\.bbl\' . latex-mode) (\.bib\' . bibtex-mode) (\.bst\' . bibtex-style-mode) (\.sql\' . sql-mode) (\(acinclude\|aclocal\|acsite\)\.m4\' . autoconf-mode) (\.m[4c]\' . m4-mode) (\.mf\' . metafont-mode) (\.mp\' . metapost-mode) (\.vhdl?\' . vhdl-mode) (\.article\' . text-mode) (\.letter\' . text-mode) (\.i?tcl\' . tcl-mode) (\.exp\' . tcl-mode) (\.itk\' . tcl-mode) (\.icn\' . icon-mode) (\.sim\' . simula-mode) (\.mss\' . scribe-mode) (\.f9[05]\' . f90-mode) (\.f0[38]\' . f90-mode) (\.indent\.pro\' . fundamental-mode) (\.\(pro\|PRO\)\' . idlwave-mode) (\.srt\' . srecode-template-mode) (\.prolog\' . prolog-mode) (\.tar\' . tar-mode) (\.\(arc\|zip\|lzh\|lha\|zoo\|[jew]ar\|xpi\|rar\|cbr\|7z\|squashfs\|ARC\|ZIP\|LZH\|LHA\|ZOO\|[JEW]AR\|XPI\|RAR\|CBR\|7Z\|SQUASHFS\)\' . archive-mode) (\.oxt\' . archive-mode) (\.\(deb\|[oi]pk\)\' . archive-mode) (\`/tmp/Re . text-mode) (/Message[0-9]*\' . text-mode) (\`/tmp/fol/ . text-mode) (\.oak\' . scheme-mode) (\.sgml?\' . sgml-mode) (\.x[ms]l\' . xml-mode) (\.dbk\' . xml-mode) (\.dtd\' . sgml-mode) (\.ds\(ss\)?l\' . dsssl-mode) (\.js[mx]?\' . javascript-mode) (\.har\' . javascript-mode) (\.json\' . js-json-mode) (\.[ds]?va?h?\' . verilog-mode) (\.by\' . bovine-grammar-mode) (\.wy\' . wisent-grammar-mode) (\.erts\' . erts-mode) ([:/\]\..*\(emacs\|gnus\|viper\)\' . emacs-lisp-mode) (\`\..*emacs\' . emacs-lisp-mode) ([:/]_emacs\' . emacs-lisp-mode) (/crontab\.X*[0-9]+\' . shell-script-mode) (\.ml\' . lisp-mode) (\.ld[si]?\' . ld-script-mode) (ld\.?script\' . ld-script-mode) (\.xs\' . c-mode) (\.x[abdsru]?[cnw]?\' . ld-script-mode) (\.zone\' . dns-mode) (\.soa\' . dns-mode) (\.asd\' . lisp-mode) (\.\(asn\|mib\|smi\)\' . snmp-mode) (\.\(as\|mi\|sm\)2\' . snmpv2-mode) (\.\(diffs?\|patch\|rej\)\' . diff-mode) (\.\(dif\|pat\)\' . diff-mode) (\.[eE]?[pP][sS]\' . ps-mode) (\.\(?:PDF\|EPUB\|CBZ\|FB2\|O?XPS\|DVI\|OD[FGPST]\|DOCX\|XLSX?\|PPTX?\|pdf\|epub\|cbz\|fb2\|o?xps\|djvu\|dvi\|od[fgpst]\|docx\|xlsx?\|pptx?\)\' . doc-view-mode-maybe) (configure\.\(ac\|in\)\' . autoconf-mode) (\.s\(v\|iv\|ieve\)\' . sieve-mode) (BROWSE\' . ebrowse-tree-mode) (\.ebrowse\' . ebrowse-tree-mode) (#\*mail\* . mail-mode) (\.g\' . antlr-mode) (\.mod\' . m2-mode) (\.ses\' . ses-mode) (\.docbook\' . sgml-mode) (\.com\' . dcl-mode) (/config\.\(?:bat\|log\)\' . fundamental-mode) (/\.\(authinfo\|netrc\)\' . authinfo-mode) (\.\(?:[iI][nN][iI]\|[lL][sS][tT]\|[rR][eE][gG]\|[sS][yY][sS]\)\' . conf-mode) (\.la\' . conf-unix-mode) (\.ppd\' . conf-ppd-mode) (java.+\.conf\' . conf-javaprop-mode) (\.properties\(?:\.[a-zA-Z0-9._-]+\)?\' . conf-javaprop-mode) (\.toml\' . conf-toml-mode) (\.desktop\' . conf-desktop-mode) (/\.redshift\.conf\' . conf-windows-mode) (\`/etc/\(?:DIR_COLORS\|ethers\|.?fstab\|.*hosts\|lesskey\|login\.?de\(?:fs\|vperm\)\|magic\|mtab\|pam\.d/.*\|permissions\(?:\.d/.+\)?\|protocols\|rpc\|services\)\' . conf-space-mode) (\`/etc/\(?:acpid?/.+\|aliases\(?:\.d/.+\)?\|default/.+\|group-?\|hosts\..+\|inittab\|ksysguarddrc\|opera6rc\|passwd-?\|shadow-?\|sysconfig/.+\)\' . conf-mode) ([cC]hange[lL]og[-.][-0-9a-z]+\' . change-log-mode) (/\.?\(?:gitconfig\|gnokiirc\|hgrc\|kde.*rc\|mime\.types\|wgetrc\)\' . conf-mode) (/\.mailmap\' . conf-unix-mode) (/\.\(?:asound\|enigma\|fetchmail\|gltron\|gtk\|hxplayer\|mairix\|mbsync\|msmtp\|net\|neverball\|nvidia-settings-\|offlineimap\|qt/.+\|realplayer\|reportbug\|rtorrent\.\|screen\|scummvm\|sversion\|sylpheed/.+\|xmp\)rc\' . conf-mode) (/\.\(?:gdbtkinit\|grip\|mpdconf\|notmuch-config\|orbital/.+txt\|rhosts\|tuxracer/options\)\' . conf-mode) (/\.?X\(?:default\|resource\|re\)s\> . conf-xdefaults-mode) (/X11.+app-defaults/\|\.ad\' . conf-xdefaults-mode) (/X11.+locale/.+/Compose\' . conf-colon-mode) (/X11.+locale/compose\.dir\' . conf-javaprop-mode) (\.~?[0-9]+\.[0-9][-.0-9]*~?\' nil t) (\.\(?:orig\|in\|[bB][aA][kK]\)\' nil t) ([/.]c\(?:on\)?f\(?:i?g\)?\(?:\.[a-zA-Z0-9._-]+\)?\' . conf-mode-maybe) (\.[1-9]\' . nroff-mode) (\.art\' . image-mode) (\.avs\' . image-mode) (\.bmp\' . image-mode) (\.cmyk\' . image-mode) (\.cmyka\' . image-mode) (\.crw\' . image-mode) (\.dcr\' . image-mode) (\.dcx\' . image-mode) (\.dng\' . image-mode) (\.dpx\' . image-mode) (\.fax\' . image-mode) (\.heic\' . image-mode) (\.hrz\' . image-mode) (\.icb\' . image-mode) (\.icc\' . image-mode) (\.icm\' . image-mode) (\.ico\' . image-mode) (\.icon\' . image-mode) (\.jbg\' . image-mode) (\.jbig\' . image-mode) (\.jng\' . image-mode) (\.jnx\' . image-mode) (\.miff\' . image-mode) (\.mng\' . image-mode) (\.mvg\' . image-mode) (\.otb\' . image-mode) (\.p7\' . image-mode) (\.pcx\' . image-mode) (\.pdb\' . image-mode) (\.pfa\' . image-mode) (\.pfb\' . image-mode) (\.picon\' . image-mode) (\.pict\' . image-mode) (\.rgb\' . image-mode) (\.rgba\' . image-mode) (\.tga\' . image-mode) (\.wbmp\' . image-mode) (\.webp\' . image-mode) (\.wmf\' . image-mode) (\.wpg\' . image-mode) (\.xcf\' . image-mode) (\.xmp\' . image-mode) (\.xwd\' . image-mode) (\.yuv\' . image-mode) (\.tgz\' . tar-mode) (\.tbz2?\' . tar-mode) (\.txz\' . tar-mode) (\.tzst\' . tar-mode) (\.drv\' . LaTeX-mode))
+: ((\.j2\' . jinja2-mode) (\.jinja2\' . jinja2-mode) (\.[pP][dD][fF]\' . pdf-view-mode) (\.odc\' . archive-mode) (\.odf\' . archive-mode) (\.odi\' . archive-mode) (\.otp\' . archive-mode) (\.odp\' . archive-mode) (\.otg\' . archive-mode) (\.odg\' . archive-mode) (\.ots\' . archive-mode) (\.ods\' . archive-mode) (\.odm\' . archive-mode) (\.ott\' . archive-mode) (\.odt\' . archive-mode) (\.hva\' . LaTeX-mode) (\.dockerfile\' . dockerfile-mode) ([/\]\(?:Containerfile\|Dockerfile\)\(?:\.[^/\]*\)?\' . dockerfile-mode) (\.editorconfig\' . editorconfig-conf-mode) (\.ipynb\' . ein:ipynb-mode) (\.fsti?\' . fstar-mode) (go\.work\' . go-dot-work-mode) (go\.mod\' . go-dot-mod-mode) (\.go\' . go-mode) (\.hsc\' . haskell-mode) (\.l[gh]s\' . haskell-literate-mode) (\.hsig\' . haskell-mode) (\.[gh]s\' . haskell-mode) (\.cabal\'\|/cabal\.project\|/\.cabal/config\' . haskell-cabal-mode) (\.chs\' . haskell-c2hs-mode) (\.ghci\' . ghci-script-mode) (\.dump-simpl\' . ghc-core-mode) (\.hcr\' . ghc-core-mode) (\.ini\' . ini-mode) (/git-rebase-todo\' . git-rebase-mode) (\.\(?:php[s345]?\|phtml\)\' . php-mode-maybe) (\.\(?:php\.inc\|stub\)\' . php-mode) (/\.php_cs\(?:\.dist\)?\' . php-mode) (\.rs\' . rustic-mode) (\.\(?:md\|markdown\|mkd\|mdown\|mkdn\|mdwn\)\' . markdown-mode) (\.rs\' . rust-mode) (\.\(e?ya?\|ra\)ml\' . yaml-mode) (\.gpg\(~\|\.~[0-9]+~\)?\' nil epa-file) (\.elc\' . elisp-byte-code-mode) (\.zst\' nil jka-compr) (\.dz\' nil jka-compr) (\.xz\' nil jka-compr) (\.lzma\' nil jka-compr) (\.lz\' nil jka-compr) (\.g?z\' nil jka-compr) (\.bz2\' nil jka-compr) (\.Z\' nil jka-compr) (\.vr[hi]?\' . vera-mode) (\(?:\.\(?:rbw?\|ru\|rake\|thor\|jbuilder\|rabl\|gemspec\|podspec\)\|/\(?:Gem\|Rake\|Cap\|Thor\|Puppet\|Berks\|Brew\|Vagrant\|Guard\|Pod\)file\)\' . ruby-mode) (\.re?st\' . rst-mode) (\.py[iw]?\' . python-mode) (\.m\' . octave-maybe-mode) (\.less\' . less-css-mode) (\.scss\' . scss-mode) (\.cs\' . csharp-mode) (\.awk\' . awk-mode) (\.\(u?lpc\|pike\|pmod\(\.in\)?\)\' . pike-mode) (\.idl\' . idl-mode) (\.java\' . java-mode) (\.m\' . objc-mode) (\.ii\' . c++-mode) (\.i\' . c-mode) (\.lex\' . c-mode) (\.y\(acc\)?\' . c-mode) (\.h\' . c-or-c++-mode) (\.c\' . c-mode) (\.\(CC?\|HH?\)\' . c++-mode) (\.[ch]\(pp\|xx\|\+\+\)\' . c++-mode) (\.\(cc\|hh\)\' . c++-mode) (\.\(bat\|cmd\)\' . bat-mode) (\.[sx]?html?\(\.[a-zA-Z_]+\)?\' . mhtml-mode) (\.svgz?\' . image-mode) (\.svgz?\' . xml-mode) (\.x[bp]m\' . image-mode) (\.x[bp]m\' . c-mode) (\.p[bpgn]m\' . image-mode) (\.tiff?\' . image-mode) (\.gif\' . image-mode) (\.png\' . image-mode) (\.jpe?g\' . image-mode) (\.webp\' . image-mode) (\.te?xt\' . text-mode) (\.[tT]e[xX]\' . tex-mode) (\.ins\' . tex-mode) (\.ltx\' . latex-mode) (\.dtx\' . doctex-mode) (\.org\' . org-mode) (\.dir-locals\(?:-2\)?\.el\' . lisp-data-mode) (\.eld\' . lisp-data-mode) (eww-bookmarks\' . lisp-data-mode) (tramp\' . lisp-data-mode) (/archive-contents\' . lisp-data-mode) (places\' . lisp-data-mode) (\.emacs-places\' . lisp-data-mode) (\.el\' . emacs-lisp :tangle yes-mode) (Project\.ede\' . emacs-lisp :tangle yes-mode) (\.\(scm\|sls\|sld\|stk\|ss\|sch\)\' . scheme-mode) (\.l\' . lisp-mode) (\.li?sp\' . lisp-mode) (\.[fF]\' . fortran-mode) (\.for\' . fortran-mode) (\.p\' . pascal-mode) (\.pas\' . pascal-mode) (\.\(dpr\|DPR\)\' . delphi-mode) (\.\([pP]\([Llm]\|erl\|od\)\|al\)\' . perl-mode) (Imakefile\' . makefile-imake-mode) (Makeppfile\(?:\.mk\)?\' . makefile-makepp-mode) (\.makepp\' . makefile-makepp-mode) (\.mk\' . makefile-gmake-mode) (\.make\' . makefile-gmake-mode) ([Mm]akefile\' . makefile-gmake-mode) (\.am\' . makefile-automake-mode) (\.texinfo\' . texinfo-mode) (\.te?xi\' . texinfo-mode) (\.[sS]\' . asm-mode) (\.asm\' . asm-mode) (\.css\' . css-mode) (\.mixal\' . mixal-mode) (\.gcov\' . compilation-mode) (/\.[a-z0-9-]*gdbinit . gdb-script-mode) (-gdb\.gdb . gdb-script-mode) ([cC]hange\.?[lL]og?\' . change-log-mode) ([cC]hange[lL]og[-.][0-9]+\' . change-log-mode) (\$CHANGE_LOG\$\.TXT . change-log-mode) (\.scm\.[0-9]*\' . scheme-mode) (\.[ckz]?sh\'\|\.shar\'\|/\.z?profile\' . sh-mode) (\.bash\' . sh-mode) (/PKGBUILD\' . sh-mode) (\(/\|\`\)\.\(bash_\(profile\|history\|log\(in\|out\)\)\|z?log\(in\|out\)\)\' . sh-mode) (\(/\|\`\)\.\(shrc\|zshrc\|m?kshrc\|bashrc\|t?cshrc\|esrc\)\' . sh-mode) (\(/\|\`\)\.\([kz]shenv\|xinitrc\|startxrc\|xsession\)\' . sh-mode) (\.m?spec\' . sh-mode) (\.m[mes]\' . nroff-mode) (\.man\' . nroff-mode) (\.sty\' . latex-mode) (\.cl[so]\' . latex-mode) (\.bbl\' . latex-mode) (\.bib\' . bibtex-mode) (\.bst\' . bibtex-style-mode) (\.sql\' . sql-mode) (\(acinclude\|aclocal\|acsite\)\.m4\' . autoconf-mode) (\.m[4c]\' . m4-mode) (\.mf\' . metafont-mode) (\.mp\' . metapost-mode) (\.vhdl?\' . vhdl-mode) (\.article\' . text-mode) (\.letter\' . text-mode) (\.i?tcl\' . tcl-mode) (\.exp\' . tcl-mode) (\.itk\' . tcl-mode) (\.icn\' . icon-mode) (\.sim\' . simula-mode) (\.mss\' . scribe-mode) (\.f9[05]\' . f90-mode) (\.f0[38]\' . f90-mode) (\.indent\.pro\' . fundamental-mode) (\.\(pro\|PRO\)\' . idlwave-mode) (\.srt\' . srecode-template-mode) (\.prolog\' . prolog-mode) (\.tar\' . tar-mode) (\.\(arc\|zip\|lzh\|lha\|zoo\|[jew]ar\|xpi\|rar\|cbr\|7z\|squashfs\|ARC\|ZIP\|LZH\|LHA\|ZOO\|[JEW]AR\|XPI\|RAR\|CBR\|7Z\|SQUASHFS\)\' . archive-mode) (\.oxt\' . archive-mode) (\.\(deb\|[oi]pk\)\' . archive-mode) (\`/tmp/Re . text-mode) (/Message[0-9]*\' . text-mode) (\`/tmp/fol/ . text-mode) (\.oak\' . scheme-mode) (\.sgml?\' . sgml-mode) (\.x[ms]l\' . xml-mode) (\.dbk\' . xml-mode) (\.dtd\' . sgml-mode) (\.ds\(ss\)?l\' . dsssl-mode) (\.js[mx]?\' . javascript-mode) (\.har\' . javascript-mode) (\.json\' . js-json-mode) (\.[ds]?va?h?\' . verilog-mode) (\.by\' . bovine-grammar-mode) (\.wy\' . wisent-grammar-mode) (\.erts\' . erts-mode) ([:/\]\..*\(emacs\|gnus\|viper\)\' . emacs-lisp :tangle yes-mode) (\`\..*emacs\' . emacs-lisp :tangle yes-mode) ([:/]_emacs\' . emacs-lisp :tangle yes-mode) (/crontab\.X*[0-9]+\' . shell-script-mode) (\.ml\' . lisp-mode) (\.ld[si]?\' . ld-script-mode) (ld\.?script\' . ld-script-mode) (\.xs\' . c-mode) (\.x[abdsru]?[cnw]?\' . ld-script-mode) (\.zone\' . dns-mode) (\.soa\' . dns-mode) (\.asd\' . lisp-mode) (\.\(asn\|mib\|smi\)\' . snmp-mode) (\.\(as\|mi\|sm\)2\' . snmpv2-mode) (\.\(diffs?\|patch\|rej\)\' . diff-mode) (\.\(dif\|pat\)\' . diff-mode) (\.[eE]?[pP][sS]\' . ps-mode) (\.\(?:PDF\|EPUB\|CBZ\|FB2\|O?XPS\|DVI\|OD[FGPST]\|DOCX\|XLSX?\|PPTX?\|pdf\|epub\|cbz\|fb2\|o?xps\|djvu\|dvi\|od[fgpst]\|docx\|xlsx?\|pptx?\)\' . doc-view-mode-maybe) (configure\.\(ac\|in\)\' . autoconf-mode) (\.s\(v\|iv\|ieve\)\' . sieve-mode) (BROWSE\' . ebrowse-tree-mode) (\.ebrowse\' . ebrowse-tree-mode) (#\*mail\* . mail-mode) (\.g\' . antlr-mode) (\.mod\' . m2-mode) (\.ses\' . ses-mode) (\.docbook\' . sgml-mode) (\.com\' . dcl-mode) (/config\.\(?:bat\|log\)\' . fundamental-mode) (/\.\(authinfo\|netrc\)\' . authinfo-mode) (\.\(?:[iI][nN][iI]\|[lL][sS][tT]\|[rR][eE][gG]\|[sS][yY][sS]\)\' . conf-mode) (\.la\' . conf-unix-mode) (\.ppd\' . conf-ppd-mode) (java.+\.conf\' . conf-javaprop-mode) (\.properties\(?:\.[a-zA-Z0-9._-]+\)?\' . conf-javaprop-mode) (\.toml\' . conf-toml-mode) (\.desktop\' . conf-desktop-mode) (/\.redshift\.conf\' . conf-windows-mode) (\`/etc/\(?:DIR_COLORS\|ethers\|.?fstab\|.*hosts\|lesskey\|login\.?de\(?:fs\|vperm\)\|magic\|mtab\|pam\.d/.*\|permissions\(?:\.d/.+\)?\|protocols\|rpc\|services\)\' . conf-space-mode) (\`/etc/\(?:acpid?/.+\|aliases\(?:\.d/.+\)?\|default/.+\|group-?\|hosts\..+\|inittab\|ksysguarddrc\|opera6rc\|passwd-?\|shadow-?\|sysconfig/.+\)\' . conf-mode) ([cC]hange[lL]og[-.][-0-9a-z]+\' . change-log-mode) (/\.?\(?:gitconfig\|gnokiirc\|hgrc\|kde.*rc\|mime\.types\|wgetrc\)\' . conf-mode) (/\.mailmap\' . conf-unix-mode) (/\.\(?:asound\|enigma\|fetchmail\|gltron\|gtk\|hxplayer\|mairix\|mbsync\|msmtp\|net\|neverball\|nvidia-settings-\|offlineimap\|qt/.+\|realplayer\|reportbug\|rtorrent\.\|screen\|scummvm\|sversion\|sylpheed/.+\|xmp\)rc\' . conf-mode) (/\.\(?:gdbtkinit\|grip\|mpdconf\|notmuch-config\|orbital/.+txt\|rhosts\|tuxracer/options\)\' . conf-mode) (/\.?X\(?:default\|resource\|re\)s\> . conf-xdefaults-mode) (/X11.+app-defaults/\|\.ad\' . conf-xdefaults-mode) (/X11.+locale/.+/Compose\' . conf-colon-mode) (/X11.+locale/compose\.dir\' . conf-javaprop-mode) (\.~?[0-9]+\.[0-9][-.0-9]*~?\' nil t) (\.\(?:orig\|in\|[bB][aA][kK]\)\' nil t) ([/.]c\(?:on\)?f\(?:i?g\)?\(?:\.[a-zA-Z0-9._-]+\)?\' . conf-mode-maybe) (\.[1-9]\' . nroff-mode) (\.art\' . image-mode) (\.avs\' . image-mode) (\.bmp\' . image-mode) (\.cmyk\' . image-mode) (\.cmyka\' . image-mode) (\.crw\' . image-mode) (\.dcr\' . image-mode) (\.dcx\' . image-mode) (\.dng\' . image-mode) (\.dpx\' . image-mode) (\.fax\' . image-mode) (\.heic\' . image-mode) (\.hrz\' . image-mode) (\.icb\' . image-mode) (\.icc\' . image-mode) (\.icm\' . image-mode) (\.ico\' . image-mode) (\.icon\' . image-mode) (\.jbg\' . image-mode) (\.jbig\' . image-mode) (\.jng\' . image-mode) (\.jnx\' . image-mode) (\.miff\' . image-mode) (\.mng\' . image-mode) (\.mvg\' . image-mode) (\.otb\' . image-mode) (\.p7\' . image-mode) (\.pcx\' . image-mode) (\.pdb\' . image-mode) (\.pfa\' . image-mode) (\.pfb\' . image-mode) (\.picon\' . image-mode) (\.pict\' . image-mode) (\.rgb\' . image-mode) (\.rgba\' . image-mode) (\.tga\' . image-mode) (\.wbmp\' . image-mode) (\.webp\' . image-mode) (\.wmf\' . image-mode) (\.wpg\' . image-mode) (\.xcf\' . image-mode) (\.xmp\' . image-mode) (\.xwd\' . image-mode) (\.yuv\' . image-mode) (\.tgz\' . tar-mode) (\.tbz2?\' . tar-mode) (\.txz\' . tar-mode) (\.tzst\' . tar-mode) (\.drv\' . LaTeX-mode))
 
 * Minibuffer stuff
 ** Change comletion behaviour in minibuffer
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (setq completion-styles '(substring
                             basic
                             partial-completion
@@ -449,7 +470,7 @@ Using diminish to hide specific modes from the mode line
 #+RESULTS:
 | substring | basic | partial-completion | emacs22 |
 ** Activate save history mode
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (savehist-mode 1)
 #+end_src
 
@@ -458,7 +479,7 @@ Using diminish to hide specific modes from the mode line
 
     
 * Magit
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package magit
     :ensure t
     :bind ("C-x g" . magit-status))
@@ -470,7 +491,7 @@ To enhance programming modes, we will:
 1. Enable a visual indicator at 80 characters for line length.
 2. Display line numbers in the left margin.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Enable line numbers and set a fill column indicator for programming modes
   (defun my-prog-mode-setup ()
     "Custom setup for programming modes."
@@ -492,27 +513,34 @@ To enhance programming modes, we will:
 For text modes like Org, Markdown, and LaTeX, we will:
 1. Disable line numbers.
 2. Enable visual line wrapping for better readability.
+3. Add visual-fill-columns mode
+4. Enable visual-fill-column-center-text
+5. Add adaptive-wrap-prefix mode
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; Disable line numbers and enable visual line wrapping for text modes
   (defun my-text-mode-setup ()
     "Custom setup for text modes."
     (display-line-numbers-mode 0)  ;; Disable line numbers
-    (visual-line-mode 1))  ;; Enable visual line wrapping
-
+    (visual-line-mode 1)
+    ;(setq visual-fill-column-center-text t)
+    ;(setq visual-fill-column-width 80)
+    ;(visual-fill-column-mode 1)
+    (adaptive-wrap-prefix-mode 1)
+    (display-fill-column-indicator-mode 1))
   ;; Hook the setup to common text modes
   (add-hook 'text-mode-hook 'my-text-mode-setup)
 #+end_src
 
 #+RESULTS:
-| my-text-mode-setup | #[nil ((display-fill-column-indicator-mode 1)) nil] | visual-line-mode | #[nil ((setq adaptive-wrap-prefix-mode 1)) nil] | #[nil ((setq visual-fill-line-mode 1)) nil] | mixed-pitch-mode | flyspell-mode | copilot-mode | turn-off-auto-fill | text-mode-hook-identify |
+| my-text-mode-setup | mixed-pitch-mode | flyspell-mode | copilot-mode | turn-off-auto-fill | text-mode-hook-identify |
 
 Apply the prog-mode setup to some "programming" modes derived from text-modes.
 These modes are:
 - html-mode
 - web-mode
 
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
 (add-hook 'html-mode-hook 'my-prog-mode-setup)
 (add-hook 'web-mode-hook 'my-prog-mode-setup)
 #+end_src
@@ -522,7 +550,7 @@ These modes are:
 | my-prog-mode-setup |
 
 ** Multi-line mode
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package multi-line
 	:ensure t
 	;;:hook (prog-mode . multi-line-mode)
@@ -534,7 +562,7 @@ These modes are:
 
 * Ebib
 Use ebib mode for bibtex files
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package ebib
 	:ensure t
 	:config
@@ -548,7 +576,7 @@ Use ebib mode for bibtex files
 * Electric Pair Mode
 Automatically close brakets, parentheses etc.
 Add $ to the list of characters that trigger electric pair mode
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (electric-pair-mode 1)
   (setq electric-pair-pairs '(
                               (?\" . ?\")
@@ -563,7 +591,7 @@ Add $ to the list of characters that trigger electric pair mode
 
 * Auto-formatting
 Load format-all and enable it in programming modes. Load default formatter for python
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (use-package format-all
     :ensure t
     :hook ((prog-mode . format-all-mode)
@@ -590,7 +618,7 @@ Load format-all and enable it in programming modes. Load default formatter for p
 : djlint
 
 * Include other files
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (org-babel-load-file
    (expand-file-name "python_stuff.org"
                    user-emacs-directory))
@@ -602,7 +630,7 @@ Load format-all and enable it in programming modes. Load default formatter for p
 
 * scratch as org mode buffer
 I use the scratch buffer for text more often than not, so I set it to org mode
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (setq initial-major-mode 'org-mode)
   (setq initial-scratch-message "#+TITLE: Scratch\n#+Description: Scratch buffer for notes and ideas. Save it to a file to keep it.\n\n")
 #+end_src
@@ -612,13 +640,13 @@ I use the scratch buffer for text more often than not, so I set it to org mode
 : #+Description: Scratch buffer for notes and ideas. Save it to a file to keep it.
 
 * Disable startup screen
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
   (setq inhibit-startup-screen t)
 #+end_src
 
 * Multiple cursors mode
 
-#+begin_src elisp
+#+begin_src emacs-lisp :tangle yes
 (use-package multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
